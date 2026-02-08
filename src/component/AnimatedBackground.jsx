@@ -7,7 +7,7 @@ class Particle {
     this.ctx = ctx;
     this.x = Math.random() * canvas.width;
     this.y = Math.random() * canvas.height;
-    this.size = Math.random() * 2 + 0.5;
+    this.size = Math.random() * 2 + 1;
     this.speedX = Math.random() * 0.5 - 0.25;
     this.speedY = Math.random() * 0.5 - 0.25;
     this.opacity = Math.random() * 0.5 + 0.2;
@@ -24,7 +24,7 @@ class Particle {
   }
 
   draw() {
-    this.ctx.fillStyle = `rgba(139, 92, 246, ${this.opacity})`;
+    this.ctx.fillStyle = `rgba(128,185,186, ${this.opacity})`;  // this is the dot's color changing
     this.ctx.beginPath();
     this.ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     this.ctx.fill();
@@ -68,8 +68,8 @@ const AnimatedBackground = () => {
           const distance = Math.sqrt(dx * dx + dy * dy);
 
           if (distance < 120) {
-            ctx.strokeStyle = `rgba(139, 92, 246, ${0.15 * (1 - distance / 120)})`;
-            ctx.lineWidth = 0.5;
+            ctx.strokeStyle = `rgba(190,214,197, ${0.15 * (1 - distance / 120)})`;  //this is for stocks color changes
+            ctx.lineWidth = 5;  // this is for the line width of the size 
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);

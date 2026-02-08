@@ -14,8 +14,8 @@ const GridBackground = () => {
         className="absolute inset-0 opacity-5"
         style={{
           backgroundImage: `
-            linear-gradient(to right, rgba(124, 58, 237, 0.4) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(124, 58, 237, 0.4) 1px, transparent 1px)
+            linear-gradient(to right, rgba(211,45,70, 0.4) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(182,12,28, 0.4) 1px, transparent 1px)
           `,
           backgroundSize: '60px 60px'
         }}

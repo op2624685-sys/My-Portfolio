@@ -8,14 +8,15 @@
   body {
     height: 100vh;
     color: rgb(255, 255, 255);
-    background: linear-gradient(135deg, #000000 0%, #0f0a1e 25%, #1a0f2e 50%, #0a0612 75%, #000000 100%);
+    /* /* background: linear-gradient(135deg, #000000 0%, #000000 25%, #000000 50%, #000000 75%, #000000 100%); */
     position: relative;
+    background: radial-gradient(circle, rgba(31, 27, 27, 1) 0%, rgba(168, 168, 168, 1) 7%, rgba(168, 111, 130, 1) 12%, rgba(163, 157, 158, 0.98) 18%, rgba(184, 95, 95, 1) 36%, rgba(156, 120, 93, 1) 50%, rgba(174, 147, 191, 1) 79%, rgba(0, 0, 0, 1) 95%);
     overflow-x: hidden;
   }
 
   ::selection {
-    background-color: rgba(139, 92, 246, 0.3);
-    color: rgb(255, 255, 255);
+    background-color: rgba(101, 99, 106, 0.3);
+    color: rgb(211, 205, 205);
   }
 }
 
@@ -24,6 +25,7 @@
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -35,6 +37,7 @@
     opacity: 0;
     transform: translateX(-50px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -46,6 +49,7 @@
     opacity: 0;
     transform: translateX(50px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -56,21 +60,27 @@
   0% {
     transform: translate(0px, 0px) scale(1);
   }
+
   33% {
     transform: translate(30px, -50px) scale(1.1);
   }
+
   66% {
     transform: translate(-20px, 20px) scale(0.9);
   }
+
   100% {
     transform: translate(0px, 0px) scale(1);
   }
 }
 
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-20px);
   }
