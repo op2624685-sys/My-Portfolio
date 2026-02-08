@@ -1,7 +1,7 @@
-import React from 'react'
-import Navbar from '../component/Navbar'
-import Title from '../component/Title'
-import JavaMain from '../component/JavaMain'
+import React from 'react';
+import Navbar from '../component/Navbar';
+import Title from '../component/Title';
+import JavaMain from '../component/JavaMain';
 
 const Index = () => {
   return (
@@ -10,7 +10,7 @@ const Index = () => {
       <Title />
       <JavaMain />
     </div>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;

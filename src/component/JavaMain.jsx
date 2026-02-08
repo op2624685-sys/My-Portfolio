@@ -13,7 +13,7 @@ export default function CodeAnimationIntro() {
 
   useEffect(() => {
     let currentIndex = 0;
-    const typingSpeed = 80; // milliseconds per character
+    const typingSpeed = 50; // milliseconds per character
 
     const typingInterval = setInterval(() => {
       if (currentIndex <= javaCode.length) {
