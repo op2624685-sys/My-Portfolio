@@ -16,7 +16,7 @@ const App = () => {
         <AnimatedBackground />                     {/* ← single background component */}
         <div className="relative z-10">              {/* ← content stays on top */}
           <Routes>
-            <Route path="/" element={<Index />} />
+            <Route path="/My-Portfolio" element={<Index />} />
             <Route path="/skills" element={<Skills />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/about" element={<About />} />
