@@ -13,21 +13,26 @@ export default function TextRotation() {
         setIsAnimating(false);
       }, 500);
     }, 3000);
-
     return () => clearInterval(interval);
   }, [texts.length]);
 
   return (
     <div className="flex items-center justify-center">
-      <div className="text-4xl font-bold text-white">
-       Hey, I'm  {' '}
+      <div className="text-4xl font-bold text-white" style={{ fontFamily: "'Cinzel', serif" }}>
+        Hey, I'm{' '}
         <span className="inline-block relative">
           <span
             className={`transition-all duration-500 ${
-              isAnimating 
-                ? 'opacity-0 translate-y-8' 
-                : 'opacity-100 translate-y-0'
-            } text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-pink-600`}
+              isAnimating ? 'opacity-0 translate-y-8' : 'opacity-100 translate-y-0'
+            } text-transparent bg-clip-text`}
+            style={{
+              backgroundImage: 'linear-gradient(90deg, #B8860B, #FFD700, #FFF8DC, #FFD700, #B8860B)',
+              backgroundSize: '300% auto',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              animation: 'shimmer 4s linear infinite',
+              fontFamily: "'Cinzel', serif",
+            }}
           >
             {texts[currentIndex]}
           </span>

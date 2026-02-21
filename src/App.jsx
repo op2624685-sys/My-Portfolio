@@ -17,9 +17,9 @@ const App = () => {
         <div className="relative z-10">              {/* ← content stays on top */}
           <Routes>
             <Route path="/My-Portfolio" element={<Index />} />
-            <Route path="/skills" element={<Skills />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/about" element={<About />} />
+            <Route path="/My-Portfolio/skills" element={<Skills />} />
+            <Route path="My-Portfolio/projects" element={<Projects />} />
+            <Route path="My-Portfolio/about" element={<About />} />
           </Routes>
         </div>
       </div>
