@@ -18,8 +18,8 @@ const App = () => {
           <Routes>
             <Route path="/My-Portfolio" element={<Index />} />
             <Route path="/My-Portfolio/skills" element={<Skills />} />
-            <Route path="My-Portfolio/projects" element={<Projects />} />
-            <Route path="My-Portfolio/about" element={<About />} />
+            <Route path="/My-Portfolio/projects" element={<Projects />} />
+            <Route path="/My-Portfolio/about" element={<About />} />
           </Routes>
         </div>
       </div>
