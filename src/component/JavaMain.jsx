@@ -146,7 +146,7 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
     const iv=setInterval(()=>{
       if(idx<=JAVA_CODE.length){ setCode(JAVA_CODE.slice(0,idx)); setProgress(Math.floor((idx/JAVA_CODE.length)*100)); idx++; }
       else { clearInterval(iv); setTypingDone(true); setScanActive(false); setPhase('complete'); }
-    },20);
+    },42);
     return()=>clearInterval(iv);
   },[phase]);
 
@@ -158,10 +158,10 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
     const iv=setInterval(()=>{
       if(idx<=OUTPUT_TEXT.length){ setOutputTxt(OUTPUT_TEXT.slice(0,idx)); idx++; }
       else { clearInterval(iv); setOutputDone(true); }
-    },40);
+    },55);
 
     // Wait for output to finish + 1.2s then shrink
-    const shrinkDelay = OUTPUT_TEXT.length*40 + 1200;
+    const shrinkDelay = OUTPUT_TEXT.length*55 + 1200;
     const shrinkTimer = setTimeout(()=>doShrink(), shrinkDelay);
     return()=>{ clearInterval(iv); clearTimeout(shrinkTimer); };
   },[phase]);
@@ -204,11 +204,10 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
     <div style={{
       background:'linear-gradient(135deg,rgba(6,0,18,0.98),rgba(18,0,36,0.97))',
       borderRadius:'0.75rem',
-      padding:'2rem',
+      padding:'1.5rem',
       border:`1px solid ${typingDone?'rgba(255,215,0,0.45)':'rgba(255,215,0,0.2)'}`,
       position:'relative',
       overflow:'hidden',
-      height:'100%',
       display:'flex',
       flexDirection:'column',
       animation:phase==='complete'||phase==='shrinking'?'glowPulse 3s ease-in-out infinite':'none',
@@ -249,7 +248,7 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
       <div style={{height:1,background:'linear-gradient(90deg,transparent,rgba(255,215,0,0.6),transparent)',marginBottom:'1.25rem',position:'relative',zIndex:2,flexShrink:0}}/>
 
       {/* Line numbers + code */}
-      <div style={{display:'flex',gap:'1.5rem',position:'relative',zIndex:2,flex:1,overflow:'hidden'}}>
+      <div style={{display:'flex',gap:'1.5rem',position:'relative',zIndex:2,overflow:'hidden'}}>
         <div style={{userSelect:'none',textAlign:'right',flexShrink:0}}>
           {JAVA_CODE.split('\n').map((_,i)=>(
             <div key={i} style={{color:i<code.split('\n').length?'rgba(255,215,0,0.35)':'rgba(255,255,255,0.08)',fontSize:'0.8rem',fontFamily:'monospace',lineHeight:1.7,transition:'color 0.4s',textShadow:i<code.split('\n').length?'0 0 4px rgba(255,215,0,0.3)':'none'}}>{i+1}</div>
@@ -356,16 +355,14 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
         </div>
       )}
 
-      {/* ══ IN-PAGE SLOT — always in the DOM so we can measure its position ══ */}
-      {/* This is what targetRef points to — it lives inside Index's flex layout */}
-      {/* We expose it via a ref callback passed from Index */}
+      {/* ══ IN-PAGE SLOT — sits naturally in flex column, no stretching ══ */}
       <section
         ref={targetRef}
-        className="flex-1 flex items-center justify-center px-4 py-4"
-        style={{minHeight:0}}
+        className="flex justify-center px-4 py-4"
+        style={{ flexShrink: 0 }}
       >
         {phase === 'done' && (
-          <div style={{width:'100%',maxWidth:640,height:'100%',minHeight:260,animation:'cardReveal 0.5s ease both'}}>
+          <div style={{width:'100%',maxWidth:640,animation:'cardReveal 0.5s ease both'}}>
             <CardInner/>
           </div>
         )}
