@@ -27,7 +27,7 @@ function highlight(code) {
   return parts;
 }
 
-/* ─── Matrix Rain ────────────────────────────────────────────── */
+/* ─── Matrix Rain Canvas ─────────────────────────────────────── */
 function MatrixRain() {
   const ref = useRef(null);
   useEffect(() => {
@@ -53,40 +53,113 @@ function MatrixRain() {
   return <canvas ref={ref} style={{position:'absolute',inset:0,width:'100%',height:'100%',opacity:0.4,pointerEvents:'none',zIndex:1,borderRadius:'inherit'}}/>;
 }
 
-/* ─── Sub-components ─────────────────────────────────────────── */
+/* ─── Scan Line (while typing) ───────────────────────────────── */
 const ScanLine = ({active}) => !active ? null : (
   <div style={{position:'absolute',left:0,right:0,height:2,zIndex:5,background:'linear-gradient(90deg,transparent,rgba(255,215,0,0.9),rgba(255,255,255,0.5),rgba(255,215,0,0.9),transparent)',boxShadow:'0 0 14px 4px rgba(255,215,0,0.5)',animation:'scanMove 2.2s linear infinite',pointerEvents:'none'}}/>
 );
 
-const OrbitalRunes = ({active}) => {
-  const runes=['♛','✦','◆','❖','★','⬡','王','金'];
-  return !active ? null : (
-    <div style={{position:'absolute',inset:0,pointerEvents:'none',zIndex:6}}>
-      {runes.map((r,i)=>(
-        <div key={i} style={{position:'absolute',top:'50%',left:'50%',fontSize:'1rem',color:'rgba(255,215,0,0.75)',textShadow:'0 0 12px #FFD700',animation:`${i%2===0?'orbitCW':'orbitCCW'} ${6+i*0.6}s linear infinite`,animationDelay:`${i*-0.5}s`}}>{r}</div>
+/* ─── Royal Ripple — gold ripple rings that expand from center ── */
+function RoyalRipple({ active }) {
+  if (!active) return null;
+  return (
+    <div style={{position:'absolute',inset:0,pointerEvents:'none',zIndex:4,display:'flex',alignItems:'center',justifyContent:'center',borderRadius:'0.75rem',overflow:'hidden'}}>
+      {[0,1,2,3].map(i => (
+        <div key={i} style={{
+          position:'absolute',
+          width:60, height:60,
+          borderRadius:'50%',
+          border:'1.5px solid rgba(255,215,0,0.7)',
+          animation:`rippleExpand 2.4s ${i*0.55}s ease-out infinite`,
+          boxShadow:'0 0 12px rgba(255,215,0,0.3)',
+        }}/>
       ))}
     </div>
   );
-};
+}
 
-const RoyalSeal = ({show}) => !show ? null : (
-  <div style={{position:'absolute',top:-30,right:-30,zIndex:10,width:76,height:76,animation:'sealStamp 0.55s cubic-bezier(0.36,0.07,0.19,0.97) both',filter:'drop-shadow(0 0 10px rgba(255,215,0,0.8))'}}>
-    <svg viewBox="0 0 100 100" style={{width:'100%',height:'100%'}}>
-      <defs><radialGradient id="sg2"><stop offset="0%" stopColor="#FFD700"/><stop offset="100%" stopColor="#B8860B"/></radialGradient></defs>
-      <circle cx="50" cy="50" r="48" fill="none" stroke="url(#sg2)" strokeWidth="2"/>
-      <circle cx="50" cy="50" r="41" fill="none" stroke="url(#sg2)" strokeWidth="0.7" strokeDasharray="4 3"/>
-      {[0,45,90,135,180,225,270,315].map((deg,i)=>(
-        <line key={i} x1={50+41*Math.cos(deg*Math.PI/180)} y1={50+41*Math.sin(deg*Math.PI/180)} x2={50+34*Math.cos(deg*Math.PI/180)} y2={50+34*Math.sin(deg*Math.PI/180)} stroke="#FFD700" strokeWidth="1.5"/>
-      ))}
-      <text x="50" y="60" textAnchor="middle" fontSize="30" fill="url(#sg2)" style={{filter:'drop-shadow(0 0 5px #FFD700)'}}>♛</text>
-    </svg>
-  </div>
-);
+/* ─── Crown Reveal — SVG crown that draws itself stroke by stroke */
+function CrownReveal({ active }) {
+  if (!active) return null;
+  return (
+    <div style={{
+      position:'absolute', top:8, right:12,
+      zIndex:6, pointerEvents:'none',
+      animation:'crownFadeIn 0.5s ease both',
+    }}>
+      <svg width="32" height="28" viewBox="0 0 32 28" fill="none">
+        <defs>
+          <linearGradient id="cg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#FFD700"/>
+            <stop offset="50%" stopColor="#FFF8DC"/>
+            <stop offset="100%" stopColor="#B8860B"/>
+          </linearGradient>
+        </defs>
+        {/* Crown shape */}
+        <path
+          d="M2 24 L6 10 L12 16 L16 4 L20 16 L26 10 L30 24 Z"
+          fill="url(#cg)"
+          stroke="#B8860B"
+          strokeWidth="0.5"
+          style={{
+            filter:'drop-shadow(0 0 6px rgba(255,215,0,0.8))',
+            strokeDasharray:120,
+            strokeDashoffset:120,
+            animation:'drawCrown 0.8s 0.1s ease forwards',
+          }}
+        />
+        {/* 3 jewels on crown */}
+        {[{cx:16,cy:7},{cx:9,cy:17},{cx:23,cy:17}].map((j,i)=>(
+          <circle key={i} cx={j.cx} cy={j.cy} r="2"
+            fill={i===0?'#c084fc':i===1?'#67e8f9':'#86efac'}
+            style={{filter:`drop-shadow(0 0 4px ${i===0?'#a855f7':i===1?'#06b6d4':'#22c55e'})`,animation:`jewelPop 0.3s ${0.5+i*0.12}s ease both`,opacity:0}}
+          />
+        ))}
+        {/* Bottom band */}
+        <rect x="2" y="23" width="28" height="3" rx="1.5" fill="url(#cg)" style={{filter:'drop-shadow(0 0 4px rgba(255,215,0,0.5))'}}/>
+      </svg>
+    </div>
+  );
+}
 
+/* ─── Gold Pulse Wave — single radial gold wave on card bg ──────  */
+function GoldWave({ active }) {
+  if (!active) return null;
+  return (
+    <div style={{
+      position:'absolute', inset:0, borderRadius:'0.75rem',
+      pointerEvents:'none', zIndex:3, overflow:'hidden',
+    }}>
+      <div style={{
+        position:'absolute', inset:0,
+        background:'radial-gradient(ellipse at 50% 50%, rgba(255,215,0,0.12) 0%, rgba(255,215,0,0.04) 40%, transparent 70%)',
+        animation:'goldWavePulse 2s ease-in-out infinite',
+      }}/>
+    </div>
+  );
+}
+
+/* ─── Running light along the border ─────────────────────────── */
+function BorderRunner({ active }) {
+  if (!active) return null;
+  return (
+    <div style={{position:'absolute',inset:0,borderRadius:'0.75rem',pointerEvents:'none',zIndex:6,overflow:'hidden'}}>
+      {/* top runner */}
+      <div style={{position:'absolute',top:0,left:0,height:'2px',width:'40%',background:'linear-gradient(90deg,transparent,#FFD700,transparent)',animation:'runTop 3s linear infinite',boxShadow:'0 0 8px #FFD700'}}/>
+      {/* right runner */}
+      <div style={{position:'absolute',top:0,right:0,width:'2px',height:'40%',background:'linear-gradient(180deg,transparent,#FFD700,transparent)',animation:'runRight 3s 0.75s linear infinite',boxShadow:'0 0 8px #FFD700'}}/>
+      {/* bottom runner */}
+      <div style={{position:'absolute',bottom:0,right:0,height:'2px',width:'40%',background:'linear-gradient(270deg,transparent,#FFD700,transparent)',animation:'runBottom 3s 1.5s linear infinite',boxShadow:'0 0 8px #FFD700'}}/>
+      {/* left runner */}
+      <div style={{position:'absolute',bottom:0,left:0,width:'2px',height:'40%',background:'linear-gradient(0deg,transparent,#FFD700,transparent)',animation:'runLeft 3s 2.25s linear infinite',boxShadow:'0 0 8px #FFD700'}}/>
+    </div>
+  );
+}
+
+/* ─── GlowOutput letters ─────────────────────────────────────── */
 const GlowOutput = ({text,done}) => (
   <span style={{fontFamily:'monospace',fontSize:'1.05rem'}}>
     {text.split('').map((ch,i)=>(
-      <span key={i} style={{color:'#FFD700',textShadow:'0 0 10px #FFD700,0 0 22px #B8860B',animation:`letterPop 0.3s ${i*0.04}s ease both`,display:'inline-block'}}>{ch}</span>
+      <span key={i} style={{color:'#FFD700',textShadow:'0 0 10px #FFD700,0 0 22px #B8860B',animation:`letterPop 0.25s ${i*0.035}s ease both`,display:'inline-block',opacity:0}}>{ch}</span>
     ))}
     {!done&&<span style={{display:'inline-block',width:9,height:18,background:'#FFD700',boxShadow:'0 0 10px #FFD700',verticalAlign:'middle',marginLeft:2,animation:'cursorBlink 0.65s infinite'}}/>}
   </span>
@@ -109,20 +182,17 @@ const OUTPUT_TEXT='Welcome to My Portfolio';
 
 /* ═══ MAIN COMPONENT ═══════════════════════════════════════════ */
 export default function CodeAnimationIntro({ onIntroComplete }) {
-  // phase: boot | matrix | typing | complete | shrinking | done
-  const [phase,      setPhase]      = useState('boot');
-  const [bootLines,  setBootLines]  = useState([]);
-  const [code,       setCode]       = useState('');
-  const [typingDone, setTypingDone] = useState(false);
-  const [progress,   setProgress]   = useState(0);
-  const [outputTxt,  setOutputTxt]  = useState('');
-  const [outputDone, setOutputDone] = useState(false);
-  const [showSeal,   setShowSeal]   = useState(false);
-  const [scanActive, setScanActive] = useState(false);
+  const [phase,       setPhase]       = useState('boot');
+  const [bootLines,   setBootLines]   = useState([]);
+  const [code,        setCode]        = useState('');
+  const [typingDone,  setTypingDone]  = useState(false);
+  const [progress,    setProgress]    = useState(0);
+  const [outputTxt,   setOutputTxt]   = useState('');
+  const [outputDone,  setOutputDone]  = useState(false);
+  const [scanActive,  setScanActive]  = useState(false);
+  const [showEffects, setShowEffects] = useState(false); // all completion effects
 
-  // The fixed fullscreen overlay element
   const overlayRef = useRef(null);
-  // The real in-page target div (always rendered, invisible placeholder during intro)
   const targetRef  = useRef(null);
 
   /* Step 1: Boot */
@@ -138,152 +208,171 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
     return()=>clearTimeout(t);
   },[phase]);
 
-  /* Step 3: Typing */
+  /* Step 3: Typing — 18ms per char */
   useEffect(()=>{
     if(phase!=='typing') return;
     setScanActive(true);
     let idx=0;
     const iv=setInterval(()=>{
-      if(idx<=JAVA_CODE.length){ setCode(JAVA_CODE.slice(0,idx)); setProgress(Math.floor((idx/JAVA_CODE.length)*100)); idx++; }
-      else { clearInterval(iv); setTypingDone(true); setScanActive(false); setPhase('complete'); }
-    },42);
+      if(idx<=JAVA_CODE.length){
+        setCode(JAVA_CODE.slice(0,idx));
+        setProgress(Math.floor((idx/JAVA_CODE.length)*100));
+        idx++;
+      } else {
+        clearInterval(iv);
+        setTypingDone(true);
+        setScanActive(false);
+        // Small pause then fire effects cleanly
+        setTimeout(()=>setShowEffects(true), 150);
+        setTimeout(()=>setPhase('complete'), 600);
+      }
+    },18);
     return()=>clearInterval(iv);
   },[phase]);
 
   /* Step 4: Complete → type output → shrink */
   useEffect(()=>{
     if(phase!=='complete') return;
-    setShowSeal(true);
     let idx=0;
     const iv=setInterval(()=>{
       if(idx<=OUTPUT_TEXT.length){ setOutputTxt(OUTPUT_TEXT.slice(0,idx)); idx++; }
       else { clearInterval(iv); setOutputDone(true); }
     },55);
-
-    // Wait for output to finish + 1.2s then shrink
-    const shrinkDelay = OUTPUT_TEXT.length*55 + 1200;
-    const shrinkTimer = setTimeout(()=>doShrink(), shrinkDelay);
+    const shrinkTimer=setTimeout(()=>doShrink(), OUTPUT_TEXT.length*55+1400);
     return()=>{ clearInterval(iv); clearTimeout(shrinkTimer); };
   },[phase]);
 
-  /* GSAP: shrink overlay from fullscreen → exact position of targetRef */
+  /* GSAP shrink overlay to in-page position */
   const doShrink = () => {
-    const overlay = overlayRef.current;
-    const target  = targetRef.current;
-    if (!overlay || !target) return;
-
+    const overlay=overlayRef.current, target=targetRef.current;
+    if(!overlay||!target) return;
     setPhase('shrinking');
-    const r = target.getBoundingClientRect();
-
-    // Brief gold flash
-    gsap.to(overlay, {
-      backgroundColor: 'rgba(255,215,0,0.12)',
-      duration: 0.1, yoyo: true, repeat: 1,
-      onComplete: () => {
-        gsap.to(overlay, {
-          top:          r.top,
-          left:         r.left,
-          width:        r.width,
-          height:       r.height,
-          borderRadius: '0.75rem',
-          duration:     0.9,
-          ease:         'power4.inOut',
-          onComplete:   () => {
-            setPhase('done');
-            if (onIntroComplete) onIntroComplete();
-          }
+    const r=target.getBoundingClientRect();
+    gsap.to(overlay,{
+      backgroundColor:'rgba(255,215,0,0.06)',
+      duration:0.1, yoyo:true, repeat:1,
+      onComplete:()=>{
+        gsap.to(overlay,{
+          top:r.top, left:r.left, width:r.width, height:r.height,
+          borderRadius:'0.75rem', duration:0.9, ease:'power4.inOut',
+          onComplete:()=>{ setPhase('done'); if(onIntroComplete) onIntroComplete(); }
         });
       }
     });
   };
 
-  /* ── Shared card inner content ─────────────────────────────── */
-  const isFullscreen = phase !== 'done';
+  const isComplete = phase==='complete'||phase==='shrinking'||phase==='done';
 
+  /* ── Card content ─────────────────────────────────────────── */
   const CardInner = () => (
     <div style={{
       background:'linear-gradient(135deg,rgba(6,0,18,0.98),rgba(18,0,36,0.97))',
       borderRadius:'0.75rem',
       padding:'1.5rem',
-      border:`1px solid ${typingDone?'rgba(255,215,0,0.45)':'rgba(255,215,0,0.2)'}`,
+      border:`1px solid ${typingDone?'rgba(255,215,0,0.5)':'rgba(255,215,0,0.18)'}`,
       position:'relative',
       overflow:'hidden',
       display:'flex',
       flexDirection:'column',
-      animation:phase==='complete'||phase==='shrinking'?'glowPulse 3s ease-in-out infinite':'none',
+      transition:'border-color 0.6s ease, box-shadow 0.6s ease',
+      boxShadow: isComplete
+        ? '0 0 0 1px rgba(255,215,0,0.1), 0 0 40px rgba(255,215,0,0.15), 0 0 80px rgba(106,13,173,0.2)'
+        : 'none',
     }}>
+
+      {/* Typing scan line */}
       <ScanLine active={scanActive}/>
-      {isFullscreen && <OrbitalRunes active={phase==='complete'||phase==='shrinking'}/>}
-      {isFullscreen && <RoyalSeal show={showSeal}/>}
 
-      {/* Corner ornaments */}
-      {isFullscreen && ['tl','tr','bl','br'].map((pos,i)=>(
-        <div key={pos} style={{position:'absolute',zIndex:7,fontSize:'0.7rem',color:'rgba(255,215,0,0.6)',textShadow:'0 0 8px #FFD700',
-          top:    pos.includes('t')?-10:'auto', bottom:pos.includes('b')?-10:'auto',
-          left:   pos.includes('l')?-10:'auto', right: pos.includes('r')?-10:'auto',
-          animation:(phase==='complete'||phase==='shrinking')?`cornerSpin ${7+i}s linear infinite`:'none',
-        }}>◆</div>
-      ))}
+      {/* Completion effects — all smooth, no glitch */}
+      <GoldWave    active={showEffects}/>
+      <RoyalRipple active={showEffects}/>
+      <BorderRunner active={showEffects}/>
+      <CrownReveal active={showEffects}/>
 
-      {/* Dot grid */}
-      <div style={{position:'absolute',inset:0,pointerEvents:'none',backgroundImage:'radial-gradient(rgba(255,215,0,0.07) 1px,transparent 1px)',backgroundSize:'22px 22px'}}/>
+      {/* Subtle dot grid bg */}
+      <div style={{position:'absolute',inset:0,pointerEvents:'none',backgroundImage:'radial-gradient(rgba(255,215,0,0.05) 1px,transparent 1px)',backgroundSize:'22px 22px'}}/>
 
-      {/* Top bar */}
-      <div style={{display:'flex',alignItems:'center',gap:'0.5rem',marginBottom:'1rem',position:'relative',zIndex:2,flexShrink:0}}>
+      {/* ── Top bar ── */}
+      <div style={{display:'flex',alignItems:'center',gap:'0.5rem',marginBottom:'1rem',position:'relative',zIndex:10,flexShrink:0}}>
         <div style={{width:12,height:12,borderRadius:'50%',background:'#ff5f57',boxShadow:'0 0 5px #ff5f57'}}/>
         <div style={{width:12,height:12,borderRadius:'50%',background:'#febc2e',boxShadow:'0 0 5px #febc2e'}}/>
         <div style={{width:12,height:12,borderRadius:'50%',background:'#28c840',boxShadow:'0 0 5px #28c840'}}/>
-        <span style={{marginLeft:'0.75rem',color:'#B8860B',fontSize:'0.72rem',fontFamily:"'Cinzel',serif",letterSpacing:'0.18em',textShadow:'0 0 8px rgba(184,134,11,0.6)'}}>♛ Main.java</span>
-        {typingDone&&<span style={{marginLeft:'auto',background:'linear-gradient(135deg,#4B0082,#B8860B,#FFD700)',backgroundSize:'200% auto',animation:'shimmer 3s linear infinite',color:'#000',fontSize:'0.55rem',fontFamily:"'Cinzel',serif",letterSpacing:'0.1em',padding:'0.2rem 0.75rem',borderRadius:'999px',fontWeight:'bold'}}>✓ Compiled</span>}
+        <span style={{marginLeft:'0.75rem',color:'#B8860B',fontSize:'0.72rem',fontFamily:"'Cinzel',serif",letterSpacing:'0.18em',textShadow:'0 0 8px rgba(184,134,11,0.5)'}}>
+          ♛ Main.java
+        </span>
+        {typingDone && (
+          <span style={{
+            marginLeft:'auto',
+            background:'linear-gradient(90deg,#B8860B,#FFD700,#B8860B)',
+            backgroundSize:'200% auto',
+            WebkitBackgroundClip:'text',
+            WebkitTextFillColor:'transparent',
+            backgroundClip:'text',
+            fontSize:'0.65rem',
+            fontFamily:"'Cinzel',serif",
+            letterSpacing:'0.12em',
+            fontWeight:'bold',
+            animation:'shimmerText 3s linear infinite',
+          }}>✦ Compiled</span>
+        )}
       </div>
 
       {/* Progress bar */}
-      {!typingDone&&(
+      {!typingDone && (
         <div style={{height:2,borderRadius:999,background:'rgba(255,215,0,0.08)',marginBottom:'1rem',overflow:'hidden',position:'relative',zIndex:2,flexShrink:0}}>
-          <div style={{height:'100%',width:`${progress}%`,background:'linear-gradient(90deg,#4B0082,#6A0DAD,#FFD700)',borderRadius:999,boxShadow:'0 0 10px rgba(255,215,0,0.6)',transition:'width 0.05s linear'}}/>
+          <div style={{height:'100%',width:`${progress}%`,background:'linear-gradient(90deg,#4B0082,#6A0DAD,#FFD700)',borderRadius:999,boxShadow:'0 0 10px rgba(255,215,0,0.6)',transition:'width 0.04s linear'}}/>
         </div>
       )}
 
       {/* Divider */}
-      <div style={{height:1,background:'linear-gradient(90deg,transparent,rgba(255,215,0,0.6),transparent)',marginBottom:'1.25rem',position:'relative',zIndex:2,flexShrink:0}}/>
+      <div style={{height:1,background:'linear-gradient(90deg,transparent,rgba(255,215,0,0.5),transparent)',marginBottom:'1.25rem',position:'relative',zIndex:2,flexShrink:0}}/>
 
       {/* Line numbers + code */}
       <div style={{display:'flex',gap:'1.5rem',position:'relative',zIndex:2,overflow:'hidden'}}>
         <div style={{userSelect:'none',textAlign:'right',flexShrink:0}}>
           {JAVA_CODE.split('\n').map((_,i)=>(
-            <div key={i} style={{color:i<code.split('\n').length?'rgba(255,215,0,0.35)':'rgba(255,255,255,0.08)',fontSize:'0.8rem',fontFamily:'monospace',lineHeight:1.7,transition:'color 0.4s',textShadow:i<code.split('\n').length?'0 0 4px rgba(255,215,0,0.3)':'none'}}>{i+1}</div>
+            <div key={i} style={{
+              color:i<code.split('\n').length?'rgba(255,215,0,0.4)':'rgba(255,255,255,0.08)',
+              fontSize:'0.8rem',fontFamily:'monospace',lineHeight:1.7,
+              transition:'color 0.3s, text-shadow 0.3s',
+              textShadow:i<code.split('\n').length?'0 0 5px rgba(255,215,0,0.3)':'none',
+            }}>{i+1}</div>
           ))}
         </div>
         <pre style={{flex:1,textAlign:'left',overflow:'hidden',margin:0}}>
           <code style={{fontSize:'0.88rem',fontFamily:'monospace',whiteSpace:'pre-wrap',wordBreak:'break-word',lineHeight:1.7}}>
             {highlight(code)}
-            {!typingDone&&<span style={{display:'inline-block',width:9,height:17,background:'#FFD700',boxShadow:'0 0 12px #FFD700,0 0 24px #B8860B',marginLeft:2,verticalAlign:'middle',animation:'cursorBlink 0.65s infinite'}}/>}
+            {!typingDone && (
+              <span style={{display:'inline-block',width:9,height:17,background:'#FFD700',boxShadow:'0 0 12px #FFD700,0 0 24px #B8860B',marginLeft:2,verticalAlign:'middle',animation:'cursorBlink 0.65s infinite'}}/>
+            )}
           </code>
         </pre>
       </div>
 
-      {/* Output */}
-      {(phase==='complete'||phase==='shrinking'||phase==='done')&&(
-        <div style={{marginTop:'1rem',animation:'outputSlide 0.6s ease both',position:'relative',zIndex:2,flexShrink:0}}>
-          <div style={{background:'linear-gradient(90deg,rgba(75,0,130,0.7),rgba(26,0,48,0.9))',borderTop:'1px solid rgba(255,215,0,0.35)',borderLeft:'1px solid rgba(255,215,0,0.2)',borderRight:'1px solid rgba(255,215,0,0.2)',borderRadius:'0.5rem 0.5rem 0 0',padding:'0.35rem 1rem',display:'flex',alignItems:'center',gap:'0.6rem'}}>
-            <div style={{width:6,height:6,borderRadius:'50%',background:'#22c55e',boxShadow:'0 0 5px #22c55e'}}/>
+      {/* Output panel */}
+      {isComplete && (
+        <div style={{marginTop:'1rem',animation:'outputSlide 0.7s cubic-bezier(0.34,1.56,0.64,1) both',position:'relative',zIndex:10,flexShrink:0}}>
+          <div style={{background:'linear-gradient(90deg,rgba(75,0,130,0.7),rgba(26,0,48,0.9))',border:'1px solid rgba(255,215,0,0.3)',borderRadius:'0.5rem 0.5rem 0 0',padding:'0.35rem 1rem',display:'flex',alignItems:'center',gap:'0.6rem'}}>
+            <div style={{width:6,height:6,borderRadius:'50%',background:'#22c55e',boxShadow:'0 0 6px #22c55e'}}/>
             <span style={{color:'#B8860B',fontSize:'0.6rem',fontFamily:"'Cinzel',serif",letterSpacing:'0.22em'}}>OUTPUT STREAM</span>
-            <span style={{marginLeft:'auto',color:'rgba(255,215,0,0.4)',fontSize:'0.55rem',fontFamily:'monospace'}}>exit code 0</span>
+            <span style={{marginLeft:'auto',color:'rgba(255,215,0,0.35)',fontSize:'0.55rem',fontFamily:'monospace'}}>exit code 0</span>
           </div>
-          <div style={{background:'rgba(0,0,0,0.6)',border:'1px solid rgba(255,215,0,0.2)',borderTop:'none',borderRadius:'0 0 0.5rem 0.5rem',padding:'0.85rem 1.25rem'}}>
+          <div style={{background:'rgba(0,0,0,0.55)',border:'1px solid rgba(255,215,0,0.2)',borderTop:'none',borderRadius:'0 0 0.5rem 0.5rem',padding:'0.85rem 1.25rem'}}>
             <GlowOutput text={outputTxt} done={outputDone}/>
           </div>
         </div>
       )}
 
-      {/* Animated bottom border */}
-      <div style={{position:'absolute',bottom:0,left:0,right:0,height:2,borderRadius:'0 0 0.75rem 0.75rem',
-        background:(phase==='complete'||phase==='shrinking'||phase==='done')
-          ?'linear-gradient(90deg,#4B0082,#FFD700,#B8860B,#FFD700,#4B0082)'
-          :`linear-gradient(90deg,#6A0DAD ${progress}%,rgba(75,0,130,0.1) ${progress}%)`,
-        backgroundSize:(phase==='complete'||phase==='shrinking'||phase==='done')?'300% auto':'100%',
-        animation:(phase==='complete'||phase==='shrinking'||phase==='done')?'shimmer 2.5s linear infinite':'none',
-        boxShadow:(phase==='complete'||phase==='shrinking'||phase==='done')?'0 0 8px rgba(255,215,0,0.4)':'none',
+      {/* Animated shimmer bottom border */}
+      <div style={{
+        position:'absolute',bottom:0,left:0,right:0,height:2,borderRadius:'0 0 0.75rem 0.75rem',
+        background: isComplete
+          ? 'linear-gradient(90deg,#4B0082,#FFD700,#B8860B,#FFD700,#4B0082)'
+          : `linear-gradient(90deg,#6A0DAD ${progress}%,rgba(75,0,130,0.08) ${progress}%)`,
+        backgroundSize: isComplete ? '300% auto' : '100%',
+        animation: isComplete ? 'shimmer 2.5s linear infinite' : 'none',
+        boxShadow: isComplete ? '0 0 10px rgba(255,215,0,0.4)' : 'none',
+        transition: 'box-shadow 0.5s ease',
       }}/>
     </div>
   );
@@ -291,40 +380,46 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
   return (
     <>
       <style>{`
-        @keyframes scanMove    { 0%{top:0%} 100%{top:100%} }
-        @keyframes orbitCW     { from{transform:rotate(0deg) translateX(220px) rotate(0deg)} to{transform:rotate(360deg) translateX(220px) rotate(-360deg)} }
-        @keyframes orbitCCW    { from{transform:rotate(0deg) translateX(240px) rotate(0deg)} to{transform:rotate(-360deg) translateX(240px) rotate(360deg)} }
-        @keyframes sealStamp   { 0%{transform:scale(3) rotate(-20deg);opacity:0} 60%{transform:scale(0.85) rotate(4deg);opacity:1} 80%{transform:scale(1.1) rotate(-2deg)} 100%{transform:scale(1) rotate(0deg);opacity:1} }
-        @keyframes cursorBlink { 0%,100%{opacity:1} 50%{opacity:0} }
-        @keyframes letterPop   { 0%{opacity:0;transform:translateY(-6px) scale(0.6)} 60%{transform:translateY(2px) scale(1.1)} 100%{opacity:1;transform:translateY(0) scale(1)} }
-        @keyframes bootLine    { from{opacity:0;transform:translateX(-10px)} to{opacity:1;transform:translateX(0)} }
-        @keyframes glowPulse   { 0%,100%{box-shadow:0 0 40px rgba(255,215,0,0.3),0 0 80px rgba(106,13,173,0.3)} 50%{box-shadow:0 0 70px rgba(255,215,0,0.6),0 0 130px rgba(106,13,173,0.5)} }
-        @keyframes outputSlide { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes cornerSpin  { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
-        @keyframes shimmer     { 0%{background-position:-300% center} 100%{background-position:300% center} }
-        @keyframes centerPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
-        @keyframes cardReveal  { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes scanMove      { 0%{top:0%}   100%{top:100%} }
+        @keyframes cursorBlink   { 0%,100%{opacity:1} 50%{opacity:0} }
+        @keyframes shimmer       { 0%{background-position:-300% center} 100%{background-position:300% center} }
+        @keyframes shimmerText   { 0%{filter:brightness(1)}  50%{filter:brightness(1.4)} 100%{filter:brightness(1)} }
+        @keyframes letterPop     { 0%{opacity:0;transform:translateY(-5px)} 100%{opacity:1;transform:translateY(0)} }
+        @keyframes bootLine      { from{opacity:0;transform:translateX(-10px)} to{opacity:1;transform:translateX(0)} }
+        @keyframes centerPulse   { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
+        @keyframes cardReveal    { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes outputSlide   { 0%{opacity:0;transform:translateY(14px) scale(0.98)} 100%{opacity:1;transform:translateY(0) scale(1)} }
+
+        /* Gold radial pulse on card background */
+        @keyframes goldWavePulse { 0%,100%{opacity:0.4;transform:scale(0.95)} 50%{opacity:1;transform:scale(1.05)} }
+
+        /* Ripple rings expanding from center */
+        @keyframes rippleExpand  { 0%{transform:scale(0.2);opacity:0.8} 100%{transform:scale(6);opacity:0} }
+
+        /* Running light on border edges */
+        @keyframes runTop    { 0%{left:-40%}  100%{left:100%}  }
+        @keyframes runRight  { 0%{top:-40%}   100%{top:100%}   }
+        @keyframes runBottom { 0%{right:-40%} 100%{right:100%} }
+        @keyframes runLeft   { 0%{bottom:-40%} 100%{bottom:100%} }
+
+        /* Crown SVG draw-in */
+        @keyframes crownFadeIn { from{opacity:0;transform:translateY(-8px) scale(0.8)} to{opacity:1;transform:translateY(0) scale(1)} }
+        @keyframes drawCrown   { to{stroke-dashoffset:0} }
+        @keyframes jewelPop    { 0%{opacity:0;transform:scale(0)} 70%{transform:scale(1.3)} 100%{opacity:1;transform:scale(1)} }
       `}</style>
 
-      {/* ══ FULLSCREEN OVERLAY — fixed, covers everything during intro ══ */}
+      {/* ── Fullscreen overlay (intro) ── */}
       {phase !== 'done' && (
-        <div ref={overlayRef} style={{
-          position:'fixed', top:0, left:0, width:'100vw', height:'100vh',
-          zIndex:9999,
-          display:'flex', alignItems:'center', justifyContent:'center',
-          background:'radial-gradient(ellipse at 50% 40%,#1a0030 0%,#0d0020 55%,#000 100%)',
-        }}>
-          {/* Background grid */}
+        <div ref={overlayRef} style={{position:'fixed',top:0,left:0,width:'100vw',height:'100vh',zIndex:9999,display:'flex',alignItems:'center',justifyContent:'center',background:'radial-gradient(ellipse at 50% 40%,#1a0030 0%,#0d0020 55%,#000 100%)'}}>
           <div style={{position:'absolute',inset:0,backgroundImage:'linear-gradient(rgba(255,215,0,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,215,0,0.03) 1px,transparent 1px)',backgroundSize:'60px 60px',pointerEvents:'none'}}/>
-          {/* Ambient orbs */}
           <div style={{position:'absolute',top:'15%',left:'8%',width:380,height:380,borderRadius:'50%',background:'radial-gradient(circle,rgba(106,13,173,0.25),transparent)',filter:'blur(80px)',pointerEvents:'none'}}/>
           <div style={{position:'absolute',bottom:'15%',right:'8%',width:380,height:380,borderRadius:'50%',background:'radial-gradient(circle,rgba(184,134,11,0.18),transparent)',filter:'blur(80px)',pointerEvents:'none'}}/>
 
-          {/* ── Boot phase ── */}
+          {/* Boot */}
           {phase==='boot' && (
             <div style={{background:'rgba(4,0,12,0.98)',border:'1px solid rgba(255,215,0,0.2)',borderRadius:'0.75rem',padding:'2rem',fontFamily:'monospace',width:'min(600px,88vw)',animation:'cardReveal 0.4s ease both'}}>
-              <div style={{display:'flex',alignItems:'center',gap:'0.5rem',marginBottom:'1rem',paddingBottom:'0.75rem',borderBottom:'1px solid rgba(255,215,0,0.15)'}}>
-                <span>♛</span>
+              <div style={{display:'flex',alignItems:'center',gap:'0.5rem',marginBottom:'1rem',paddingBottom:'0.75rem',borderBottom:'1px solid rgba(255,215,0,0.12)'}}>
+                <span style={{color:'#FFD700'}}>♛</span>
                 <span style={{color:'#B8860B',fontFamily:"'Cinzel',serif",fontSize:'0.68rem',letterSpacing:'0.25em'}}>ROYAL JVM TERMINAL v∞</span>
                 <span style={{marginLeft:'auto',width:8,height:8,borderRadius:'50%',background:'#22c55e',boxShadow:'0 0 6px #22c55e',display:'inline-block',animation:'cursorBlink 1s infinite'}}/>
               </div>
@@ -335,7 +430,7 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
             </div>
           )}
 
-          {/* ── Matrix phase ── */}
+          {/* Matrix */}
           {phase==='matrix' && (
             <div style={{position:'relative',borderRadius:'0.75rem',overflow:'hidden',width:'min(600px,88vw)',height:220,background:'#000'}}>
               <MatrixRain/>
@@ -346,22 +441,18 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
             </div>
           )}
 
-          {/* ── Typing / Complete / Shrinking phases ── */}
+          {/* Typing / Complete / Shrinking */}
           {(phase==='typing'||phase==='complete'||phase==='shrinking') && (
-            <div style={{width:'min(640px,88vw)',height:'min(420px,70vh)',animation:'cardReveal 0.5s ease both'}}>
+            <div style={{width:'min(640px,88vw)',animation:'cardReveal 0.5s ease both'}}>
               <CardInner/>
             </div>
           )}
         </div>
       )}
 
-      {/* ══ IN-PAGE SLOT — sits naturally in flex column, no stretching ══ */}
-      <section
-        ref={targetRef}
-        className="flex justify-center px-4 py-4"
-        style={{ flexShrink: 0 }}
-      >
-        {phase === 'done' && (
+      {/* ── In-page slot ── */}
+      <section ref={targetRef} className="flex justify-center px-4 py-4" style={{flexShrink:0}}>
+        {phase==='done' && (
           <div style={{width:'100%',maxWidth:640,animation:'cardReveal 0.5s ease both'}}>
             <CardInner/>
           </div>
