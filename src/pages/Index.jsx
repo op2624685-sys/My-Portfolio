@@ -10,85 +10,85 @@ function ParticleField() {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    let W = canvas.width  = window.innerWidth;
+    let W = canvas.width = window.innerWidth;
     let H = canvas.height = window.innerHeight;
     const particles = Array.from({ length: 55 }, () => ({
-      x: Math.random()*W, y: Math.random()*H,
-      r: 0.6 + Math.random()*1.4,
-      vx:(Math.random()-0.5)*0.25, vy:(Math.random()-0.5)*0.25,
-      alpha:0.15+Math.random()*0.45, pulse:Math.random()*Math.PI*2,
+      x: Math.random() * W, y: Math.random() * H,
+      r: 0.6 + Math.random() * 1.4,
+      vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25,
+      alpha: 0.15 + Math.random() * 0.45, pulse: Math.random() * Math.PI * 2,
     }));
-    let mx=-999, my=-999;
-    const onMove=(e)=>{mx=e.clientX;my=e.clientY;};
-    const onResize=()=>{W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;};
-    window.addEventListener('mousemove',onMove);
-    window.addEventListener('resize',onResize);
+    let mx = -999, my = -999;
+    const onMove = (e) => { mx = e.clientX; my = e.clientY; };
+    const onResize = () => { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; };
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('resize', onResize);
     let id;
-    const draw=()=>{
-      ctx.clearRect(0,0,W,H);
-      particles.forEach(p=>{
-        p.pulse+=0.018;
-        const dx=mx-p.x, dy=my-p.y, d=Math.sqrt(dx*dx+dy*dy);
-        if(d<200){p.vx+=dx/d*0.015;p.vy+=dy/d*0.015;}
-        p.vx*=0.98;p.vy*=0.98;
-        p.x+=p.vx;p.y+=p.vy;
-        if(p.x<0)p.x=W;if(p.x>W)p.x=0;
-        if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+    const draw = () => {
+      ctx.clearRect(0, 0, W, H);
+      particles.forEach(p => {
+        p.pulse += 0.018;
+        const dx = mx - p.x, dy = my - p.y, d = Math.sqrt(dx * dx + dy * dy);
+        if (d < 200) { p.vx += dx / d * 0.015; p.vy += dy / d * 0.015; }
+        p.vx *= 0.98; p.vy *= 0.98;
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+        if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
       });
-      for(let i=0;i<particles.length;i++){
-        for(let j=i+1;j<particles.length;j++){
-          const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
-          const d=Math.sqrt(dx*dx+dy*dy);
-          if(d<130){
-            ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);
-            ctx.strokeStyle=`rgba(184,134,11,${(1-d/130)*0.22})`;ctx.lineWidth=0.6;ctx.stroke();
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < 130) {
+            ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(184,134,11,${(1 - d / 130) * 0.22})`; ctx.lineWidth = 0.6; ctx.stroke();
           }
         }
       }
-      particles.forEach(p=>{
-        const a=p.alpha*(0.6+0.4*Math.sin(p.pulse));
-        ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-        ctx.fillStyle=`rgba(255,215,0,${a})`;
-        ctx.shadowBlur=6;ctx.shadowColor='rgba(255,215,0,0.4)';
-        ctx.fill();ctx.shadowBlur=0;
+      particles.forEach(p => {
+        const a = p.alpha * (0.6 + 0.4 * Math.sin(p.pulse));
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,215,0,${a})`;
+        ctx.shadowBlur = 6; ctx.shadowColor = 'rgba(255,215,0,0.4)';
+        ctx.fill(); ctx.shadowBlur = 0;
       });
-      id=requestAnimationFrame(draw);
+      id = requestAnimationFrame(draw);
     };
     draw();
-    return()=>{cancelAnimationFrame(id);window.removeEventListener('mousemove',onMove);window.removeEventListener('resize',onResize);};
-  },[]);
-  return <canvas ref={canvasRef} style={{position:'fixed',inset:0,pointerEvents:'none',zIndex:0}}/>;
+    return () => { cancelAnimationFrame(id); window.removeEventListener('mousemove', onMove); window.removeEventListener('resize', onResize); };
+  }, []);
+  return <canvas ref={canvasRef} style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }} />;
 }
 
 /* ─── Royal Geometric Decorations ───────────────────────────── */
 function RoyalGeometry({ visible }) {
   if (!visible) return null;
   return (
-    <div style={{position:'fixed',inset:0,pointerEvents:'none',zIndex:1,overflow:'hidden'}}>
-      <svg style={{position:'absolute',top:-60,left:-60,opacity:0.07,animation:'geoRotate 25s linear infinite'}} width="280" height="280" viewBox="0 0 280 280">
-        <polygon points="140,10 270,140 140,270 10,140" fill="none" stroke="#FFD700" strokeWidth="1"/>
-        <polygon points="140,40 240,140 140,240 40,140" fill="none" stroke="#B8860B" strokeWidth="0.5"/>
-        <polygon points="140,70 210,140 140,210 70,140" fill="none" stroke="#FFD700" strokeWidth="0.3"/>
+    <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 1, overflow: 'hidden' }}>
+      <svg style={{ position: 'absolute', top: -60, left: -60, opacity: 0.07, animation: 'geoRotate 25s linear infinite' }} width="280" height="280" viewBox="0 0 280 280">
+        <polygon points="140,10 270,140 140,270 10,140" fill="none" stroke="#FFD700" strokeWidth="1" />
+        <polygon points="140,40 240,140 140,240 40,140" fill="none" stroke="#B8860B" strokeWidth="0.5" />
+        <polygon points="140,70 210,140 140,210 70,140" fill="none" stroke="#FFD700" strokeWidth="0.3" />
       </svg>
-      <svg style={{position:'absolute',bottom:-80,right:-80,opacity:0.06,animation:'geoRotate 30s linear infinite reverse'}} width="320" height="320" viewBox="0 0 320 320">
-        <polygon points="160,10 310,160 160,310 10,160" fill="none" stroke="#FFD700" strokeWidth="1"/>
-        <polygon points="160,45 275,160 160,275 45,160" fill="none" stroke="#B8860B" strokeWidth="0.5"/>
+      <svg style={{ position: 'absolute', bottom: -80, right: -80, opacity: 0.06, animation: 'geoRotate 30s linear infinite reverse' }} width="320" height="320" viewBox="0 0 320 320">
+        <polygon points="160,10 310,160 160,310 10,160" fill="none" stroke="#FFD700" strokeWidth="1" />
+        <polygon points="160,45 275,160 160,275 45,160" fill="none" stroke="#B8860B" strokeWidth="0.5" />
       </svg>
-      <svg style={{position:'absolute',top:50,right:40,opacity:0.08,animation:'geoRotate 20s linear infinite'}} width="110" height="110" viewBox="0 0 110 110">
-        <polygon points="55,5 100,30 100,80 55,105 10,80 10,30" fill="none" stroke="#FFD700" strokeWidth="1"/>
-        <polygon points="55,22 83,38 83,72 55,88 27,72 27,38" fill="none" stroke="#B8860B" strokeWidth="0.5"/>
+      <svg style={{ position: 'absolute', top: 50, right: 40, opacity: 0.08, animation: 'geoRotate 20s linear infinite' }} width="110" height="110" viewBox="0 0 110 110">
+        <polygon points="55,5 100,30 100,80 55,105 10,80 10,30" fill="none" stroke="#FFD700" strokeWidth="1" />
+        <polygon points="55,22 83,38 83,72 55,88 27,72 27,38" fill="none" stroke="#B8860B" strokeWidth="0.5" />
       </svg>
-      <svg style={{position:'absolute',bottom:50,left:40,opacity:0.07,animation:'geoRotate 18s linear infinite reverse'}} width="90" height="90" viewBox="0 0 90 90">
-        <polygon points="45,5 80,25 80,65 45,85 10,65 10,25" fill="none" stroke="#FFD700" strokeWidth="1"/>
+      <svg style={{ position: 'absolute', bottom: 50, left: 40, opacity: 0.07, animation: 'geoRotate 18s linear infinite reverse' }} width="90" height="90" viewBox="0 0 90 90">
+        <polygon points="45,5 80,25 80,65 45,85 10,65 10,25" fill="none" stroke="#FFD700" strokeWidth="1" />
       </svg>
       {[
-        {style:{top:14,left:18},   d:'M0 22 L0 0 L22 0'},
-        {style:{top:14,right:18},  d:'M0 0 L22 0 L22 22'},
-        {style:{bottom:28,left:18},  d:'M0 0 L0 22 L22 22'},
-        {style:{bottom:28,right:18}, d:'M22 0 L22 22 L0 22'},
-      ].map((c,i)=>(
-        <svg key={i} style={{position:'absolute',...c.style,animation:`cornerReveal 0.5s ${0.3+i*0.1}s ease both`,opacity:0}} width="22" height="22" viewBox="0 0 22 22">
-          <path d={c.d} fill="none" stroke="rgba(255,215,0,0.5)" strokeWidth="1.5"/>
+        { style: { top: 14, left: 18 }, d: 'M0 22 L0 0 L22 0' },
+        { style: { top: 14, right: 18 }, d: 'M0 0 L22 0 L22 22' },
+        { style: { bottom: 28, left: 18 }, d: 'M0 0 L0 22 L22 22' },
+        { style: { bottom: 28, right: 18 }, d: 'M22 0 L22 22 L0 22' },
+      ].map((c, i) => (
+        <svg key={i} style={{ position: 'absolute', ...c.style, animation: `cornerReveal 0.5s ${0.3 + i * 0.1}s ease both`, opacity: 0 }} width="22" height="22" viewBox="0 0 22 22">
+          <path d={c.d} fill="none" stroke="rgba(255,215,0,0.5)" strokeWidth="1.5" />
         </svg>
       ))}
     </div>
@@ -97,36 +97,36 @@ function RoyalGeometry({ visible }) {
 
 /* ─── Magnetic Cursor ────────────────────────────────────────── */
 function MagneticCursor() {
-  const dotRef  = useRef(null);
+  const dotRef = useRef(null);
   const ringRef = useRef(null);
-  const pos     = useRef({x:-100,y:-100});
-  const rPos    = useRef({x:-100,y:-100});
-  useEffect(()=>{
-    const dot=dotRef.current, ring=ringRef.current;
-    if(!dot||!ring) return;
-    const move=(e)=>{pos.current={x:e.clientX,y:e.clientY};};
-    window.addEventListener('mousemove',move);
+  const pos = useRef({ x: -100, y: -100 });
+  const rPos = useRef({ x: -100, y: -100 });
+  useEffect(() => {
+    const dot = dotRef.current, ring = ringRef.current;
+    if (!dot || !ring) return;
+    const move = (e) => { pos.current = { x: e.clientX, y: e.clientY }; };
+    window.addEventListener('mousemove', move);
     let id;
-    const loop=()=>{
-      gsap.set(dot,{x:pos.current.x-4,y:pos.current.y-4});
-      rPos.current.x+=(pos.current.x-rPos.current.x)*0.1;
-      rPos.current.y+=(pos.current.y-rPos.current.y)*0.1;
-      gsap.set(ring,{x:rPos.current.x-18,y:rPos.current.y-18});
-      id=requestAnimationFrame(loop);
+    const loop = () => {
+      gsap.set(dot, { x: pos.current.x - 4, y: pos.current.y - 4 });
+      rPos.current.x += (pos.current.x - rPos.current.x) * 0.1;
+      rPos.current.y += (pos.current.y - rPos.current.y) * 0.1;
+      gsap.set(ring, { x: rPos.current.x - 18, y: rPos.current.y - 18 });
+      id = requestAnimationFrame(loop);
     };
     loop();
-    const onIn =()=>gsap.to(ring,{scale:2.2,opacity:0.5,duration:0.25});
-    const onOut=()=>gsap.to(ring,{scale:1,  opacity:1,  duration:0.25});
-    document.querySelectorAll('a,button').forEach(el=>{
-      el.addEventListener('mouseenter',onIn);
-      el.addEventListener('mouseleave',onOut);
+    const onIn = () => gsap.to(ring, { scale: 2.2, opacity: 0.5, duration: 0.25 });
+    const onOut = () => gsap.to(ring, { scale: 1, opacity: 1, duration: 0.25 });
+    document.querySelectorAll('a,button').forEach(el => {
+      el.addEventListener('mouseenter', onIn);
+      el.addEventListener('mouseleave', onOut);
     });
-    return()=>{cancelAnimationFrame(id);window.removeEventListener('mousemove',move);};
-  },[]);
+    return () => { cancelAnimationFrame(id); window.removeEventListener('mousemove', move); };
+  }, []);
   return (
     <>
-      <div ref={dotRef}  style={{position:'fixed',top:0,left:0,width:8,height:8,borderRadius:'50%',background:'#FFD700',boxShadow:'0 0 8px #FFD700',pointerEvents:'none',zIndex:99999,mixBlendMode:'difference'}}/>
-      <div ref={ringRef} style={{position:'fixed',top:0,left:0,width:36,height:36,borderRadius:'50%',border:'1.5px solid rgba(255,215,0,0.7)',pointerEvents:'none',zIndex:99998}}/>
+      <div ref={dotRef} style={{ position: 'fixed', top: 0, left: 0, width: 8, height: 8, borderRadius: '50%', background: '#FFD700', boxShadow: '0 0 8px #FFD700', pointerEvents: 'none', zIndex: 99999, mixBlendMode: 'difference' }} />
+      <div ref={ringRef} style={{ position: 'fixed', top: 0, left: 0, width: 36, height: 36, borderRadius: '50%', border: '1.5px solid rgba(255,215,0,0.7)', pointerEvents: 'none', zIndex: 99998 }} />
     </>
   );
 }
@@ -134,37 +134,37 @@ function MagneticCursor() {
 /* ═══ INDEX PAGE ════════════════════════════════════════════════ */
 const Index = () => {
   const [introComplete, setIntroComplete] = useState(false);
-  const navRef   = useRef(null);
+  const navRef = useRef(null);
   const titleRef = useRef(null);
   const navbarWrapRef = useRef(null);
-  const titleWrapRef  = useRef(null);
+  const titleWrapRef = useRef(null);
 
   const handleIntroComplete = () => setIntroComplete(true);
 
-  useEffect(()=>{
-    if(!introComplete) return;
-    requestAnimationFrame(()=>{
-      const tl = gsap.timeline({defaults:{ease:'power3.out'}});
+  useEffect(() => {
+    if (!introComplete) return;
+    requestAnimationFrame(() => {
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
       // Reveal navbar wrapper
       tl.fromTo(navbarWrapRef.current,
-        {y:-80, opacity:0},
-        {y:0,   opacity:1, duration:0.6}
+        { y: -80, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.6 }
       );
       // Reveal title wrapper
       tl.fromTo(titleWrapRef.current,
-        {opacity:0},
-        {opacity:1, duration:0.4},
+        { opacity: 0 },
+        { opacity: 1, duration: 0.4 },
         '-=0.3'
       );
       // Stagger each .gs child
       tl.fromTo(
         titleWrapRef.current?.querySelectorAll('.gs') || [],
-        {y:40, opacity:0, filter:'blur(6px)'},
-        {y:0,  opacity:1, filter:'blur(0px)', duration:0.5, stagger:0.13},
+        { y: 40, opacity: 0, filter: 'blur(6px)' },
+        { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.5, stagger: 0.13 },
         '-=0.2'
       );
     });
-  },[introComplete]);
+  }, [introComplete]);
 
   return (
     <>
@@ -207,15 +207,19 @@ const Index = () => {
 
         {/* Bottom ticker */}
         {introComplete && (
-          <div style={{position:'fixed',bottom:0,left:0,right:0,height:22,zIndex:38,
-            borderTop:'1px solid rgba(255,215,0,0.07)',
-            background:'rgba(0,0,0,0.75)',backdropFilter:'blur(12px)',
-            overflow:'hidden',display:'flex',alignItems:'center'}}>
-            <div style={{display:'flex',gap:'3rem',
-              animation:'tickerScroll 22s linear infinite',
-              whiteSpace:'nowrap',color:'rgba(255,215,0,0.25)',
-              fontSize:'0.53rem',fontFamily:"'Cinzel',serif",letterSpacing:'0.35em'}}>
-              {Array(10).fill(['♛ OM PRAKASH','✦ JAVA DEVELOPER','◆ SPRING BOOT','❖ MICROSERVICES','★ REST API','⬡ BACKEND ENGINEER','◈ CLEAN CODE','⊕ SYSTEM DESIGN']).flat().map((t,i)=>(
+          <div style={{
+            position: 'fixed', bottom: 0, left: 0, right: 0, height: 22, zIndex: 38,
+            borderTop: '1px solid rgba(255,215,0,0.07)',
+            background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(12px)',
+            overflow: 'hidden', display: 'flex', alignItems: 'center'
+          }}>
+            <div style={{
+              display: 'flex', gap: '3rem',
+              animation: 'tickerScroll 22s linear infinite',
+              whiteSpace: 'nowrap', color: 'rgba(255,215,0,0.25)',
+              fontSize: '0.53rem', fontFamily: "'Cinzel',serif", letterSpacing: '0.35em'
+            }}>
+              {Array(10).fill(['♛ OM PRAKASH', '✦ JAVA DEVELOPER', '◆ SPRING BOOT', '❖ MICROSERVICES', '★ REST API', '⬡ BACKEND ENGINEER', '◈ CLEAN CODE', '⊕ SYSTEM DESIGN']).flat().map((t, i) => (
                 <span key={i}>{t}</span>
               ))}
             </div>
@@ -223,105 +227,115 @@ const Index = () => {
         )}
 
         {/* Navbar — hidden until intro done, revealed by GSAP */}
-        <div ref={navbarWrapRef} style={{opacity:0, flexShrink:0}}>
+        <div ref={navbarWrapRef} style={{ opacity: 0, flexShrink: 0 }}>
           <Navbar />
         </div>
 
         {/* Title — hidden until intro done, revealed by GSAP */}
-        <div ref={titleWrapRef} style={{opacity:0, flexShrink:0}}>
-          <div style={{display:'flex',justifyContent:'center',alignItems:'center',
-            paddingTop:'1.2rem',paddingBottom:'0.4rem'}}>
-            <div style={{textAlign:'center',padding:'0 1rem',maxWidth:720}}>
+        <div ref={titleWrapRef} style={{ opacity: 0, flexShrink: 0 }}>
+          <div style={{
+            display: 'flex', justifyContent: 'center', alignItems: 'center',
+            paddingTop: '1.2rem', paddingBottom: '0.4rem'
+          }}>
+            <div style={{ textAlign: 'center', padding: '0 1rem', maxWidth: 720 }}>
 
               {/* Available pill */}
               <div className="gs" style={{
-                display:'inline-flex',alignItems:'center',gap:'0.45rem',
-                marginBottom:'0.9rem',padding:'0.25rem 0.9rem',
-                border:'1px solid rgba(255,215,0,0.14)',borderRadius:'999px',
-                background:'rgba(75,0,130,0.16)',backdropFilter:'blur(8px)',
+                display: 'inline-flex', alignItems: 'center', gap: '0.45rem',
+                marginBottom: '0.9rem', padding: '0.25rem 0.9rem',
+                border: '1px solid rgba(255,215,0,0.14)', borderRadius: '999px',
+                background: 'rgba(75,0,130,0.16)', backdropFilter: 'blur(8px)',
               }}>
-                <span style={{width:6,height:6,borderRadius:'50%',background:'#22c55e',
-                  display:'inline-block',animation:'dotPulse 2s ease-in-out infinite'}}/>
-                <span style={{color:'rgba(255,215,0,0.5)',fontSize:'0.56rem',
-                  fontFamily:"'Cinzel',serif",letterSpacing:'0.3em'}}>
+                <span style={{
+                  width: 6, height: 6, borderRadius: '50%', background: '#22c55e',
+                  display: 'inline-block', animation: 'dotPulse 2s ease-in-out infinite'
+                }} />
+                <span style={{
+                  color: 'rgba(255,215,0,0.5)', fontSize: '0.56rem',
+                  fontFamily: "'Cinzel',serif", letterSpacing: '0.3em'
+                }}>
                   AVAILABLE FOR WORK
                 </span>
               </div>
 
               {/* Greeting */}
               <div className="gs" style={{
-                color:'rgba(212,175,55,0.65)',fontFamily:"'Cinzel',serif",
-                fontSize:'0.75rem',letterSpacing:'0.5em',marginBottom:'0.8rem',
+                color: 'rgba(212,175,55,0.65)', fontFamily: "'Cinzel',serif",
+                fontSize: '0.75rem', letterSpacing: '0.5em', marginBottom: '0.8rem',
               }}>
                 HEY THERE · WELCOME
               </div>
 
               {/* Name */}
-              <div className="gs" style={{marginBottom:'0.55rem',animation:'namePulse 3.5s ease-in-out infinite'}}>
-                <span style={{fontFamily:"'Cinzel',serif",fontSize:'clamp(2rem,5.5vw,3.8rem)',
-                  fontWeight:700,color:'#fff',marginRight:'0.3rem'}}>I'm</span>
+              <div className="gs" style={{ marginBottom: '0.55rem', animation: 'namePulse 3.5s ease-in-out infinite' }}>
                 <span style={{
-                  fontFamily:"'Cinzel',serif",fontSize:'clamp(2rem,5.5vw,3.8rem)',fontWeight:700,
-                  backgroundImage:'linear-gradient(90deg,#B8860B,#FFD700,#FFF8DC,#FFD700,#B8860B)',
-                  backgroundSize:'300% auto',
-                  WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text',
-                  animation:'shimmer 4s linear infinite',
+                  fontFamily: "'Cinzel',serif", fontSize: 'clamp(2rem,5.5vw,3.8rem)',
+                  fontWeight: 700, color: '#fff', marginRight: '0.3rem'
+                }}>I'm</span>
+                <span style={{
+                  fontFamily: "'Cinzel',serif", fontSize: 'clamp(2rem,5.5vw,3.8rem)', fontWeight: 700,
+                  backgroundImage: 'linear-gradient(90deg,#B8860B,#FFD700,#FFF8DC,#FFD700,#B8860B)',
+                  backgroundSize: '300% auto',
+                  WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+                  animation: 'shimmer 4s linear infinite',
                 }}>Om Prakash</span>
               </div>
 
               {/* Role */}
               <div className="gs" style={{
-                fontFamily:"'Cinzel',serif",fontSize:'clamp(0.9rem,2.6vw,1.45rem)',
-                fontWeight:600,marginBottom:'1rem',
-                display:'flex',alignItems:'center',justifyContent:'center',
-                gap:'0.4rem',flexWrap:'wrap',
+                fontFamily: "'Cinzel',serif", fontSize: 'clamp(0.9rem,2.6vw,1.45rem)',
+                fontWeight: 600, marginBottom: '1rem',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                gap: '0.4rem', flexWrap: 'wrap',
               }}>
-                <span style={{color:'rgba(200,200,200,0.7)'}}>A</span>
-                <span style={{position:'relative',display:'inline-block'}}>
+                <span style={{ color: 'rgba(200,200,200,0.7)' }}>A</span>
+                <span style={{ position: 'relative', display: 'inline-block' }}>
                   <span style={{
-                    backgroundImage:'linear-gradient(90deg,#B8860B,#FFD700)',
-                    WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text',
+                    backgroundImage: 'linear-gradient(90deg,#B8860B,#FFD700)',
+                    WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
                   }}>JAVA</span>
-                  <span style={{position:'absolute',bottom:-3,left:0,height:2,borderRadius:999,
-                    background:'linear-gradient(90deg,#B8860B,#FFD700)',
-                    animation:'underlineIn 1s 0.8s ease both',width:0}}/>
+                  <span style={{
+                    position: 'absolute', bottom: -3, left: 0, height: 2, borderRadius: 999,
+                    background: 'linear-gradient(90deg,#B8860B,#FFD700)',
+                    animation: 'underlineIn 1s 0.8s ease both', width: 0
+                  }} />
                 </span>
-                <span style={{color:'rgba(200,200,200,0.7)'}}>Backend Engineer</span>
+                <span style={{ color: 'rgba(200,200,200,0.7)' }}>Backend Engineer</span>
               </div>
 
               {/* Tech badges */}
-              <div className="gs" style={{display:'flex',justifyContent:'center',gap:'0.45rem',flexWrap:'wrap'}}>
+              <div className="gs" style={{ display: 'flex', justifyContent: 'center', gap: '0.45rem', flexWrap: 'wrap' }}>
                 {[
-                  {label:'Spring Boot',icon:'⚡'},
-                  {label:'Microservices',icon:'⬡'},
-                  {label:'REST API',icon:'◆'},
-                  {label:'Java',icon:'♛'},
-                ].map((tech,idx)=>(
+                  { label: 'Spring Boot', icon: '⚡' },
+                  { label: 'Microservices', icon: '⬡' },
+                  { label: 'REST API', icon: '◆' },
+                  { label: 'Java', icon: '♛' },
+                ].map((tech, idx) => (
                   <span key={idx}
-                    onMouseEnter={e=>{
-                      e.currentTarget.style.background='rgba(75,0,130,0.5)';
-                      e.currentTarget.style.borderColor='rgba(255,215,0,0.5)';
-                      e.currentTarget.style.boxShadow='0 0 18px rgba(255,215,0,0.2)';
-                      e.currentTarget.style.transform='translateY(-2px)';
+                    onMouseEnter={e => {
+                      e.currentTarget.style.background = 'rgba(75,0,130,0.5)';
+                      e.currentTarget.style.borderColor = 'rgba(255,215,0,0.5)';
+                      e.currentTarget.style.boxShadow = '0 0 18px rgba(255,215,0,0.2)';
+                      e.currentTarget.style.transform = 'translateY(-2px)';
                     }}
-                    onMouseLeave={e=>{
-                      e.currentTarget.style.background='rgba(75,0,130,0.2)';
-                      e.currentTarget.style.borderColor='rgba(255,215,0,0.18)';
-                      e.currentTarget.style.boxShadow='none';
-                      e.currentTarget.style.transform='translateY(0)';
+                    onMouseLeave={e => {
+                      e.currentTarget.style.background = 'rgba(75,0,130,0.2)';
+                      e.currentTarget.style.borderColor = 'rgba(255,215,0,0.18)';
+                      e.currentTarget.style.boxShadow = 'none';
+                      e.currentTarget.style.transform = 'translateY(0)';
                     }}
                     style={{
-                      display:'inline-flex',alignItems:'center',gap:'0.3rem',
-                      padding:'0.28rem 0.8rem',
-                      background:'rgba(75,0,130,0.2)',
-                      border:'1px solid rgba(255,215,0,0.18)',
-                      borderRadius:'999px',
-                      color:'rgba(212,175,55,0.85)',
-                      fontFamily:"'Cinzel',serif",fontSize:'0.58rem',letterSpacing:'0.12em',
-                      backdropFilter:'blur(8px)',
-                      animation:`floatBadge ${3.5+idx*0.5}s ease-in-out infinite`,
-                      animationDelay:`${idx*0.25}s`,
-                      cursor:'default',transition:'all 0.3s ease',
+                      display: 'inline-flex', alignItems: 'center', gap: '0.3rem',
+                      padding: '0.28rem 0.8rem',
+                      background: 'rgba(75,0,130,0.2)',
+                      border: '1px solid rgba(255,215,0,0.18)',
+                      borderRadius: '999px',
+                      color: 'rgba(212,175,55,0.85)',
+                      fontFamily: "'Cinzel',serif", fontSize: '0.58rem', letterSpacing: '0.12em',
+                      backdropFilter: 'blur(8px)',
+                      animation: `floatBadge ${3.5 + idx * 0.5}s ease-in-out infinite`,
+                      animationDelay: `${idx * 0.25}s`,
+                      cursor: 'default', transition: 'all 0.3s ease',
                     }}>
                     <span>{tech.icon}</span><span>{tech.label}</span>
                   </span>
@@ -334,16 +348,16 @@ const Index = () => {
           {/* Rune divider */}
           {introComplete && (
             <div style={{
-              display:'flex',alignItems:'center',gap:'1rem',
-              padding:'0.35rem 2rem',
-              animation:'dividerIn 0.8s 0.2s ease both',
-              transformOrigin:'center',
+              display: 'flex', alignItems: 'center', gap: '1rem',
+              padding: '0.35rem 2rem',
+              animation: 'dividerIn 0.8s 0.2s ease both',
+              transformOrigin: 'center',
             }}>
-              <div style={{flex:1,height:1,background:'linear-gradient(90deg,transparent,rgba(255,215,0,0.18))'}}/>
-              <span style={{color:'rgba(255,215,0,0.3)',fontSize:'0.62rem',fontFamily:"'Cinzel',serif",letterSpacing:'0.5em'}}>
+              <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg,transparent,rgba(255,215,0,0.18))' }} />
+              <span style={{ color: 'rgba(255,215,0,0.3)', fontSize: '0.62rem', fontFamily: "'Cinzel',serif", letterSpacing: '0.5em' }}>
                 ✦ ♛ ✦
               </span>
-              <div style={{flex:1,height:1,background:'linear-gradient(90deg,rgba(255,215,0,0.18),transparent)'}}/>
+              <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg,rgba(255,215,0,0.18),transparent)' }} />
             </div>
           )}
         </div>
