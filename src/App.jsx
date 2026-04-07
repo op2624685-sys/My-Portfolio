@@ -6,14 +6,14 @@ import Skills from "./pages/Skills";
 import Projects from "./pages/Projects";
 import About from "./pages/About";
 
-import AnimatedBackground from "./component/AnimatedBackground";
+import FuturisticBackground from "./component/FuturisticBackground";
 
 const App = () => {
   return (
     <Router>
       {/* Full‑screen container – background sits behind the routed pages */}
       <div className="min-h-screen relative">
-        <AnimatedBackground />                     {/* ← single background component */}
+        <FuturisticBackground />                   {/* ← single background component */}
         <div className="relative z-10">              {/* ← content stays on top */}
           <Routes>
             <Route path="/My-Portfolio" element={<Index />} />
