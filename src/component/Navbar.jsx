@@ -32,7 +32,7 @@ const Navbar = () => {
           font-family: 'Cinzel', serif;
           font-size: 0.78rem;
           letter-spacing: 0.18em;
-          color: rgba(212,175,55,0.7);
+          color: rgba(255,185,128,0.7);
           text-decoration: none;
           transition: color 0.3s ease;
           padding-bottom: 4px;
@@ -42,19 +42,19 @@ const Navbar = () => {
           position: absolute;
           bottom: 0; left: 0;
           height: 1px; width: 0;
-          background: linear-gradient(90deg, #B8860B, #FFD700);
+          background: linear-gradient(90deg, #c46a2b, #ffb347);
           transition: width 0.35s cubic-bezier(0.4,0,0.2,1);
-          box-shadow: 0 0 6px rgba(255,215,0,0.4);
+          box-shadow: 0 0 6px rgba(255,179,71,0.4);
         }
-        .nav-link-royal:hover { color: #FFD700; }
+        .nav-link-royal:hover { color: #ffb347; }
         .nav-link-royal:hover::after { width: 100%; }
-        .nav-link-royal.active { color: #FFD700; }
+        .nav-link-royal.active { color: #ffb347; }
         .nav-link-royal.active::after { width: 100%; }
 
         .btn-resume {
           display: inline-flex; align-items: center; gap: 0.4rem;
           padding: 0.45rem 1.1rem;
-          background: linear-gradient(135deg, #B8860B, #FFD700, #B8860B);
+          background: linear-gradient(135deg, #c46a2b, #ffb347, #c46a2b);
           background-size: 200% auto;
           color: #0a0010;
           font-family: 'Cinzel', serif;
@@ -66,11 +66,11 @@ const Navbar = () => {
           cursor: pointer;
           text-decoration: none;
           transition: all 0.35s ease;
-          box-shadow: 0 0 12px rgba(255,215,0,0.2);
+          box-shadow: 0 0 12px rgba(255,179,71,0.2);
         }
         .btn-resume:hover {
           background-position: right center;
-          box-shadow: 0 0 24px rgba(255,215,0,0.45);
+          box-shadow: 0 0 24px rgba(255,179,71,0.45);
           transform: translateY(-1px);
         }
 
@@ -78,28 +78,28 @@ const Navbar = () => {
           display: inline-flex; align-items: center; gap: 0.4rem;
           padding: 0.43rem 1.1rem;
           background: transparent;
-          color: rgba(212,175,55,0.85);
+          color: rgba(255,185,128,0.85);
           font-family: 'Cinzel', serif;
           font-size: 0.65rem;
           font-weight: 600;
           letter-spacing: 0.15em;
           border-radius: 4px;
-          border: 1px solid rgba(255,215,0,0.3);
+          border: 1px solid rgba(255,179,71,0.3);
           cursor: pointer;
           text-decoration: none;
           transition: all 0.3s ease;
         }
         .btn-email:hover {
-          background: rgba(75,0,130,0.3);
-          border-color: rgba(255,215,0,0.6);
-          color: #FFD700;
-          box-shadow: 0 0 16px rgba(255,215,0,0.15);
+          background: rgba(58,31,21,0.3);
+          border-color: rgba(255,179,71,0.6);
+          color: #ffb347;
+          box-shadow: 0 0 16px rgba(255,179,71,0.15);
           transform: translateY(-1px);
         }
 
         @keyframes logoGlow {
-          0%,100%{ box-shadow: 0 0 10px rgba(255,215,0,0.2), inset 0 0 10px rgba(75,0,130,0.3); }
-          50%    { box-shadow: 0 0 22px rgba(255,215,0,0.45), inset 0 0 16px rgba(106,13,173,0.4); }
+          0%,100%{ box-shadow: 0 0 10px rgba(255,179,71,0.2), inset 0 0 10px rgba(58,31,21,0.3); }
+          50%    { box-shadow: 0 0 22px rgba(255,179,71,0.45), inset 0 0 16px rgba(122,59,36,0.4); }
         }
         @keyframes navReveal {
           from { opacity:0; transform: translateY(-4px); }
@@ -112,9 +112,9 @@ const Navbar = () => {
         padding:'0.9rem 1.75rem',
         width:'100%',
         position:'relative', zIndex:50,
-        background: scrolled ? 'rgba(4,0,14,0.88)' : 'transparent',
+        background: scrolled ? 'rgba(20,14,10,0.88)' : 'transparent',
         backdropFilter: scrolled ? 'blur(20px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(255,215,0,0.08)' : '1px solid transparent',
+        borderBottom: scrolled ? '1px solid rgba(255,179,71,0.08)' : '1px solid transparent',
         transition: 'all 0.4s ease',
       }}>
 
@@ -122,15 +122,15 @@ const Navbar = () => {
         <div style={{display:'flex',alignItems:'center',gap:'0.9rem'}}>
           <div style={{
             width:48, height:48, borderRadius:'50%',
-            background:'linear-gradient(135deg,#1a0030,#2d0050)',
-            border:'1.5px solid rgba(255,215,0,0.35)',
+            background:'linear-gradient(135deg,#1b1410,#2a1b16)',
+            border:'1.5px solid rgba(255,179,71,0.35)',
             display:'flex', alignItems:'center', justifyContent:'center',
             animation:'logoGlow 3s ease-in-out infinite',
             flexShrink:0,
           }}>
             <span style={{
               fontFamily:"'Cinzel',serif", fontWeight:700, fontSize:'1rem',
-              backgroundImage:'linear-gradient(135deg,#B8860B,#FFD700)',
+              backgroundImage:'linear-gradient(135deg,#c46a2b,#ffb347)',
               WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text',
               letterSpacing:'0.05em',
             }}>OP</span>
@@ -174,8 +174,8 @@ const Navbar = () => {
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           style={{
-            background:'transparent', border:'1px solid rgba(255,215,0,0.2)',
-            borderRadius:6, padding:'0.4rem', color:'rgba(255,215,0,0.7)',
+            background:'transparent', border:'1px solid rgba(255,179,71,0.2)',
+            borderRadius:6, padding:'0.4rem', color:'rgba(255,179,71,0.7)',
             cursor:'pointer', display:'none', transition:'all 0.3s',
           }}
           className="mobile-menu-btn"
@@ -187,9 +187,9 @@ const Navbar = () => {
         {isMenuOpen && (
           <div style={{
             position:'absolute', top:'100%', left:0, right:0,
-            background:'rgba(4,0,14,0.97)', backdropFilter:'blur(20px)',
-            borderTop:'1px solid rgba(255,215,0,0.1)',
-            borderBottom:'1px solid rgba(255,215,0,0.1)',
+            background:'rgba(20,14,10,0.97)', backdropFilter:'blur(20px)',
+            borderTop:'1px solid rgba(255,179,71,0.1)',
+            borderBottom:'1px solid rgba(255,179,71,0.1)',
             padding:'1rem 1.5rem',
             zIndex:100,
           }}>
@@ -204,7 +204,7 @@ const Navbar = () => {
                 </li>
               ))}
             </ul>
-            <div style={{display:'flex',flexDirection:'column',gap:'0.5rem',borderTop:'1px solid rgba(255,215,0,0.08)',paddingTop:'1rem'}}>
+            <div style={{display:'flex',flexDirection:'column',gap:'0.5rem',borderTop:'1px solid rgba(255,179,71,0.08)',paddingTop:'1rem'}}>
               <a href="https://drive.google.com/your-resume-link" target="_blank" rel="noopener noreferrer" className="btn-resume" style={{justifyContent:'center'}}>
                 <FileText size={13}/><span>Resume</span>
               </a>
@@ -235,3 +235,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
