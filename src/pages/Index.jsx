@@ -41,15 +41,15 @@ function ParticleField() {
           const d = Math.sqrt(dx * dx + dy * dy);
           if (d < 130) {
             ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(184,134,11,${(1 - d / 130) * 0.22})`; ctx.lineWidth = 0.6; ctx.stroke();
+            ctx.strokeStyle = `rgba(196,106,43,${(1 - d / 130) * 0.22})`; ctx.lineWidth = 0.6; ctx.stroke();
           }
         }
       }
       particles.forEach(p => {
         const a = p.alpha * (0.6 + 0.4 * Math.sin(p.pulse));
         ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,215,0,${a})`;
-        ctx.shadowBlur = 6; ctx.shadowColor = 'rgba(255,215,0,0.4)';
+        ctx.fillStyle = `rgba(255,179,71,${a})`;
+        ctx.shadowBlur = 6; ctx.shadowColor = 'rgba(255,179,71,0.4)';
         ctx.fill(); ctx.shadowBlur = 0;
       });
       id = requestAnimationFrame(draw);
@@ -67,7 +67,7 @@ function GoldWaveBackground() {
         style={{
           position: 'absolute',
           inset: 0,
-          background: 'radial-gradient(ellipse at 50% 50%, rgba(255,215,0,0.12) 0%, rgba(255,215,0,0.04) 40%, transparent 70%)',
+          background: 'radial-gradient(ellipse at 50% 50%, rgba(255,179,71,0.12) 0%, rgba(255,179,71,0.04) 40%, transparent 70%)',
           animation: 'goldWavePulse 2s ease-in-out infinite',
         }}
       />
@@ -86,9 +86,9 @@ function GoldRippleBackground() {
             width: '24vmax',
             height: '24vmax',
             borderRadius: '50%',
-            border: '1.5px solid rgba(255,215,0,0.7)',
+            border: '1.5px solid rgba(255,179,71,0.7)',
             animation: `rippleExpand 4s ${i * 0.95}s ease-out infinite`,
-            boxShadow: '0 0 12px rgba(255,215,0,0.3)',
+            boxShadow: '0 0 12px rgba(255,179,71,0.3)',
           }}
         />
       ))}
@@ -102,20 +102,20 @@ function RoyalGeometry({ visible }) {
   return (
     <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 1, overflow: 'hidden' }}>
       <svg style={{ position: 'absolute', top: -60, left: -60, opacity: 0.07, animation: 'geoRotate 25s linear infinite' }} width="280" height="280" viewBox="0 0 280 280">
-        <polygon points="140,10 270,140 140,270 10,140" fill="none" stroke="#FFD700" strokeWidth="1" />
-        <polygon points="140,40 240,140 140,240 40,140" fill="none" stroke="#B8860B" strokeWidth="0.5" />
-        <polygon points="140,70 210,140 140,210 70,140" fill="none" stroke="#FFD700" strokeWidth="0.3" />
+        <polygon points="140,10 270,140 140,270 10,140" fill="none" stroke="#ffb347" strokeWidth="1" />
+        <polygon points="140,40 240,140 140,240 40,140" fill="none" stroke="#c46a2b" strokeWidth="0.5" />
+        <polygon points="140,70 210,140 140,210 70,140" fill="none" stroke="#ffb347" strokeWidth="0.3" />
       </svg>
       <svg style={{ position: 'absolute', bottom: -80, right: -80, opacity: 0.06, animation: 'geoRotate 30s linear infinite reverse' }} width="320" height="320" viewBox="0 0 320 320">
-        <polygon points="160,10 310,160 160,310 10,160" fill="none" stroke="#FFD700" strokeWidth="1" />
-        <polygon points="160,45 275,160 160,275 45,160" fill="none" stroke="#B8860B" strokeWidth="0.5" />
+        <polygon points="160,10 310,160 160,310 10,160" fill="none" stroke="#ffb347" strokeWidth="1" />
+        <polygon points="160,45 275,160 160,275 45,160" fill="none" stroke="#c46a2b" strokeWidth="0.5" />
       </svg>
       <svg style={{ position: 'absolute', top: 50, right: 40, opacity: 0.08, animation: 'geoRotate 20s linear infinite' }} width="110" height="110" viewBox="0 0 110 110">
-        <polygon points="55,5 100,30 100,80 55,105 10,80 10,30" fill="none" stroke="#FFD700" strokeWidth="1" />
-        <polygon points="55,22 83,38 83,72 55,88 27,72 27,38" fill="none" stroke="#B8860B" strokeWidth="0.5" />
+        <polygon points="55,5 100,30 100,80 55,105 10,80 10,30" fill="none" stroke="#ffb347" strokeWidth="1" />
+        <polygon points="55,22 83,38 83,72 55,88 27,72 27,38" fill="none" stroke="#c46a2b" strokeWidth="0.5" />
       </svg>
       <svg style={{ position: 'absolute', bottom: 50, left: 40, opacity: 0.07, animation: 'geoRotate 18s linear infinite reverse' }} width="90" height="90" viewBox="0 0 90 90">
-        <polygon points="45,5 80,25 80,65 45,85 10,65 10,25" fill="none" stroke="#FFD700" strokeWidth="1" />
+        <polygon points="45,5 80,25 80,65 45,85 10,65 10,25" fill="none" stroke="#ffb347" strokeWidth="1" />
       </svg>
     </div>
   );
@@ -151,8 +151,8 @@ function MagneticCursor() {
   }, []);
   return (
     <>
-      <div ref={dotRef} style={{ position: 'fixed', top: 0, left: 0, width: 8, height: 8, borderRadius: '50%', background: '#FFD700', boxShadow: '0 0 8px #FFD700', pointerEvents: 'none', zIndex: 99999, mixBlendMode: 'difference' }} />
-      <div ref={ringRef} style={{ position: 'fixed', top: 0, left: 0, width: 36, height: 36, borderRadius: '50%', border: '1.5px solid rgba(255,215,0,0.7)', pointerEvents: 'none', zIndex: 99998 }} />
+      <div ref={dotRef} style={{ position: 'fixed', top: 0, left: 0, width: 8, height: 8, borderRadius: '50%', background: '#ffb347', boxShadow: '0 0 8px #ffb347', pointerEvents: 'none', zIndex: 99999, mixBlendMode: 'difference' }} />
+      <div ref={ringRef} style={{ position: 'fixed', top: 0, left: 0, width: 36, height: 36, borderRadius: '50%', border: '1.5px solid rgba(255,179,71,0.7)', pointerEvents: 'none', zIndex: 99998 }} />
     </>
   );
 }
@@ -198,7 +198,7 @@ const Index = () => {
         @keyframes goldWavePulse { 0%,100%{opacity:0.4;transform:scale(0.95)} 50%{opacity:1;transform:scale(1.05)} }
         @keyframes rippleExpand  { 0%{transform:scale(0.2);opacity:0.8} 100%{transform:scale(6);opacity:0} }
         @keyframes floatBadge   { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
-        @keyframes namePulse    { 0%,100%{filter:drop-shadow(0 0 10px rgba(255,215,0,0.2))} 50%{filter:drop-shadow(0 0 26px rgba(255,215,0,0.5))} }
+        @keyframes namePulse    { 0%,100%{filter:drop-shadow(0 0 10px rgba(255,179,71,0.2))} 50%{filter:drop-shadow(0 0 26px rgba(255,179,71,0.5))} }
         @keyframes underlineIn  { from{width:0;opacity:0} to{width:100%;opacity:1} }
         @keyframes dotPulse     { 0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.6)} 70%{box-shadow:0 0 0 7px rgba(34,197,94,0)} }
         @keyframes dividerIn    { from{opacity:0;transform:scaleX(0)} to{opacity:1;transform:scaleX(1)} }
@@ -248,15 +248,15 @@ const Index = () => {
               <div className="gs" style={{
                 display: 'inline-flex', alignItems: 'center', gap: '0.45rem',
                 marginBottom: '0.9rem', padding: '0.25rem 0.9rem',
-                border: '1px solid rgba(255,215,0,0.14)', borderRadius: '999px',
-                background: 'rgba(75,0,130,0.16)', backdropFilter: 'blur(8px)',
+                border: '1px solid rgba(255,179,71,0.14)', borderRadius: '999px',
+                background: 'rgba(58,31,21,0.16)', backdropFilter: 'blur(8px)',
               }}>
                 <span style={{
-                  width: 6, height: 6, borderRadius: '50%', background: '#22c55e',
+                  width: 6, height: 6, borderRadius: '50%', background: '#7fb069',
                   display: 'inline-block', animation: 'dotPulse 2s ease-in-out infinite'
                 }} />
                 <span style={{
-                  color: 'rgba(255,215,0,0.5)', fontSize: '0.56rem',
+                  color: 'rgba(255,179,71,0.5)', fontSize: '0.56rem',
                   fontFamily: "'Cinzel',serif", letterSpacing: '0.3em'
                 }}>
                   AVAILABLE FOR WORK
@@ -265,7 +265,7 @@ const Index = () => {
 
               {/* Greeting */}
               <div className="gs" style={{
-                color: 'rgba(212,175,55,0.65)', fontFamily: "'Cinzel',serif",
+                color: 'rgba(255,185,128,0.65)', fontFamily: "'Cinzel',serif",
                 fontSize: '0.75rem', letterSpacing: '0.5em', marginBottom: '0.8rem',
               }}>
                 HEY THERE · WELCOME
@@ -279,7 +279,7 @@ const Index = () => {
                 }}>I'm</span>
                 <span style={{
                   fontFamily: "'Cinzel',serif", fontSize: 'clamp(2rem,5.5vw,3.8rem)', fontWeight: 700,
-                  backgroundImage: 'linear-gradient(90deg,#B8860B,#FFD700,#FFF8DC,#FFD700,#B8860B)',
+                  backgroundImage: 'linear-gradient(90deg,#c46a2b,#ffb347,#fff1d6,#ffb347,#c46a2b)',
                   backgroundSize: '300% auto',
                   WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
                   animation: 'shimmer 4s linear infinite',
@@ -296,12 +296,12 @@ const Index = () => {
                 <span style={{ color: 'rgba(200,200,200,0.7)' }}>A</span>
                 <span style={{ position: 'relative', display: 'inline-block' }}>
                   <span style={{
-                    backgroundImage: 'linear-gradient(90deg,#B8860B,#FFD700)',
+                    backgroundImage: 'linear-gradient(90deg,#c46a2b,#ffb347)',
                     WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
                   }}>JAVA</span>
                   <span style={{
                     position: 'absolute', bottom: -3, left: 0, height: 2, borderRadius: 999,
-                    background: 'linear-gradient(90deg,#B8860B,#FFD700)',
+                    background: 'linear-gradient(90deg,#c46a2b,#ffb347)',
                     animation: 'underlineIn 1s 0.8s ease both', width: 0
                   }} />
                 </span>
@@ -318,24 +318,24 @@ const Index = () => {
                 ].map((tech, idx) => (
                   <span key={idx}
                     onMouseEnter={e => {
-                      e.currentTarget.style.background = 'rgba(75,0,130,0.5)';
-                      e.currentTarget.style.borderColor = 'rgba(255,215,0,0.5)';
-                      e.currentTarget.style.boxShadow = '0 0 18px rgba(255,215,0,0.2)';
+                      e.currentTarget.style.background = 'rgba(58,31,21,0.5)';
+                      e.currentTarget.style.borderColor = 'rgba(255,179,71,0.5)';
+                      e.currentTarget.style.boxShadow = '0 0 18px rgba(255,179,71,0.2)';
                       e.currentTarget.style.transform = 'translateY(-2px)';
                     }}
                     onMouseLeave={e => {
-                      e.currentTarget.style.background = 'rgba(75,0,130,0.2)';
-                      e.currentTarget.style.borderColor = 'rgba(255,215,0,0.18)';
+                      e.currentTarget.style.background = 'rgba(58,31,21,0.2)';
+                      e.currentTarget.style.borderColor = 'rgba(255,179,71,0.18)';
                       e.currentTarget.style.boxShadow = 'none';
                       e.currentTarget.style.transform = 'translateY(0)';
                     }}
                     style={{
                       display: 'inline-flex', alignItems: 'center', gap: '0.3rem',
                       padding: '0.28rem 0.8rem',
-                      background: 'rgba(75,0,130,0.2)',
-                      border: '1px solid rgba(255,215,0,0.18)',
+                      background: 'rgba(58,31,21,0.2)',
+                      border: '1px solid rgba(255,179,71,0.18)',
                       borderRadius: '999px',
-                      color: 'rgba(212,175,55,0.85)',
+                      color: 'rgba(255,185,128,0.85)',
                       fontFamily: "'Cinzel',serif", fontSize: '0.58rem', letterSpacing: '0.12em',
                       backdropFilter: 'blur(8px)',
                       animation: `floatBadge ${3.5 + idx * 0.5}s ease-in-out infinite`,
@@ -358,11 +358,11 @@ const Index = () => {
               animation: 'dividerIn 0.8s 0.2s ease both',
               transformOrigin: 'center',
             }}>
-              <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg,transparent,rgba(255,215,0,0.18))' }} />
-              <span style={{ color: 'rgba(255,215,0,0.3)', fontSize: '0.62rem', fontFamily: "'Cinzel',serif", letterSpacing: '0.5em' }}>
+              <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg,transparent,rgba(255,179,71,0.18))' }} />
+              <span style={{ color: 'rgba(255,179,71,0.3)', fontSize: '0.62rem', fontFamily: "'Cinzel',serif", letterSpacing: '0.5em' }}>
                 ✦ ♛ ✦
               </span>
-              <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg,rgba(255,215,0,0.18),transparent)' }} />
+              <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg,rgba(255,179,71,0.18),transparent)' }} />
             </div>
           )}
         </div>
@@ -385,4 +385,6 @@ const Index = () => {
 };
 
 export default Index;
+
+
 

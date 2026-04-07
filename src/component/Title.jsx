@@ -15,7 +15,7 @@ const Title = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.6 }}
           className='text-xl md:text-2xl mb-4 font-light tracking-wide'
-          style={{ color: '#d4af37', fontFamily: "'Cinzel', serif", letterSpacing: '0.2em' }}
+          style={{ color: '#ffb980', fontFamily: "'Cinzel', serif", letterSpacing: '0.2em' }}
         >
           Hey there, 👑
         </motion.div>
@@ -31,7 +31,7 @@ const Title = () => {
           <span
             className='text-transparent bg-clip-text animate-float'
             style={{
-              backgroundImage: 'linear-gradient(90deg, #B8860B, #FFD700, #FFF8DC, #FFD700, #B8860B)',
+              backgroundImage: 'linear-gradient(90deg, #c46a2b, #ffb347, #fff1d6, #ffb347, #c46a2b)',
               backgroundSize: '300% auto',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
@@ -54,7 +54,7 @@ const Title = () => {
             <span
               className='text-transparent bg-clip-text'
               style={{
-                backgroundImage: 'linear-gradient(90deg, #B8860B, #FFD700)',
+                backgroundImage: 'linear-gradient(90deg, #c46a2b, #ffb347)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
               }}
@@ -63,7 +63,7 @@ const Title = () => {
             </span>
             <span
               className='absolute -bottom-1 left-0 w-full h-1 rounded-full'
-              style={{ background: 'linear-gradient(90deg, #B8860B, #FFD700)' }}
+              style={{ background: 'linear-gradient(90deg, #c46a2b, #ffb347)' }}
             />
           </span>
           <span className='text-gray-300'> Backend Engineer</span>
@@ -80,9 +80,9 @@ const Title = () => {
               key={idx}
               className='px-4 py-2 backdrop-blur-sm rounded-full text-sm font-medium shadow-lg'
               style={{
-                background: 'rgba(75,0,130,0.3)',
-                border: '1px solid rgba(255,215,0,0.3)',
-                color: '#d4af37',
+                background: 'rgba(58,31,21,0.3)',
+                border: '1px solid rgba(255,179,71,0.3)',
+                color: '#ffb980',
                 fontFamily: "'Cinzel', serif",
                 fontSize: '0.7rem',
                 letterSpacing: '0.1em',
@@ -98,3 +98,4 @@ const Title = () => {
 };
 
 export default Title;
+

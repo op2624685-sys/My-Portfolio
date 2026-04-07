@@ -31,7 +31,7 @@ const About = () => {
           <h1
             className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text mb-4"
             style={{
-              backgroundImage: 'linear-gradient(90deg, #B8860B, #FFD700, #FFF8DC, #FFD700, #B8860B)',
+              backgroundImage: 'linear-gradient(90deg, #c46a2b, #ffb347, #fff1d6, #ffb347, #c46a2b)',
               backgroundSize: '300% auto',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
@@ -41,7 +41,7 @@ const About = () => {
           >
             About Me
           </h1>
-          <p className="text-xl max-w-2xl mx-auto" style={{ color: 'rgba(212,175,55,0.7)' }}>
+          <p className="text-xl max-w-2xl mx-auto" style={{ color: 'rgba(255,185,128,0.7)' }}>
             Passionate Java Backend Developer crafting scalable solutions
           </p>
         </motion.div>
@@ -56,26 +56,26 @@ const About = () => {
           >
             <div
               className="backdrop-blur-sm rounded-xl p-8 sticky top-8"
-              style={{ background: 'rgba(26,0,48,0.7)', border: '1px solid rgba(255,215,0,0.2)' }}
+              style={{ background: 'rgba(27,20,16,0.7)', border: '1px solid rgba(255,179,71,0.2)' }}
             >
               {/* Profile Image */}
               <div className="mb-6 flex justify-center">
                 <div className="relative">
-                  <div className="w-40 h-40 rounded-full p-1" style={{ background: 'linear-gradient(135deg, #B8860B, #FFD700)' }}>
+                  <div className="w-40 h-40 rounded-full p-1" style={{ background: 'linear-gradient(135deg, #c46a2b, #ffb347)' }}>
                     <img
                       src="https://images.unsplash.com/photo-1768463852001-811ead5844fb?q=80&w=1974&auto=format&fit=crop"
                       alt="Om Prakash"
                       className="w-full h-full rounded-full object-cover"
                     />
                   </div>
-                  <div className="absolute bottom-0 right-0 w-8 h-8 bg-green-500 rounded-full border-4" style={{ borderColor: '#0d0020' }}></div>
+                  <div className="absolute bottom-0 right-0 w-8 h-8 bg-green-500 rounded-full border-4" style={{ borderColor: '#120d0a' }}></div>
                 </div>
               </div>
 
               <h2 className="text-2xl font-bold text-white text-center mb-2" style={{ fontFamily: "'Cinzel', serif" }}>
                 Om Prakash
               </h2>
-              <p className="text-center mb-6 font-medium" style={{ color: '#d4af37', fontFamily: "'Cinzel', serif", fontSize: '0.8rem', letterSpacing: '0.1em' }}>
+              <p className="text-center mb-6 font-medium" style={{ color: '#ffb980', fontFamily: "'Cinzel', serif", fontSize: '0.8rem', letterSpacing: '0.1em' }}>
                 Java Backend Developer
               </p>
 
@@ -88,12 +88,12 @@ const About = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.4 + index * 0.1 }}
                     className="flex items-center gap-3 p-3 rounded-lg"
-                    style={{ background: 'rgba(75,0,130,0.3)' }}
+                    style={{ background: 'rgba(58,31,21,0.3)' }}
                   >
-                    <stat.icon className="w-5 h-5" style={{ color: '#FFD700' }} />
+                    <stat.icon className="w-5 h-5" style={{ color: '#ffb347' }} />
                     <div>
                       <div className="text-2xl font-bold text-white" style={{ fontFamily: "'Cinzel', serif" }}>{stat.value}</div>
-                      <div className="text-xs" style={{ color: 'rgba(212,175,55,0.7)' }}>{stat.label}</div>
+                      <div className="text-xs" style={{ color: 'rgba(255,185,128,0.7)' }}>{stat.label}</div>
                     </div>
                   </motion.div>
                 ))}
@@ -113,9 +113,9 @@ const About = () => {
                     whileHover={{ scale: 1.1 }}
                     className={`p-3 rounded-lg transition-all duration-200 ${link.color}`}
                     style={{
-                      background: 'rgba(75,0,130,0.4)',
-                      border: '1px solid rgba(255,215,0,0.2)',
-                      color: 'rgba(212,175,55,0.8)',
+                      background: 'rgba(58,31,21,0.4)',
+                      border: '1px solid rgba(255,179,71,0.2)',
+                      color: 'rgba(255,185,128,0.8)',
                     }}
                   >
                     <link.icon className="w-6 h-6" />
@@ -133,9 +133,9 @@ const About = () => {
             className="lg:col-span-2 space-y-6"
           >
             {/* Bio */}
-            <div className="backdrop-blur-sm rounded-xl p-8" style={{ background: 'rgba(26,0,48,0.7)', border: '1px solid rgba(255,215,0,0.2)' }}>
+            <div className="backdrop-blur-sm rounded-xl p-8" style={{ background: 'rgba(27,20,16,0.7)', border: '1px solid rgba(255,179,71,0.2)' }}>
               <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-2" style={{ fontFamily: "'Cinzel', serif" }}>
-                <span className="w-1 h-8 rounded" style={{ background: 'linear-gradient(180deg, #B8860B, #FFD700)' }}></span>
+                <span className="w-1 h-8 rounded" style={{ background: 'linear-gradient(180deg, #c46a2b, #ffb347)' }}></span>
                 Overview
               </h3>
               <div className="space-y-4 leading-relaxed" style={{ color: 'rgba(255,255,255,0.7)' }}>
@@ -159,9 +159,9 @@ const About = () => {
             </div>
 
             {/* What I Do */}
-            <div className="backdrop-blur-sm rounded-xl p-8" style={{ background: 'rgba(26,0,48,0.7)', border: '1px solid rgba(255,215,0,0.2)' }}>
+            <div className="backdrop-blur-sm rounded-xl p-8" style={{ background: 'rgba(27,20,16,0.7)', border: '1px solid rgba(255,179,71,0.2)' }}>
               <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2" style={{ fontFamily: "'Cinzel', serif" }}>
-                <span className="w-1 h-8 rounded" style={{ background: 'linear-gradient(180deg, #B8860B, #FFD700)' }}></span>
+                <span className="w-1 h-8 rounded" style={{ background: 'linear-gradient(180deg, #c46a2b, #ffb347)' }}></span>
                 What I Do
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -179,12 +179,12 @@ const About = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.8 + index * 0.1 }}
                     className="p-4 rounded-lg transition-colors duration-200"
-                    style={{ background: 'rgba(75,0,130,0.25)', border: '1px solid rgba(255,215,0,0.15)' }}
-                    onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(255,215,0,0.5)'}
-                    onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255,215,0,0.15)'}
+                    style={{ background: 'rgba(58,31,21,0.25)', border: '1px solid rgba(255,179,71,0.15)' }}
+                    onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(255,179,71,0.5)'}
+                    onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255,179,71,0.15)'}
                   >
                     <h4 className="text-white font-semibold mb-1" style={{ fontFamily: "'Cinzel', serif", fontSize: '0.85rem' }}>{item.title}</h4>
-                    <p className="text-sm" style={{ color: 'rgba(212,175,55,0.65)' }}>{item.desc}</p>
+                    <p className="text-sm" style={{ color: 'rgba(255,185,128,0.65)' }}>{item.desc}</p>
                   </motion.div>
                 ))}
               </div>
@@ -196,7 +196,7 @@ const About = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2 }}
               className="backdrop-blur-sm rounded-xl p-8"
-              style={{ background: 'rgba(75,0,130,0.2)', border: '1px solid rgba(255,215,0,0.35)' }}
+              style={{ background: 'rgba(58,31,21,0.2)', border: '1px solid rgba(255,179,71,0.35)' }}
             >
               <h3 className="text-2xl font-bold text-white mb-4" style={{ fontFamily: "'Cinzel', serif" }}>Let's Connect!</h3>
               <p className="mb-6" style={{ color: 'rgba(255,255,255,0.7)' }}>
@@ -206,7 +206,7 @@ const About = () => {
                 <a
                   href="mailto:omprakash@example.com"
                   className="inline-flex items-center gap-2 px-6 py-3 text-black rounded-lg font-semibold hover:scale-105 transition-transform duration-200"
-                  style={{ background: 'linear-gradient(135deg, #B8860B, #FFD700)', fontFamily: "'Cinzel', serif", fontSize: '0.75rem', letterSpacing: '0.1em' }}
+                  style={{ background: 'linear-gradient(135deg, #c46a2b, #ffb347)', fontFamily: "'Cinzel', serif", fontSize: '0.75rem', letterSpacing: '0.1em' }}
                 >
                   <Mail className="w-5 h-5" />
                   Send Email
@@ -216,7 +216,7 @@ const About = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
-                  style={{ background: 'rgba(75,0,130,0.4)', border: '1px solid rgba(255,215,0,0.3)', color: '#d4af37', fontFamily: "'Cinzel', serif", fontSize: '0.75rem', letterSpacing: '0.1em' }}
+                  style={{ background: 'rgba(58,31,21,0.4)', border: '1px solid rgba(255,179,71,0.3)', color: '#ffb980', fontFamily: "'Cinzel', serif", fontSize: '0.75rem', letterSpacing: '0.1em' }}
                 >
                   <Linkedin className="w-5 h-5" />
                   LinkedIn
@@ -231,3 +231,4 @@ const About = () => {
 };
 
 export default About;
+

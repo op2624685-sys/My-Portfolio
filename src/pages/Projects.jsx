@@ -11,7 +11,7 @@ const Projects = () => {
       technologies: ['Spring Boot', 'MySQL', 'JWT', 'Spring Security'],
       githubUrl: 'https://github.com/omprakash',
       liveUrl: 'https://demo-project.com',
-      gradient: 'linear-gradient(135deg, #4B0082, #6A0DAD)'
+      gradient: 'linear-gradient(135deg, #3b1f15, #7a3b24)'
     },
     {
       title: 'Task Management System',
@@ -19,7 +19,7 @@ const Projects = () => {
       technologies: ['Java', 'Spring MVC', 'Hibernate', 'PostgreSQL'],
       githubUrl: 'https://github.com/omprakash',
       liveUrl: 'https://demo-project.com',
-      gradient: 'linear-gradient(135deg, #B8860B, #FFD700)'
+      gradient: 'linear-gradient(135deg, #c46a2b, #ffb347)'
     },
     {
       title: 'Microservices Architecture',
@@ -27,7 +27,7 @@ const Projects = () => {
       technologies: ['Spring Cloud', 'Docker', 'Kubernetes', 'Redis'],
       githubUrl: 'https://github.com/omprakash',
       liveUrl: 'https://demo-project.com',
-      gradient: 'linear-gradient(135deg, #1a0030, #4B0082)'
+      gradient: 'linear-gradient(135deg, #1b1410, #3b1f15)'
     },
     {
       title: 'Real-time Chat Application',
@@ -35,7 +35,7 @@ const Projects = () => {
       technologies: ['Spring Boot', 'WebSocket', 'MongoDB', 'RabbitMQ'],
       githubUrl: 'https://github.com/omprakash',
       liveUrl: 'https://demo-project.com',
-      gradient: 'linear-gradient(135deg, #7B0D1E, #B8860B)'
+      gradient: 'linear-gradient(135deg, #7B0D1E, #c46a2b)'
     },
     {
       title: 'Payment Gateway Integration',
@@ -43,7 +43,7 @@ const Projects = () => {
       technologies: ['Spring Boot', 'Stripe API', 'MySQL', 'Redis'],
       githubUrl: 'https://github.com/omprakash',
       liveUrl: 'https://demo-project.com',
-      gradient: 'linear-gradient(135deg, #6A0DAD, #B8860B)'
+      gradient: 'linear-gradient(135deg, #7a3b24, #c46a2b)'
     },
     {
       title: 'Analytics Dashboard API',
@@ -51,7 +51,7 @@ const Projects = () => {
       technologies: ['Java', 'Spring Boot', 'ElasticSearch', 'Kafka'],
       githubUrl: 'https://github.com/omprakash',
       liveUrl: 'https://demo-project.com',
-      gradient: 'linear-gradient(135deg, #4B0082, #B8860B)'
+      gradient: 'linear-gradient(135deg, #3b1f15, #c46a2b)'
     }
   ];
 
@@ -80,7 +80,7 @@ const Projects = () => {
           <h1
             className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text mb-4"
             style={{
-              backgroundImage: 'linear-gradient(90deg, #B8860B, #FFD700, #FFF8DC, #FFD700, #B8860B)',
+              backgroundImage: 'linear-gradient(90deg, #c46a2b, #ffb347, #fff1d6, #ffb347, #c46a2b)',
               backgroundSize: '300% auto',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
@@ -90,7 +90,7 @@ const Projects = () => {
           >
             My Projects
           </h1>
-          <p className="text-xl max-w-2xl mx-auto" style={{ color: 'rgba(212,175,55,0.7)' }}>
+          <p className="text-xl max-w-2xl mx-auto" style={{ color: 'rgba(255,185,128,0.7)' }}>
             Showcasing my work in backend development and system architecture
           </p>
         </motion.div>
@@ -109,15 +109,15 @@ const Projects = () => {
               whileHover={{ y: -10 }}
               className="backdrop-blur-sm rounded-xl overflow-hidden transition-all duration-300 shadow-lg"
               style={{
-                background: 'rgba(26,0,48,0.7)',
-                border: '1px solid rgba(255,215,0,0.18)',
+                background: 'rgba(27,20,16,0.7)',
+                border: '1px solid rgba(255,179,71,0.18)',
               }}
               onMouseEnter={e => {
-                e.currentTarget.style.borderColor = 'rgba(255,215,0,0.55)';
-                e.currentTarget.style.boxShadow = '0 20px 50px rgba(75,0,130,0.4), 0 0 20px rgba(255,215,0,0.1)';
+                e.currentTarget.style.borderColor = 'rgba(255,179,71,0.55)';
+                e.currentTarget.style.boxShadow = '0 20px 50px rgba(58,31,21,0.4), 0 0 20px rgba(255,179,71,0.1)';
               }}
               onMouseLeave={e => {
-                e.currentTarget.style.borderColor = 'rgba(255,215,0,0.18)';
+                e.currentTarget.style.borderColor = 'rgba(255,179,71,0.18)';
                 e.currentTarget.style.boxShadow = '';
               }}
             >
@@ -139,9 +139,9 @@ const Projects = () => {
                       key={idx}
                       className="px-3 py-1 rounded-full text-xs font-medium"
                       style={{
-                        background: 'rgba(75,0,130,0.35)',
-                        border: '1px solid rgba(255,215,0,0.25)',
-                        color: '#d4af37',
+                        background: 'rgba(58,31,21,0.35)',
+                        border: '1px solid rgba(255,179,71,0.25)',
+                        color: '#ffb980',
                         fontFamily: "'Cinzel', serif",
                         letterSpacing: '0.05em',
                       }}
@@ -158,7 +158,7 @@ const Projects = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 flex-1 justify-center"
-                    style={{ background: 'rgba(75,0,130,0.4)', border: '1px solid rgba(255,215,0,0.2)', color: '#d4af37' }}
+                    style={{ background: 'rgba(58,31,21,0.4)', border: '1px solid rgba(255,179,71,0.2)', color: '#ffb980' }}
                   >
                     <Github className="w-4 h-4" />
                     <span className="text-sm font-medium" style={{ fontFamily: "'Cinzel', serif", fontSize: '0.7rem' }}>Code</span>
@@ -168,7 +168,7 @@ const Projects = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 flex-1 justify-center hover:scale-105 text-black font-semibold"
-                    style={{ background: 'linear-gradient(135deg, #B8860B, #FFD700)' }}
+                    style={{ background: 'linear-gradient(135deg, #c46a2b, #ffb347)' }}
                   >
                     <ExternalLink className="w-4 h-4" />
                     <span className="text-sm font-medium" style={{ fontFamily: "'Cinzel', serif", fontSize: '0.7rem' }}>Live</span>
@@ -186,7 +186,7 @@ const Projects = () => {
           transition={{ delay: 0.8, duration: 0.6 }}
           className="mt-16 text-center"
         >
-          <p className="text-lg mb-4" style={{ color: 'rgba(212,175,55,0.5)' }}>
+          <p className="text-lg mb-4" style={{ color: 'rgba(255,185,128,0.5)' }}>
             More projects available on my GitHub profile
           </p>
           <a
@@ -194,7 +194,7 @@ const Projects = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 text-black rounded-lg font-semibold hover:scale-105 transition-transform duration-200"
-            style={{ background: 'linear-gradient(135deg, #B8860B, #FFD700)', fontFamily: "'Cinzel', serif", fontSize: '0.75rem', letterSpacing: '0.1em' }}
+            style={{ background: 'linear-gradient(135deg, #c46a2b, #ffb347)', fontFamily: "'Cinzel', serif", fontSize: '0.75rem', letterSpacing: '0.1em' }}
           >
             <Github className="w-5 h-5" />
             View All Projects
@@ -206,3 +206,4 @@ const Projects = () => {
 };
 
 export default Projects;
+

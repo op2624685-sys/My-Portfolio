@@ -15,9 +15,9 @@ const Skills = () => {
   ];
 
   const levelStyle = (level) => {
-    if (level === 'Expert')       return { background: 'rgba(255,215,0,0.15)',   color: '#FFD700',  border: '1px solid rgba(255,215,0,0.45)' };
-    if (level === 'Advanced')     return { background: 'rgba(106,13,173,0.25)', color: '#c4a4ff', border: '1px solid rgba(106,13,173,0.6)' };
-    return                               { background: 'rgba(184,134,11,0.15)',  color: '#d4af37', border: '1px solid rgba(184,134,11,0.45)' };
+    if (level === 'Expert')       return { background: 'rgba(255,179,71,0.15)',   color: '#ffb347',  border: '1px solid rgba(255,179,71,0.45)' };
+    if (level === 'Advanced')     return { background: 'rgba(127,176,105,0.18)', color: '#9fd78a', border: '1px solid rgba(127,176,105,0.6)' };
+    return                               { background: 'rgba(196,106,43,0.15)',  color: '#ffb980', border: '1px solid rgba(196,106,43,0.45)' };
   };
 
   const containerVariants = {
@@ -45,7 +45,7 @@ const Skills = () => {
           <h1
             className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text mb-4"
             style={{
-              backgroundImage: 'linear-gradient(90deg, #B8860B, #FFD700, #FFF8DC, #FFD700, #B8860B)',
+              backgroundImage: 'linear-gradient(90deg, #c46a2b, #ffb347, #fff1d6, #ffb347, #c46a2b)',
               backgroundSize: '300% auto',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
@@ -55,7 +55,7 @@ const Skills = () => {
           >
             My Skills
           </h1>
-          <p className="text-xl max-w-2xl mx-auto" style={{ color: 'rgba(212,175,55,0.7)' }}>
+          <p className="text-xl max-w-2xl mx-auto" style={{ color: 'rgba(255,185,128,0.7)' }}>
             Technologies and tools I work with to build robust backend solutions
           </p>
         </motion.div>
@@ -73,13 +73,13 @@ const Skills = () => {
               variants={cardVariants}
               whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
               className="backdrop-blur-sm rounded-xl p-6 transition-all duration-300 shadow-lg"
-              style={{ background: 'rgba(26,0,48,0.7)', border: '1px solid rgba(255,215,0,0.18)' }}
+              style={{ background: 'rgba(27,20,16,0.7)', border: '1px solid rgba(255,179,71,0.18)' }}
               onMouseEnter={e => {
-                e.currentTarget.style.borderColor = 'rgba(255,215,0,0.55)';
-                e.currentTarget.style.boxShadow = '0 20px 50px rgba(75,0,130,0.4), 0 0 20px rgba(255,215,0,0.1)';
+                e.currentTarget.style.borderColor = 'rgba(255,179,71,0.55)';
+                e.currentTarget.style.boxShadow = '0 20px 50px rgba(58,31,21,0.4), 0 0 20px rgba(255,179,71,0.1)';
               }}
               onMouseLeave={e => {
-                e.currentTarget.style.borderColor = 'rgba(255,215,0,0.18)';
+                e.currentTarget.style.borderColor = 'rgba(255,179,71,0.18)';
                 e.currentTarget.style.boxShadow = '';
               }}
             >
@@ -92,7 +92,7 @@ const Skills = () => {
                 <div className="mb-4 flex items-center justify-center">
                   <div
                     className="w-16 h-16 rounded-lg flex items-center justify-center text-2xl font-bold text-black"
-                    style={{ background: 'linear-gradient(135deg, #B8860B, #FFD700)', fontFamily: "'Cinzel', serif" }}
+                    style={{ background: 'linear-gradient(135deg, #c46a2b, #ffb347)', fontFamily: "'Cinzel', serif" }}
                   >
                     {skill.name.charAt(0)}
                   </div>
@@ -113,7 +113,7 @@ const Skills = () => {
                 </span>
               </div>
 
-              <p className="text-sm text-center leading-relaxed" style={{ color: 'rgba(212,175,55,0.65)' }}>
+              <p className="text-sm text-center leading-relaxed" style={{ color: 'rgba(255,185,128,0.65)' }}>
                 {skill.description}
               </p>
             </motion.div>
@@ -127,7 +127,7 @@ const Skills = () => {
           transition={{ delay: 0.8, duration: 0.6 }}
           className="mt-16 text-center"
         >
-          <p className="text-lg" style={{ color: 'rgba(212,175,55,0.45)' }}>
+          <p className="text-lg" style={{ color: 'rgba(255,185,128,0.45)' }}>
             Always learning and exploring new technologies to stay updated
           </p>
         </motion.div>
@@ -137,3 +137,4 @@ const Skills = () => {
 };
 
 export default Skills;
+

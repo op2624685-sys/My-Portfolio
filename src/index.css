@@ -9,13 +9,13 @@
   body {
     height: 100vh;
     color: rgb(255, 255, 255);
-    background: radial-gradient(ellipse at 50% 40%, #1a0030 0%, #0d0020 55%, #000000 100%);
+    background: radial-gradient(ellipse at 50% 40%, #2a1b16 0%, #1b1410 55%, #0a0706 100%);
     overflow-x: hidden;
   }
 
   ::selection {
-    background-color: rgba(255, 215, 0, 0.25);
-    color: #FFD700;
+    background-color: rgba(255, 179, 71, 0.25);
+    color: #ffb347;
   }
 }
 
@@ -52,7 +52,7 @@
 }
 
 .shimmer-gold {
-  background: linear-gradient(90deg, #B8860B, #FFD700, #FFF8DC, #FFD700, #B8860B);
+  background: linear-gradient(90deg, #c46a2b, #ffb347, #fff1d6, #ffb347, #c46a2b);
   background-size: 300% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
