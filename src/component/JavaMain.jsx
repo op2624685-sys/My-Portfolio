@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { gsap } from 'gsap';
 
 /* ─── Syntax Highlighter ─────────────────────────────────────── */
@@ -58,25 +58,6 @@ const ScanLine = ({active}) => !active ? null : (
   <div style={{position:'absolute',left:0,right:0,height:2,zIndex:5,background:'linear-gradient(90deg,transparent,rgba(255,215,0,0.9),rgba(255,255,255,0.5),rgba(255,215,0,0.9),transparent)',boxShadow:'0 0 14px 4px rgba(255,215,0,0.5)',animation:'scanMove 2.2s linear infinite',pointerEvents:'none'}}/>
 );
 
-/* ─── Royal Ripple — gold ripple rings that expand from center ── */
-function RoyalRipple({ active }) {
-  if (!active) return null;
-  return (
-    <div style={{position:'absolute',inset:0,pointerEvents:'none',zIndex:4,display:'flex',alignItems:'center',justifyContent:'center',borderRadius:'0.75rem',overflow:'hidden'}}>
-      {[0,1,2,3].map(i => (
-        <div key={i} style={{
-          position:'absolute',
-          width:60, height:60,
-          borderRadius:'50%',
-          border:'1.5px solid rgba(255,215,0,0.7)',
-          animation:`rippleExpand 2.4s ${i*0.55}s ease-out infinite`,
-          boxShadow:'0 0 12px rgba(255,215,0,0.3)',
-        }}/>
-      ))}
-    </div>
-  );
-}
-
 /* ─── Crown Reveal — SVG crown that draws itself stroke by stroke */
 function CrownReveal({ active }) {
   if (!active) return null;
@@ -121,23 +102,6 @@ function CrownReveal({ active }) {
   );
 }
 
-/* ─── Gold Pulse Wave — single radial gold wave on card bg ──────  */
-function GoldWave({ active }) {
-  if (!active) return null;
-  return (
-    <div style={{
-      position:'absolute', inset:0, borderRadius:'0.75rem',
-      pointerEvents:'none', zIndex:3, overflow:'hidden',
-    }}>
-      <div style={{
-        position:'absolute', inset:0,
-        background:'radial-gradient(ellipse at 50% 50%, rgba(255,215,0,0.12) 0%, rgba(255,215,0,0.04) 40%, transparent 70%)',
-        animation:'goldWavePulse 2s ease-in-out infinite',
-      }}/>
-    </div>
-  );
-}
-
 /* ─── Running light along the border ─────────────────────────── */
 function BorderRunner({ active }) {
   if (!active) return null;
@@ -155,24 +119,14 @@ function BorderRunner({ active }) {
   );
 }
 
-/* ─── GlowOutput letters ─────────────────────────────────────── */
-const GlowOutput = ({text,done}) => (
-  <span style={{fontFamily:'monospace',fontSize:'1.05rem'}}>
-    {text.split('').map((ch,i)=>(
-      <span key={i} style={{color:'#FFD700',textShadow:'0 0 10px #FFD700,0 0 22px #B8860B',animation:`letterPop 0.25s ${i*0.035}s ease both`,display:'inline-block',opacity:0}}>{ch}</span>
-    ))}
-    {!done&&<span style={{display:'inline-block',width:9,height:18,background:'#FFD700',boxShadow:'0 0 10px #FFD700',verticalAlign:'middle',marginLeft:2,animation:'cursorBlink 0.65s infinite'}}/>}
+/* ─── GlowOutput letters ───────────────── */
+const GlowOutput = ({ text }) => (
+  <span style={{ fontFamily: 'monospace', fontSize: '1.05rem', color: '#FFD700', textShadow: '0 0 10px #FFD700,0 0 22px #B8860B' }}>
+    {text}
   </span>
 );
 
 /* ─── Constants ──────────────────────────────────────────────── */
-const BOOT=[
-  {t:'[♛] ROYAL JVM v∞ — Awakening the Throne...',ms:0},
-  {t:'[✦] Mounting the Spring of Infinite Power...',ms:500},
-  {t:'[◆] Forging Gold Compilation Flags...',ms:950},
-  {t:'[❖] Weaving Dependency Enchantments...',ms:1350},
-  {t:'[★] All Systems Royal — Executing >>>',ms:1750},
-];
 const JAVA_CODE=`public class Main {
     public static void main(String[] args) {
         System.out.println("Welcome to My Portfolio");
@@ -182,33 +136,43 @@ const OUTPUT_TEXT='Welcome to My Portfolio';
 
 /* ═══ MAIN COMPONENT ═══════════════════════════════════════════ */
 export default function CodeAnimationIntro({ onIntroComplete }) {
-  const [phase,       setPhase]       = useState('boot');
-  const [bootLines,   setBootLines]   = useState([]);
+  const [phase,       setPhase]       = useState('matrix');
   const [code,        setCode]        = useState('');
   const [typingDone,  setTypingDone]  = useState(false);
   const [progress,    setProgress]    = useState(0);
   const [outputTxt,   setOutputTxt]   = useState('');
-  const [outputDone,  setOutputDone]  = useState(false);
   const [scanActive,  setScanActive]  = useState(false);
   const [showEffects, setShowEffects] = useState(false); // all completion effects
 
   const overlayRef = useRef(null);
   const targetRef  = useRef(null);
 
-  /* Step 1: Boot */
-  useEffect(()=>{
-    BOOT.forEach(({t,ms})=>setTimeout(()=>setBootLines(p=>[...p,t]),ms));
-    setTimeout(()=>setPhase('matrix'),2200);
-  },[]);
+  const doShrink = useCallback(() => {
+    const overlay = overlayRef.current, target = targetRef.current;
+    if(!overlay||!target) return;
+    setPhase('shrinking');
+    const r=target.getBoundingClientRect();
+    gsap.to(overlay,{
+      backgroundColor:'rgba(255,215,0,0.06)',
+      duration:0.1, yoyo:true, repeat:1,
+      onComplete:()=>{
+        gsap.to(overlay,{
+          top:r.top, left:r.left, width:r.width, height:r.height,
+          borderRadius:'0.75rem', duration:0.9, ease:'power4.inOut',
+          onComplete:()=>{ setPhase('done'); if(onIntroComplete) onIntroComplete(); }
+        });
+      }
+    });
+  }, [onIntroComplete]);
 
-  /* Step 2: Matrix */
+  /* Step 1: Matrix */
   useEffect(()=>{
     if(phase!=='matrix') return;
     const t=setTimeout(()=>setPhase('typing'),1500);
     return()=>clearTimeout(t);
   },[phase]);
 
-  /* Step 3: Typing — 18ms per char */
+  /* Step 2: Typing — 18ms per char */
   useEffect(()=>{
     if(phase!=='typing') return;
     setScanActive(true);
@@ -230,37 +194,19 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
     return()=>clearInterval(iv);
   },[phase]);
 
-  /* Step 4: Complete → type output → shrink */
+  /* Step 3: Complete → type output → shrink */
   useEffect(()=>{
     if(phase!=='complete') return;
     let idx=0;
     const iv=setInterval(()=>{
       if(idx<=OUTPUT_TEXT.length){ setOutputTxt(OUTPUT_TEXT.slice(0,idx)); idx++; }
-      else { clearInterval(iv); setOutputDone(true); }
+      else { clearInterval(iv); }
     },55);
     const shrinkTimer=setTimeout(()=>doShrink(), OUTPUT_TEXT.length*55+1400);
     return()=>{ clearInterval(iv); clearTimeout(shrinkTimer); };
-  },[phase]);
+  },[phase, doShrink]);
 
   /* GSAP shrink overlay to in-page position */
-  const doShrink = () => {
-    const overlay=overlayRef.current, target=targetRef.current;
-    if(!overlay||!target) return;
-    setPhase('shrinking');
-    const r=target.getBoundingClientRect();
-    gsap.to(overlay,{
-      backgroundColor:'rgba(255,215,0,0.06)',
-      duration:0.1, yoyo:true, repeat:1,
-      onComplete:()=>{
-        gsap.to(overlay,{
-          top:r.top, left:r.left, width:r.width, height:r.height,
-          borderRadius:'0.75rem', duration:0.9, ease:'power4.inOut',
-          onComplete:()=>{ setPhase('done'); if(onIntroComplete) onIntroComplete(); }
-        });
-      }
-    });
-  };
-
   const isComplete = phase==='complete'||phase==='shrinking'||phase==='done';
 
   /* ── Card content ─────────────────────────────────────────── */
@@ -283,9 +229,7 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
       {/* Typing scan line */}
       <ScanLine active={scanActive}/>
 
-      {/* Completion effects — all smooth, no glitch */}
-      <GoldWave    active={showEffects}/>
-      <RoyalRipple active={showEffects}/>
+      {/* Completion effects � all smooth, no glitch */}
       <BorderRunner active={showEffects}/>
       <CrownReveal active={showEffects}/>
 
@@ -351,14 +295,14 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
 
       {/* Output panel */}
       {isComplete && (
-        <div style={{marginTop:'1rem',animation:'outputSlide 0.7s cubic-bezier(0.34,1.56,0.64,1) both',position:'relative',zIndex:10,flexShrink:0}}>
+        <div style={{marginTop:'1rem',position:'relative',zIndex:10,flexShrink:0}}>
           <div style={{background:'linear-gradient(90deg,rgba(75,0,130,0.7),rgba(26,0,48,0.9))',border:'1px solid rgba(255,215,0,0.3)',borderRadius:'0.5rem 0.5rem 0 0',padding:'0.35rem 1rem',display:'flex',alignItems:'center',gap:'0.6rem'}}>
             <div style={{width:6,height:6,borderRadius:'50%',background:'#22c55e',boxShadow:'0 0 6px #22c55e'}}/>
             <span style={{color:'#B8860B',fontSize:'0.6rem',fontFamily:"'Cinzel',serif",letterSpacing:'0.22em'}}>OUTPUT STREAM</span>
             <span style={{marginLeft:'auto',color:'rgba(255,215,0,0.35)',fontSize:'0.55rem',fontFamily:'monospace'}}>exit code 0</span>
           </div>
           <div style={{background:'rgba(0,0,0,0.55)',border:'1px solid rgba(255,215,0,0.2)',borderTop:'none',borderRadius:'0 0 0.5rem 0.5rem',padding:'0.85rem 1.25rem'}}>
-            <GlowOutput text={outputTxt} done={outputDone}/>
+            <GlowOutput text={outputTxt}/>
           </div>
         </div>
       )}
@@ -387,15 +331,9 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
         @keyframes letterPop     { 0%{opacity:0;transform:translateY(-5px)} 100%{opacity:1;transform:translateY(0)} }
         @keyframes bootLine      { from{opacity:0;transform:translateX(-10px)} to{opacity:1;transform:translateX(0)} }
         @keyframes centerPulse   { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
-        @keyframes cardReveal    { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes outputSlide   { 0%{opacity:0;transform:translateY(14px) scale(0.98)} 100%{opacity:1;transform:translateY(0) scale(1)} }
-
-        /* Gold radial pulse on card background */
-        @keyframes goldWavePulse { 0%,100%{opacity:0.4;transform:scale(0.95)} 50%{opacity:1;transform:scale(1.05)} }
-
-        /* Ripple rings expanding from center */
-        @keyframes rippleExpand  { 0%{transform:scale(0.2);opacity:0.8} 100%{transform:scale(6);opacity:0} }
-
+        @keyframes cardReveal    { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+        /* Gold radial pulse on card background */
+        /* Ripple rings expanding from center */
         /* Running light on border edges */
         @keyframes runTop    { 0%{left:-40%}  100%{left:100%}  }
         @keyframes runRight  { 0%{top:-40%}   100%{top:100%}   }
@@ -414,21 +352,6 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
           <div style={{position:'absolute',inset:0,backgroundImage:'linear-gradient(rgba(255,215,0,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,215,0,0.03) 1px,transparent 1px)',backgroundSize:'60px 60px',pointerEvents:'none'}}/>
           <div style={{position:'absolute',top:'15%',left:'8%',width:380,height:380,borderRadius:'50%',background:'radial-gradient(circle,rgba(106,13,173,0.25),transparent)',filter:'blur(80px)',pointerEvents:'none'}}/>
           <div style={{position:'absolute',bottom:'15%',right:'8%',width:380,height:380,borderRadius:'50%',background:'radial-gradient(circle,rgba(184,134,11,0.18),transparent)',filter:'blur(80px)',pointerEvents:'none'}}/>
-
-          {/* Boot */}
-          {phase==='boot' && (
-            <div style={{background:'rgba(4,0,12,0.98)',border:'1px solid rgba(255,215,0,0.2)',borderRadius:'0.75rem',padding:'2rem',fontFamily:'monospace',width:'min(600px,88vw)',animation:'cardReveal 0.4s ease both'}}>
-              <div style={{display:'flex',alignItems:'center',gap:'0.5rem',marginBottom:'1rem',paddingBottom:'0.75rem',borderBottom:'1px solid rgba(255,215,0,0.12)'}}>
-                <span style={{color:'#FFD700'}}>♛</span>
-                <span style={{color:'#B8860B',fontFamily:"'Cinzel',serif",fontSize:'0.68rem',letterSpacing:'0.25em'}}>ROYAL JVM TERMINAL v∞</span>
-                <span style={{marginLeft:'auto',width:8,height:8,borderRadius:'50%',background:'#22c55e',boxShadow:'0 0 6px #22c55e',display:'inline-block',animation:'cursorBlink 1s infinite'}}/>
-              </div>
-              {bootLines.map((line,i)=>(
-                <div key={i} style={{color:i===bootLines.length-1?'#FFD700':'#86efac',fontSize:'0.78rem',marginBottom:'0.4rem',animation:'bootLine 0.3s ease both',textShadow:i===bootLines.length-1?'0 0 10px #FFD700':'0 0 5px #22c55e'}}>{line}</div>
-              ))}
-              <span style={{color:'#FFD700',animation:'cursorBlink 0.7s infinite',fontSize:'0.9rem'}}>█</span>
-            </div>
-          )}
 
           {/* Matrix */}
           {phase==='matrix' && (
@@ -461,3 +384,4 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
     </>
   );
 }
+

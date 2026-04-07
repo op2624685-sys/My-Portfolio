@@ -55,9 +55,45 @@ function ParticleField() {
       id = requestAnimationFrame(draw);
     };
     draw();
-    return () => { cancelAnimationFrame(id); window.removeEventListener('mousemove', onMove); window.removeEventListener('resize', onResize); };
-  }, []);
-  return <canvas ref={canvasRef} style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }} />;
+  return () => { cancelAnimationFrame(id); window.removeEventListener('mousemove', onMove); window.removeEventListener('resize', onResize); };
+}, []);
+return <canvas ref={canvasRef} style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }} />;
+}
+
+function GoldWaveBackground() {
+  return (
+    <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'radial-gradient(ellipse at 50% 50%, rgba(255,215,0,0.12) 0%, rgba(255,215,0,0.04) 40%, transparent 70%)',
+          animation: 'goldWavePulse 2s ease-in-out infinite',
+        }}
+      />
+    </div>
+  );
+}
+
+function GoldRippleBackground() {
+  return (
+    <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+      {[0, 1, 2, 3].map(i => (
+        <div
+          key={i}
+          style={{
+            position: 'absolute',
+            width: '24vmax',
+            height: '24vmax',
+            borderRadius: '50%',
+            border: '1.5px solid rgba(255,215,0,0.7)',
+            animation: `rippleExpand 4s ${i * 0.95}s ease-out infinite`,
+            boxShadow: '0 0 12px rgba(255,215,0,0.3)',
+          }}
+        />
+      ))}
+    </div>
+  );
 }
 
 /* ─── Royal Geometric Decorations ───────────────────────────── */
@@ -81,16 +117,6 @@ function RoyalGeometry({ visible }) {
       <svg style={{ position: 'absolute', bottom: 50, left: 40, opacity: 0.07, animation: 'geoRotate 18s linear infinite reverse' }} width="90" height="90" viewBox="0 0 90 90">
         <polygon points="45,5 80,25 80,65 45,85 10,65 10,25" fill="none" stroke="#FFD700" strokeWidth="1" />
       </svg>
-      {[
-        { style: { top: 14, left: 18 }, d: 'M0 22 L0 0 L22 0' },
-        { style: { top: 14, right: 18 }, d: 'M0 0 L22 0 L22 22' },
-        { style: { bottom: 28, left: 18 }, d: 'M0 0 L0 22 L22 22' },
-        { style: { bottom: 28, right: 18 }, d: 'M22 0 L22 22 L0 22' },
-      ].map((c, i) => (
-        <svg key={i} style={{ position: 'absolute', ...c.style, animation: `cornerReveal 0.5s ${0.3 + i * 0.1}s ease both`, opacity: 0 }} width="22" height="22" viewBox="0 0 22 22">
-          <path d={c.d} fill="none" stroke="rgba(255,215,0,0.5)" strokeWidth="1.5" />
-        </svg>
-      ))}
     </div>
   );
 }
@@ -134,8 +160,6 @@ function MagneticCursor() {
 /* ═══ INDEX PAGE ════════════════════════════════════════════════ */
 const Index = () => {
   const [introComplete, setIntroComplete] = useState(false);
-  const navRef = useRef(null);
-  const titleRef = useRef(null);
   const navbarWrapRef = useRef(null);
   const titleWrapRef = useRef(null);
 
@@ -171,8 +195,8 @@ const Index = () => {
       <style>{`
         @keyframes shimmer      { 0%{background-position:-300% center} 100%{background-position:300% center} }
         @keyframes geoRotate    { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
-        @keyframes cornerReveal { from{opacity:0;transform:scale(0.5)} to{opacity:1;transform:scale(1)} }
-        @keyframes tickerScroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+        @keyframes goldWavePulse { 0%,100%{opacity:0.4;transform:scale(0.95)} 50%{opacity:1;transform:scale(1.05)} }
+        @keyframes rippleExpand  { 0%{transform:scale(0.2);opacity:0.8} 100%{transform:scale(6);opacity:0} }
         @keyframes floatBadge   { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
         @keyframes namePulse    { 0%,100%{filter:drop-shadow(0 0 10px rgba(255,215,0,0.2))} 50%{filter:drop-shadow(0 0 26px rgba(255,215,0,0.5))} }
         @keyframes underlineIn  { from{width:0;opacity:0} to{width:100%;opacity:1} }
@@ -182,6 +206,8 @@ const Index = () => {
 
       {/* ── Always-on layers ── */}
       <ParticleField />
+      <GoldWaveBackground />
+      <GoldRippleBackground />
       <RoyalGeometry visible={introComplete} />
       <MagneticCursor />
 
@@ -204,27 +230,6 @@ const Index = () => {
         ─────────────────────────────────────────────────────────────
       */}
       <div className="h-screen flex flex-col overflow-hidden">
-
-        {/* Bottom ticker */}
-        {introComplete && (
-          <div style={{
-            position: 'fixed', bottom: 0, left: 0, right: 0, height: 22, zIndex: 38,
-            borderTop: '1px solid rgba(255,215,0,0.07)',
-            background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(12px)',
-            overflow: 'hidden', display: 'flex', alignItems: 'center'
-          }}>
-            <div style={{
-              display: 'flex', gap: '3rem',
-              animation: 'tickerScroll 22s linear infinite',
-              whiteSpace: 'nowrap', color: 'rgba(255,215,0,0.25)',
-              fontSize: '0.53rem', fontFamily: "'Cinzel',serif", letterSpacing: '0.35em'
-            }}>
-              {Array(10).fill(['♛ OM PRAKASH', '✦ JAVA DEVELOPER', '◆ SPRING BOOT', '❖ MICROSERVICES', '★ REST API', '⬡ BACKEND ENGINEER', '◈ CLEAN CODE', '⊕ SYSTEM DESIGN']).flat().map((t, i) => (
-                <span key={i}>{t}</span>
-              ))}
-            </div>
-          </div>
-        )}
 
         {/* Navbar — hidden until intro done, revealed by GSAP */}
         <div ref={navbarWrapRef} style={{ opacity: 0, flexShrink: 0 }}>
@@ -380,3 +385,4 @@ const Index = () => {
 };
 
 export default Index;
+
