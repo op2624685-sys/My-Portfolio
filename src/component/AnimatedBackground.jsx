@@ -22,7 +22,7 @@ class Particle {
   }
 
   draw() {
-    this.ctx.fillStyle = `rgba(255, 215, 0, ${this.opacity})`; // gold particles
+    this.ctx.fillStyle = `rgba(255, 179, 71, ${this.opacity})`; // warm particles
     this.ctx.beginPath();
     this.ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     this.ctx.fill();
@@ -59,7 +59,7 @@ const AnimatedBackground = () => {
           const dy = particles[i].y - particles[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
           if (distance < 120) {
-            ctx.strokeStyle = `rgba(184, 134, 11, ${0.15 * (1 - distance / 120)})`; // dark gold lines
+            ctx.strokeStyle = `rgba(196, 106, 43, ${0.15 * (1 - distance / 120)})`; // warm lines
             ctx.lineWidth = 0.8;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
@@ -94,3 +94,4 @@ const AnimatedBackground = () => {
 };
 
 export default AnimatedBackground;
+
