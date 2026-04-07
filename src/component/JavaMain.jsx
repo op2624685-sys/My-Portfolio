@@ -102,10 +102,10 @@ function CrownReveal({ active }) {
 }
 
 /* --- Running light along the border --------------------------- */
-function BorderRunner({ active }) {
+function BorderRunner({ active, squared = false }) {
   if (!active) return null;
   return (
-    <div style={{position:'absolute',inset:0,borderRadius:'0.75rem',pointerEvents:'none',zIndex:6,overflow:'hidden'}}>
+    <div style={{position:'absolute',inset:0,borderRadius: squared ? '0' : '0.75rem',pointerEvents:'none',zIndex:6,overflow:'hidden'}}>
       {/* top runner */}
       <div style={{position:'absolute',top:0,left:0,height:'2px',width:'40%',background:'linear-gradient(90deg,transparent,#ffb347,transparent)',animation:'runTop 3s linear infinite',boxShadow:'0 0 8px #ffb347'}}/>
       {/* right runner */}
@@ -142,8 +142,11 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
   const [outputTxt,   setOutputTxt]   = useState('');
   const [scanActive,  setScanActive]  = useState(false);
   const [showEffects, setShowEffects] = useState(false); // all completion effects
+  const [overlayVisible, setOverlayVisible] = useState(true);
+  const [overlayFading, setOverlayFading] = useState(false);
   const targetRef  = useRef(null);
 
+  
   useEffect(() => {
     if (phase === 'done' && onIntroComplete) {
       onIntroComplete();
@@ -182,19 +185,22 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
       if(idx<=OUTPUT_TEXT.length){ setOutputTxt(OUTPUT_TEXT.slice(0,idx)); idx++; }
       else { clearInterval(iv); }
     },55);
-    const doneTimer=setTimeout(()=>setPhase('done'), OUTPUT_TEXT.length*55+900);
-    return()=>{ clearInterval(iv); clearTimeout(doneTimer); };
+    const doneTimer=setTimeout(()=>{ setPhase('done'); setOverlayFading(true); }, OUTPUT_TEXT.length*55+300);
+    const hideTimer=setTimeout(()=>setOverlayVisible(false), OUTPUT_TEXT.length*55+750);
+    return()=>{ clearInterval(iv); clearTimeout(doneTimer); clearTimeout(hideTimer); };
   },[phase]);
 
   /* Completion state */
   const isComplete = phase==='complete'||phase==='done';
 
   /* -- Card content ------------------------------------------- */
-  const CardInner = () => (
+  const CardInner = ({ full = false }) => (
     <div style={{
       background:'linear-gradient(135deg,rgba(20,14,10,0.98),rgba(27,20,16,0.97))',
-      borderRadius:'0.75rem',
-      padding:'1.5rem',
+      borderRadius: full ? '0' : '0.75rem',
+      padding: full ? '3.5rem 4rem' : '1.5rem',
+      width: full ? '100%' : 'auto',
+      height: full ? '100%' : 'auto',
       border:`1px solid ${typingDone?'rgba(255,179,71,0.5)':'rgba(255,179,71,0.18)'}`,
       position:'relative',
       overflow:'hidden',
@@ -210,7 +216,7 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
       <ScanLine active={scanActive}/>
 
       {/* Completion effects ? all smooth, no glitch */}
-      <BorderRunner active={showEffects}/>
+      <BorderRunner active={showEffects} squared={full}/>
       <CrownReveal active={showEffects}/>
 
       {/* Subtle dot grid bg */}
@@ -221,7 +227,7 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
         <div style={{width:12,height:12,borderRadius:'50%',background:'#ff5f57',boxShadow:'0 0 5px #ff5f57'}}/>
         <div style={{width:12,height:12,borderRadius:'50%',background:'#febc2e',boxShadow:'0 0 5px #febc2e'}}/>
         <div style={{width:12,height:12,borderRadius:'50%',background:'#28c840',boxShadow:'0 0 5px #28c840'}}/>
-        <span style={{marginLeft:'0.75rem',color:'#c46a2b',fontSize:'0.72rem',fontFamily:"'Cinzel',serif",letterSpacing:'0.18em',textShadow:'0 0 8px rgba(196,106,43,0.5)'}}>
+        <span style={{marginLeft:'0.75rem',color:'#c46a2b',fontSize:'1.05rem',fontFamily:"'Cinzel',serif",letterSpacing:'0.18em',textShadow:'0 0 8px rgba(196,106,43,0.5)'}}>
           ? Main.java
         </span>
         {typingDone && (
@@ -232,7 +238,7 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
             WebkitBackgroundClip:'text',
             WebkitTextFillColor:'transparent',
             backgroundClip:'text',
-            fontSize:'0.65rem',
+            fontSize:'0.95rem',
             fontFamily:"'Cinzel',serif",
             letterSpacing:'0.12em',
             fontWeight:'bold',
@@ -257,14 +263,14 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
           {JAVA_CODE.split('\n').map((_,i)=>(
             <div key={i} style={{
               color:i<code.split('\n').length?'rgba(255,179,71,0.4)':'rgba(255,255,255,0.08)',
-              fontSize:'0.8rem',fontFamily:'monospace',lineHeight:1.7,
+              fontSize:'1.15rem',fontFamily:'monospace',lineHeight:1.7,
               transition:'color 0.3s, text-shadow 0.3s',
               textShadow:i<code.split('\n').length?'0 0 5px rgba(255,179,71,0.3)':'none',
             }}>{i+1}</div>
           ))}
         </div>
         <pre style={{flex:1,textAlign:'left',overflow:'hidden',margin:0}}>
-          <code style={{fontSize:'0.88rem',fontFamily:'monospace',whiteSpace:'pre-wrap',wordBreak:'break-word',lineHeight:1.7}}>
+          <code style={{fontSize:'1.2rem',fontFamily:'monospace',whiteSpace:'pre-wrap',wordBreak:'break-word',lineHeight:1.7}}>
             {highlight(code)}
             {!typingDone && (
               <span style={{display:'inline-block',width:9,height:17,background:'#ffb347',boxShadow:'0 0 12px #ffb347,0 0 24px #c46a2b',marginLeft:2,verticalAlign:'middle',animation:'cursorBlink 0.65s infinite'}}/>
@@ -278,8 +284,8 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
         <div style={{marginTop:'1rem',position:'relative',zIndex:10,flexShrink:0}}>
           <div style={{background:'linear-gradient(90deg,rgba(58,31,21,0.7),rgba(27,20,16,0.9))',border:'1px solid rgba(255,179,71,0.3)',borderRadius:'0.5rem 0.5rem 0 0',padding:'0.35rem 1rem',display:'flex',alignItems:'center',gap:'0.6rem'}}>
             <div style={{width:6,height:6,borderRadius:'50%',background:'#7fb069',boxShadow:'0 0 6px #7fb069'}}/>
-            <span style={{color:'#c46a2b',fontSize:'0.6rem',fontFamily:"'Cinzel',serif",letterSpacing:'0.22em'}}>OUTPUT STREAM</span>
-            <span style={{marginLeft:'auto',color:'rgba(255,179,71,0.35)',fontSize:'0.55rem',fontFamily:'monospace'}}>exit code 0</span>
+            <span style={{color:'#c46a2b',fontSize:'0.95rem',fontFamily:"'Cinzel',serif",letterSpacing:'0.22em'}}>OUTPUT STREAM</span>
+            <span style={{marginLeft:'auto',color:'rgba(255,179,71,0.35)',fontSize:'0.85rem',fontFamily:'monospace'}}>exit code 0</span>
           </div>
           <div style={{background:'rgba(0,0,0,0.55)',border:'1px solid rgba(255,179,71,0.2)',borderTop:'none',borderRadius:'0 0 0.5rem 0.5rem',padding:'0.85rem 1.25rem'}}>
             <GlowOutput text={outputTxt}/>
@@ -329,15 +335,54 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
         @keyframes jewelPop    { 0%{opacity:0;transform:scale(0)} 70%{transform:scale(1.3)} 100%{opacity:1;transform:scale(1)} }
       `}</style>
 
+      {/* Fullscreen execution (no loader) */}
+      {overlayVisible && (
+        <div style={{position:'fixed',top:0,left:0,width:'100vw',height:'100vh',zIndex:60,display:'flex',alignItems:'center',justifyContent:'center',background:'radial-gradient(ellipse at 50% 40%, rgba(27,20,16,0.9) 0%, rgba(10,7,6,0.92) 70%)', transform: overlayFading ? 'translateY(60px)' : 'translateY(0)', opacity: overlayFading ? 0 : 1, transition: 'transform 0.9s cubic-bezier(0.22,0.61,0.36,1), opacity 0.7s ease'}}>
+          <div style={{width:'100vw', height:'100vh',animation: 'slideUp 0.8s cubic-bezier(0.22,0.61,0.36,1) both'}}>
+            <CardInner full />
+          </div>
+        </div>
+      )}
+
       {/* -- In-page slot -- */}
       <section ref={targetRef} className="flex justify-center px-4 py-4" style={{flexShrink:0, paddingTop: '10rem'}}>
-        <div style={{width:'100%',maxWidth:640,animation:'cardReveal 0.5s ease both'}}>
-          <CardInner/>
-        </div>
+        {phase==='done' && (
+          <div style={{width:'100%',maxWidth:640,animation: 'slideUp 0.8s cubic-bezier(0.22,0.61,0.36,1) both'}}>
+            <div style={{transform:'scale(0.85)', transformOrigin:'top center'}}>
+              <CardInner/>
+            </div>
+          </div>
+        )}
       </section>
     </>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
