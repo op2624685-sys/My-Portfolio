@@ -356,7 +356,7 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
                   </code>
                 </pre>
               </div>
-              <div style={{marginTop:'1rem'}}>
+              <div style={{marginTop:'0.5rem'}}>
                 <div style={{background:'rgba(0,0,0,0.55)',border:'1px solid rgba(255,179,71,0.2)',borderRadius:'0.5rem',padding:'0.75rem 1rem'}}>
                   <GlowOutput text={OUTPUT_TEXT}/>
                 </div>
