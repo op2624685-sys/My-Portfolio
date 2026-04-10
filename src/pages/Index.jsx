@@ -78,7 +78,7 @@ function GoldWaveBackground() {
 function GoldRippleBackground() {
   return (
     <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-      {[0, 1, 2, 3].map(i => (
+      {[0, 1].map(i => (
         <div
           key={i}
           style={{
@@ -86,8 +86,8 @@ function GoldRippleBackground() {
             width: '24vmax',
             height: '24vmax',
             borderRadius: '50%',
-            border: '1.5px solid rgba(255,179,71,0.7)',
-            animation: `rippleExpand 4s ${i * 0.95}s ease-out infinite`,
+            border: '0.5px solid rgba(255,179,71,0.7)',
+            animation: `rippleExpand 3.5s ${i * 0.5}s ease-out infinite`,
             boxShadow: '0 0 12px rgba(255,179,71,0.3)',
           }}
         />
@@ -274,16 +274,16 @@ const Index = () => {
               {/* Name */}
               <div className="gs" style={{ marginBottom: '0.55rem', animation: 'namePulse 3.5s ease-in-out infinite' }}>
                 <span style={{
-                  fontFamily: "'Cinzel',serif", fontSize: 'clamp(2rem,5.5vw,3.8rem)',
+                  fontFamily: "'DM Sans',serif", fontSize: 'clamp(2rem,5.5vw,3.8rem)',
                   fontWeight: 700, color: '#fff', marginRight: '0.3rem'
-                }}>I'm</span>
+                }}>I'M  </span>
                 <span style={{
-                  fontFamily: "'Cinzel',serif", fontSize: 'clamp(2rem,5.5vw,3.8rem)', fontWeight: 700,
+                  fontFamily: "'DM Sans',serif", fontSize: 'clamp(2rem,5.5vw,3.8rem)', fontWeight: 700,
                   backgroundImage: 'linear-gradient(90deg,#c46a2b,#ffb347,#fff1d6,#ffb347,#c46a2b)',
                   backgroundSize: '300% auto',
                   WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
                   animation: 'shimmer 4s linear infinite',
-                }}>Om Prakash</span>
+                }}>OM</span>
               </div>
 
               {/* Role */}
