@@ -1,21 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
-export default function TextRotation() {
-  const texts = ["Om Prakash", "Java Developer"];
-  const [displayText, setDisplayText] = useState("");
+export default function TextRotation({ size = 'md' }) {
+  const texts = useMemo(() => ['Java', 'Backend', 'API'], []);
+  // Longest word reserves the width so the surrounding layout never shifts
+  // while the typed text cycles between shorter/longer strings.
+  const longestText = useMemo(
+    () => texts.reduce((a, b) => (a.length >= b.length ? a : b), ''),
+    [texts]
+  );
+
+  const [displayText, setDisplayText] = useState('');
   const [textIndex, setTextIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     const current = texts[textIndex % texts.length];
-    const typingSpeed = isDeleting ? 45 : 85;
-    const pauseAfterType = 1100;
+    const typingSpeed = isDeleting ? 40 : 90;
+    const pauseAfterType = 1400;
     const pauseAfterDelete = 250;
 
     let timeoutId;
     if (!isDeleting && displayText === current) {
       timeoutId = setTimeout(() => setIsDeleting(true), pauseAfterType);
-    } else if (isDeleting && displayText === "") {
+    } else if (isDeleting && displayText === '') {
       timeoutId = setTimeout(() => {
         setIsDeleting(false);
         setTextIndex((prev) => (prev + 1) % texts.length);
@@ -32,43 +39,67 @@ export default function TextRotation() {
     return () => clearTimeout(timeoutId);
   }, [displayText, isDeleting, textIndex, texts]);
 
+  const fontSize = size === 'sm' ? '0.78rem' : size === 'lg' ? '2.4rem' : '1rem';
+  const isLarge = size === 'lg';
+  const gradient = isLarge
+    ? 'linear-gradient(135deg, #f0d4a8 0%, #d4af7a 50%, #a87c4b 100%)'
+    : 'linear-gradient(135deg, #f0d4a8 0%, #d4af7a 100%)';
+
   return (
-    <div className="flex items-center justify-center">
-      <div className="text-4xl font-bold text-white" style={{ fontFamily: "'Cinzel', serif" }}>
-        Hey, I'm{' '}
-        <span className="inline-block relative">
-          <span
-            className="text-transparent bg-clip-text"
-            style={{
-              backgroundImage: 'linear-gradient(90deg, #c46a2b, #ffb347, #fff1d6, #ffb347, #c46a2b)',
-              backgroundSize: '300% auto',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              animation: 'shimmer 4s linear infinite',
-              fontFamily: "'Cinzel', serif",
-              whiteSpace: 'pre',
-            }}
-          >
-            {displayText}
-          </span>
-          <span
-            aria-hidden="true"
-            style={{
-              display: 'inline-block',
-              width: 2,
-              height: '1.1em',
-              background: '#ffb347',
-              marginLeft: 3,
-              transform: 'translateY(2px)',
-              animation: 'cursorBlink 0.8s infinite',
-            }}
-          />
-        </span>
-      </div>
+    <span
+      style={{
+        position: 'relative',
+        display: 'inline-block',
+        fontFamily: 'Inter, system-ui, sans-serif',
+        fontWeight: 500,
+        fontSize,
+        letterSpacing: '-0.01em',
+        lineHeight: 1.1,
+        // Extra padding on the right so the blinking cursor never overflows
+        // the reserved width of the longest word.
+        paddingRight: '0.45ch',
+      }}
+    >
+      {/* Ghost: invisible spacer that locks the span's width to the longest word */}
+      <span style={{ visibility: 'hidden', whiteSpace: 'pre' }} aria-hidden="true">
+        {longestText}
+      </span>
+
+      {/* Animated: absolutely positioned over the ghost so it can shrink/grow
+          without affecting surrounding layout (navbar, hero, etc.). */}
+      <span
+        style={{
+          position: 'absolute',
+          left: 0,
+          top: '50%',
+          transform: 'translateY(-50%)',
+          display: 'inline-flex',
+          alignItems: 'center',
+          whiteSpace: 'pre',
+          backgroundImage: gradient,
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text',
+        }}
+      >
+        {displayText || ' '}
+        <span
+          aria-hidden="true"
+          style={{
+            display: 'inline-block',
+            width: 1.5,
+            height: isLarge ? '1em' : '0.95em',
+            background: '#d4af7a',
+            marginLeft: 2,
+            animation: 'rbCursor 0.85s steps(2) infinite',
+            flexShrink: 0,
+          }}
+        />
+      </span>
+
       <style>{`
-        @keyframes cursorBlink { 0%,100%{opacity:1} 50%{opacity:0} }
+        @keyframes rbCursor { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
       `}</style>
-    </div>
+    </span>
   );
 }
-

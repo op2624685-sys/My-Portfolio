@@ -1,7 +1,34 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
+import { motion } from 'framer-motion';
+import {
+  ArrowDown,
+  ArrowUpRight,
+  Sparkles,
+  Github,
+  Linkedin,
+  Mail,
+  Calendar,
+  Code2,
+  Layers,
+  ExternalLink,
+} from 'lucide-react';
 import Navbar from '../component/Navbar';
 import JavaMain from '../component/JavaMain';
+import AmbientBackdrop from '../component/AmbientBackdrop';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+const HOME_PATH = '/My-Portfolio';
+
+// Each section gets a clean URL. All routes render <Index />; the page
+// detects the path and scrolls to the matching section on mount / change.
+const SECTION_ROUTES = {
+  '/My-Portfolio':          '#hero',
+  '/My-Portfolio/skills':   '#skills',
+  '/My-Portfolio/projects': '#projects',
+  '/My-Portfolio/about':    '#about',
+  '/My-Portfolio/contact':  '#contact',
+};
 
 /* ─── Ambient Particle Field ─────────────────────────────────── */
 function ParticleField() {
@@ -10,15 +37,18 @@ function ParticleField() {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    let W = canvas.width = window.innerWidth;
-    let H = canvas.height = window.innerHeight;
-    const particles = Array.from({ length: 55 }, () => ({
-      x: Math.random() * W, y: Math.random() * H,
-      r: 0.6 + Math.random() * 1.4,
-      vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25,
-      alpha: 0.15 + Math.random() * 0.45, pulse: Math.random() * Math.PI * 2,
+    let W = (canvas.width = window.innerWidth);
+    let H = (canvas.height = window.innerHeight);
+    const particles = Array.from({ length: 40 }, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: 0.4 + Math.random() * 1.1,
+      vx: (Math.random() - 0.5) * 0.15,
+      vy: (Math.random() - 0.5) * 0.15,
+      alpha: 0.12 + Math.random() * 0.35,
+      pulse: Math.random() * Math.PI * 2,
     }));
-    let mx = -999, my = -999;
+    let mx = -9999, my = -9999;
     const onMove = (e) => { mx = e.clientX; my = e.clientY; };
     const onResize = () => { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; };
     window.addEventListener('mousemove', onMove);
@@ -26,10 +56,10 @@ function ParticleField() {
     let id;
     const draw = () => {
       ctx.clearRect(0, 0, W, H);
-      particles.forEach(p => {
-        p.pulse += 0.018;
+      particles.forEach((p) => {
+        p.pulse += 0.014;
         const dx = mx - p.x, dy = my - p.y, d = Math.sqrt(dx * dx + dy * dy);
-        if (d < 200) { p.vx += dx / d * 0.015; p.vy += dy / d * 0.015; }
+        if (d < 160) { p.vx += (dx / d) * 0.01; p.vy += (dy / d) * 0.01; }
         p.vx *= 0.98; p.vy *= 0.98;
         p.x += p.vx; p.y += p.vy;
         if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
@@ -37,354 +67,922 @@ function ParticleField() {
       });
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
           const d = Math.sqrt(dx * dx + dy * dy);
-          if (d < 130) {
-            ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(196,106,43,${(1 - d / 130) * 0.22})`; ctx.lineWidth = 0.6; ctx.stroke();
+          if (d < 110) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(212, 175, 122, ${(1 - d / 110) * 0.14})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
           }
         }
       }
-      particles.forEach(p => {
-        const a = p.alpha * (0.6 + 0.4 * Math.sin(p.pulse));
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,179,71,${a})`;
-        ctx.shadowBlur = 6; ctx.shadowColor = 'rgba(255,179,71,0.4)';
-        ctx.fill(); ctx.shadowBlur = 0;
+      particles.forEach((p) => {
+        const a = p.alpha * (0.55 + 0.45 * Math.sin(p.pulse));
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(212, 175, 122, ${a})`;
+        ctx.shadowBlur = 4;
+        ctx.shadowColor = 'rgba(212, 175, 122, 0.3)';
+        ctx.fill();
+        ctx.shadowBlur = 0;
       });
       id = requestAnimationFrame(draw);
     };
     draw();
-  return () => { cancelAnimationFrame(id); window.removeEventListener('mousemove', onMove); window.removeEventListener('resize', onResize); };
-}, []);
-return <canvas ref={canvasRef} style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }} />;
-}
-
-function GoldWaveBackground() {
-  return (
-    <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'radial-gradient(ellipse at 50% 50%, rgba(255,179,71,0.12) 0%, rgba(255,179,71,0.04) 40%, transparent 70%)',
-          animation: 'goldWavePulse 2s ease-in-out infinite',
-        }}
-      />
-    </div>
-  );
-}
-
-function GoldRippleBackground() {
-  return (
-    <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-      {[0, 1].map(i => (
-        <div
-          key={i}
-          style={{
-            position: 'absolute',
-            width: '24vmax',
-            height: '24vmax',
-            borderRadius: '50%',
-            border: '0.5px solid rgba(255,179,71,0.7)',
-            animation: `rippleExpand 3.5s ${i * 0.5}s ease-out infinite`,
-            boxShadow: '0 0 12px rgba(255,179,71,0.3)',
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
-/* ─── Royal Geometric Decorations ───────────────────────────── */
-function RoyalGeometry({ visible }) {
-  if (!visible) return null;
-  return (
-    <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 1, overflow: 'hidden' }}>
-      <svg style={{ position: 'absolute', top: -60, left: -60, opacity: 0.07, animation: 'geoRotate 25s linear infinite' }} width="280" height="280" viewBox="0 0 280 280">
-        <polygon points="140,10 270,140 140,270 10,140" fill="none" stroke="#ffb347" strokeWidth="1" />
-        <polygon points="140,40 240,140 140,240 40,140" fill="none" stroke="#c46a2b" strokeWidth="0.5" />
-        <polygon points="140,70 210,140 140,210 70,140" fill="none" stroke="#ffb347" strokeWidth="0.3" />
-      </svg>
-      <svg style={{ position: 'absolute', bottom: -80, right: -80, opacity: 0.06, animation: 'geoRotate 30s linear infinite reverse' }} width="320" height="320" viewBox="0 0 320 320">
-        <polygon points="160,10 310,160 160,310 10,160" fill="none" stroke="#ffb347" strokeWidth="1" />
-        <polygon points="160,45 275,160 160,275 45,160" fill="none" stroke="#c46a2b" strokeWidth="0.5" />
-      </svg>
-      <svg style={{ position: 'absolute', top: 50, right: 40, opacity: 0.08, animation: 'geoRotate 20s linear infinite' }} width="110" height="110" viewBox="0 0 110 110">
-        <polygon points="55,5 100,30 100,80 55,105 10,80 10,30" fill="none" stroke="#ffb347" strokeWidth="1" />
-        <polygon points="55,22 83,38 83,72 55,88 27,72 27,38" fill="none" stroke="#c46a2b" strokeWidth="0.5" />
-      </svg>
-      <svg style={{ position: 'absolute', bottom: 50, left: 40, opacity: 0.07, animation: 'geoRotate 18s linear infinite reverse' }} width="90" height="90" viewBox="0 0 90 90">
-        <polygon points="45,5 80,25 80,65 45,85 10,65 10,25" fill="none" stroke="#ffb347" strokeWidth="1" />
-      </svg>
-    </div>
-  );
-}
-
-/* ─── Magnetic Cursor ────────────────────────────────────────── */
-function MagneticCursor() {
-  const dotRef = useRef(null);
-  const ringRef = useRef(null);
-  const pos = useRef({ x: -100, y: -100 });
-  const rPos = useRef({ x: -100, y: -100 });
-  useEffect(() => {
-    const dot = dotRef.current, ring = ringRef.current;
-    if (!dot || !ring) return;
-    const move = (e) => { pos.current = { x: e.clientX, y: e.clientY }; };
-    window.addEventListener('mousemove', move);
-    let id;
-    const loop = () => {
-      gsap.set(dot, { x: pos.current.x - 4, y: pos.current.y - 4 });
-      rPos.current.x += (pos.current.x - rPos.current.x) * 0.1;
-      rPos.current.y += (pos.current.y - rPos.current.y) * 0.1;
-      gsap.set(ring, { x: rPos.current.x - 18, y: rPos.current.y - 18 });
-      id = requestAnimationFrame(loop);
+    return () => {
+      cancelAnimationFrame(id);
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('resize', onResize);
     };
-    loop();
-    const onIn = () => gsap.to(ring, { scale: 2.2, opacity: 0.5, duration: 0.25 });
-    const onOut = () => gsap.to(ring, { scale: 1, opacity: 1, duration: 0.25 });
-    document.querySelectorAll('a,button').forEach(el => {
-      el.addEventListener('mouseenter', onIn);
-      el.addEventListener('mouseleave', onOut);
-    });
-    return () => { cancelAnimationFrame(id); window.removeEventListener('mousemove', move); };
   }, []);
-  return (
-    <>
-      <div ref={dotRef} style={{ position: 'fixed', top: 0, left: 0, width: 8, height: 8, borderRadius: '50%', background: '#ffb347', boxShadow: '0 0 8px #ffb347', pointerEvents: 'none', zIndex: 99999, mixBlendMode: 'difference' }} />
-      <div ref={ringRef} style={{ position: 'fixed', top: 0, left: 0, width: 36, height: 36, borderRadius: '50%', border: '1.5px solid rgba(255,179,71,0.7)', pointerEvents: 'none', zIndex: 99998 }} />
-    </>
-  );
+  return <canvas ref={canvasRef} style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }} />;
 }
 
-/* ═══ INDEX PAGE ════════════════════════════════════════════════ */
+/* ─── Reusable section primitives ────────────────────────────── */
+const SectionHeader = ({ kicker, lead, accent }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ amount: 0.3 }}
+    transition={{ duration: 0.6 }}
+    style={{ textAlign: 'center', marginBottom: '4rem' }}
+  >
+    <span
+      style={{
+        display: 'inline-block',
+        fontSize: '0.78rem',
+        color: 'var(--text-tertiary)',
+        letterSpacing: '0.2em',
+        textTransform: 'uppercase',
+        fontWeight: 500,
+        marginBottom: '1rem',
+      }}
+    >
+      {kicker}
+    </span>
+    <h1
+      className="font-display"
+      style={{
+        fontSize: 'clamp(2.5rem, 5.5vw, 4rem)',
+        fontWeight: 500,
+        letterSpacing: '-0.03em',
+        lineHeight: 1.05,
+        margin: 0,
+        marginBottom: '1rem',
+      }}
+    >
+      <span className="text-gradient">{lead} </span>
+      <span className="text-gradient-gold">{accent}</span>
+    </h1>
+  </motion.div>
+);
+
+/* ─── Section data (reused from dedicated pages) ─────────────── */
+const skills = [
+  { name: 'Java',             icon: '/icons/java.svg',   level: 'Expert',       description: 'Core Java, Java 8+, Collections, Multithreading, Streams' },
+  { name: 'Spring Framework', icon: '/icons/spring.svg', level: 'Advanced',     description: 'Spring Boot, Spring MVC, Spring Security, Spring Data JPA' },
+  { name: 'MySQL',            icon: '/icons/mysql.svg',  level: 'Advanced',     description: 'Database design, query optimization, stored procedures' },
+  { name: 'Git',              icon: '/icons/git.svg',    level: 'Advanced',     description: 'Version control, branching, merging, CI/CD pipelines' },
+  { name: 'Docker',           icon: '/icons/docker.svg', level: 'Intermediate', description: 'Containerization, Docker Compose, deployment workflows' },
+  { name: 'REST API',                                       level: 'Expert',       description: 'RESTful services, API design, microservices architecture' },
+  { name: 'Hibernate',                                      level: 'Advanced',     description: 'ORM, JPA, entity relationships, query language' },
+  { name: 'Maven / Gradle',                                level: 'Advanced',     description: 'Build tools, dependency management, project configuration' },
+];
+
+const levelStyle = (level) => {
+  if (level === 'Expert')   return { background: 'rgba(212, 175, 122, 0.12)',  color: '#f0d4a8', border: '1px solid rgba(212, 175, 122, 0.4)' };
+  if (level === 'Advanced') return { background: 'rgba(74, 222, 128, 0.10)',   color: '#86efac', border: '1px solid rgba(74, 222, 128, 0.35)' };
+  return                            { background: 'rgba(255, 255, 255, 0.04)', color: 'var(--text-tertiary)', border: '1px solid var(--border-default)' };
+};
+
+const projects = [
+  { title: 'E-Commerce Backend API',  description: 'A comprehensive RESTful API for an e-commerce platform with user authentication, product management, shopping cart, and order processing.', technologies: ['Spring Boot', 'MySQL', 'JWT', 'Spring Security'], githubUrl: 'https://github.com/omprakash', liveUrl: 'https://demo-project.com' },
+  { title: 'Task Management System',  description: 'Enterprise task management application with role-based access control, real-time notifications, and advanced filtering.',                technologies: ['Java', 'Spring MVC', 'Hibernate', 'PostgreSQL'],     githubUrl: 'https://github.com/omprakash', liveUrl: 'https://demo-project.com' },
+  { title: 'Microservices Architecture', description: 'Scalable microservices-based application with service discovery, API gateway, and distributed tracing.',                          technologies: ['Spring Cloud', 'Docker', 'Kubernetes', 'Redis'],      githubUrl: 'https://github.com/omprakash', liveUrl: 'https://demo-project.com' },
+  { title: 'Real-time Chat Application', description: 'WebSocket-based real-time messaging platform with group chats, file sharing, and user presence indicators.',                     technologies: ['Spring Boot', 'WebSocket', 'MongoDB', 'RabbitMQ'],   githubUrl: 'https://github.com/omprakash', liveUrl: 'https://demo-project.com' },
+  { title: 'Payment Gateway Integration', description: 'Secure payment processing system with multiple providers, transaction management, and fraud detection.',                          technologies: ['Spring Boot', 'Stripe API', 'MySQL', 'Redis'],       githubUrl: 'https://github.com/omprakash', liveUrl: 'https://demo-project.com' },
+  { title: 'Analytics Dashboard API',   description: 'High-performance backend for analytics dashboard with data aggregation, caching, and export functionality.',                    technologies: ['Java', 'Spring Boot', 'ElasticSearch', 'Kafka'],    githubUrl: 'https://github.com/omprakash', liveUrl: 'https://demo-project.com' },
+];
+
+const stats = [
+  { label: 'Years Experience',   value: '3+',  icon: Calendar },
+  { label: 'Projects Completed', value: '25+', icon: Code2 },
+  { label: 'Technologies',       value: '15+', icon: Layers },
+];
+
+const services = [
+  { title: 'Backend Development', desc: 'Building scalable server-side applications with Java and Spring' },
+  { title: 'API Design',          desc: 'Creating RESTful APIs following best practices and standards' },
+  { title: 'Database Design',     desc: 'Designing efficient database schemas and optimizing queries' },
+  { title: 'Microservices',       desc: 'Developing distributed systems with microservices architecture' },
+  { title: 'Performance Tuning',  desc: 'Optimizing application performance and resource utilization' },
+  { title: 'Code Review',         desc: 'Ensuring code quality through comprehensive reviews' },
+];
+
+const socialLinks = [
+  { name: 'GitHub',   icon: Github,   url: 'https://github.com/omprakash' },
+  { name: 'LinkedIn', icon: Linkedin, url: 'https://linkedin.com/in/omprakash' },
+  { name: 'Email',    icon: Mail,     url: 'mailto:omprakash@example.com' },
+];
+
+/* ─── Framer variants ────────────────────────────────────────── */
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.2 } },
+};
+const cardVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 110, damping: 18 } },
+};
+
+/* ═══ HERO INDEX PAGE (single-page with sections) ════════════════ */
 const Index = () => {
   const [introComplete, setIntroComplete] = useState(false);
-  const navbarWrapRef = useRef(null);
-  const titleWrapRef = useRef(null);
+  const heroRef = useRef(null);
+  const scrollHintRef = useRef(null);
+  const [hideScrollHint, setHideScrollHint] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleIntroComplete = () => setIntroComplete(true);
 
+  /* GSAP intro animation for the hero */
   useEffect(() => {
     if (!introComplete) return;
     requestAnimationFrame(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-      // Reveal navbar wrapper
-      tl.fromTo(navbarWrapRef.current,
-        { y: -80, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6 }
-      );
-      // Reveal title wrapper
-      tl.fromTo(titleWrapRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.4 },
-        '-=0.3'
-      );
-      // Stagger each .gs child
+      tl.fromTo(heroRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6 });
       tl.fromTo(
-        titleWrapRef.current?.querySelectorAll('.gs') || [],
-        { y: 40, opacity: 0, filter: 'blur(6px)' },
-        { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.5, stagger: 0.13 },
-        '-=0.2'
+        heroRef.current?.querySelectorAll('.gs') || [],
+        { y: 28, opacity: 0, filter: 'blur(6px)' },
+        { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.7, stagger: 0.1 },
+        '-=0.4'
       );
     });
   }, [introComplete]);
 
+  /* Hide the "Scroll" hint once the user scrolls past the hero. */
+  useEffect(() => {
+    const onScroll = () => {
+      // If user is no longer in the first ~85% of the viewport, hide the hint.
+      setHideScrollHint(window.scrollY > window.innerHeight * 0.6);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  /* Scroll-spy: as the user scrolls through sections, update the URL
+     (and therefore the navbar's active link) to reflect the section
+     currently in view. Uses IntersectionObserver on a thin band at
+     viewport center, so the active link only flips when the user has
+     actually moved past the middle of a section. */
+  useEffect(() => {
+    const sectionEntries = Object.entries(SECTION_ROUTES); // [['/', '#hero'], ...]
+    const sectionEls = sectionEntries
+      .map(([, anchor]) => document.querySelector(anchor))
+      .filter(Boolean);
+    if (!sectionEls.length) return;
+
+    // Track which sections currently intersect the "decision line" at the
+    // vertical center of the viewport. The active one is whichever has the
+    // smallest absolute distance between its top and the viewport mid-line.
+    const intersecting = new Set();
+
+    const pickActive = () => {
+      // Prefer an intersecting section, fall back to the one whose top is
+      // closest to (and just above) the viewport mid-line.
+      const midY = window.innerHeight / 2;
+      let best = null;
+      let bestDist = Infinity;
+
+      sectionEls.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (intersecting.has(el)) {
+          // Distance from section top to viewport mid-line; smaller = closer.
+          const dist = Math.abs(rect.top - midY);
+          if (dist < bestDist) { bestDist = dist; best = el; }
+        } else if (rect.top < midY && rect.bottom > 0) {
+          // Section is above mid-line but its top is the closest still-on-screen.
+          const dist = midY - rect.top;
+          if (dist < bestDist) { bestDist = dist; best = el; }
+        }
+      });
+
+      // If nothing matched (e.g. very top of page), use the first section.
+      if (!best) best = sectionEls[0];
+
+      const match = sectionEntries.find(([, anchor]) =>
+        document.querySelector(anchor) === best
+      );
+      const newPath = match?.[0];
+      if (newPath && newPath !== location.pathname) {
+        // Sync URL via React Router so useLocation updates and the
+        // Navbar re-renders with the new active link. `replace: true`
+        // keeps the back button stack clean.
+        navigate(newPath, { replace: true });
+      }
+    };
+
+    // A thin band at the vertical center of the viewport. Only sections
+    // whose body crosses this band are considered "currently active".
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) intersecting.add(entry.target);
+          else intersecting.delete(entry.target);
+        });
+        pickActive();
+      },
+      {
+        // Top edge of the band sits at viewport center (50% from top, minus the
+        // band's own half-height), bottom edge same — making a 1px line.
+        // A few px tall so it actually fires.
+        rootMargin: '-50% 0px -49.9% 0px',
+        threshold: 0,
+      }
+    );
+
+    sectionEls.forEach((el) => observer.observe(el));
+    // Run once on mount so the initial state is correct.
+    pickActive();
+
+    return () => observer.disconnect();
+  }, [location.pathname, navigate]);
+
+  /* Scroll-to-section when the URL changes (via click or back/forward). */
+  useEffect(() => {
+    const target = SECTION_ROUTES[location.pathname] || '#hero';
+    // Defer to allow layout / fonts to settle, then smooth-scroll.
+    const id = setTimeout(() => {
+      const el = document.querySelector(target);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 80);
+    return () => clearTimeout(id);
+  }, [location.pathname]);
+
+  const techs = [{ label: 'Spring Boot' }, { label: 'Microservices' }, { label: 'REST APIs' }, { label: 'Java' }];
+
   return (
     <>
-      <style>{`
-        @keyframes shimmer      { 0%{background-position:-300% center} 100%{background-position:300% center} }
-        @keyframes geoRotate    { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
-        @keyframes goldWavePulse { 0%,100%{opacity:0.4;transform:scale(0.95)} 50%{opacity:1;transform:scale(1.05)} }
-        @keyframes rippleExpand  { 0%{transform:scale(0.2);opacity:0.8} 100%{transform:scale(6);opacity:0} }
-        @keyframes floatBadge   { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
-        @keyframes namePulse    { 0%,100%{filter:drop-shadow(0 0 10px rgba(255,179,71,0.2))} 50%{filter:drop-shadow(0 0 26px rgba(255,179,71,0.5))} }
-        @keyframes underlineIn  { from{width:0;opacity:0} to{width:100%;opacity:1} }
-        @keyframes dotPulse     { 0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.6)} 70%{box-shadow:0 0 0 7px rgba(34,197,94,0)} }
-        @keyframes dividerIn    { from{opacity:0;transform:scaleX(0)} to{opacity:1;transform:scaleX(1)} }
-      `}</style>
-
-      {/* ── Always-on layers ── */}
+      <AmbientBackdrop />
       <ParticleField />
-      <GoldWaveBackground />
-      <GoldRippleBackground />
-      <RoyalGeometry visible={introComplete} />
-      <MagneticCursor />
 
-      {/*
-        ─────────────────────────────────────────────────────────────
-        LAYOUT STRATEGY
-        ─────────────────────────────────────────────────────────────
-        The whole page is a normal flex column. Nothing has opacity:0
-        as a wrapper — instead we hide individual sections (navbar,
-        title) and reveal them with GSAP after intro.
+      <Navbar />
 
-        JavaMain renders TWO things:
-          1. position:fixed fullscreen overlay (zIndex 9999) — intro animation
-             This is ALWAYS visible because it's fixed to the viewport.
-          2. A <section> in the normal flow — the final code card slot.
-             The GSAP shrink animates the overlay down to this slot's position.
+      {/* ── #hero ────────────────────────────────────────────── */}
+      <section
+        id="hero"
+        style={{
+          minHeight: '100vh',
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '7rem 1.5rem 4rem',
+          position: 'relative',
+          zIndex: 2,
+        }}
+      >
+        <div
+          ref={heroRef}
+          style={{
+            width: '100%',
+            maxWidth: 880,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            textAlign: 'center',
+            margin: '0 auto',
+          }}
+        >
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="gs"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.4rem 0.9rem 0.4rem 0.7rem',
+              borderRadius: 999,
+              background: 'rgba(255, 255, 255, 0.03)',
+              border: '1px solid var(--border-default)',
+              marginBottom: '1.75rem',
+              backdropFilter: 'blur(12px)',
+            }}
+          >
+            <span
+              style={{
+                width: 7,
+                height: 7,
+                borderRadius: '50%',
+                background: '#4ade80',
+                animation: 'pulseDot 2s infinite',
+                flexShrink: 0,
+              }}
+            />
+            <span style={{ fontSize: '0.78rem', color: 'var(--text-tertiary)', fontWeight: 450, letterSpacing: '0.01em' }}>
+              Available for new opportunities
+            </span>
+          </motion.div>
 
-        Key insight: we never wrap JavaMain in opacity:0. The overlay
-        is fixed so it doesn't need a visible parent to show.
-        ─────────────────────────────────────────────────────────────
-      */}
-      <div className="h-screen flex flex-col overflow-hidden">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="gs"
+            style={{ fontSize: '0.88rem', color: 'var(--text-tertiary)', marginBottom: '1.1rem', fontWeight: 450, letterSpacing: '0.01em' }}
+          >
+            Hey there, welcome — I'm
+          </motion.div>
 
-        {/* Navbar — hidden until intro done, revealed by GSAP */}
-        <div ref={navbarWrapRef} style={{ opacity: 0, flexShrink: 0 }}>
-          <Navbar />
-        </div>
+          <motion.h1
+            initial={{ opacity: 0, y: 12 }}
+            animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="gs font-display"
+            style={{
+              fontSize: 'clamp(2.75rem, 7.5vw, 5rem)',
+              fontWeight: 500,
+              letterSpacing: '-0.035em',
+              lineHeight: 1.02,
+              margin: 0,
+              marginBottom: '1.5rem',
+            }}
+          >
+            <span className="text-gradient">Om </span>
+            <span className="text-gradient-gold">Prakash.</span>
+          </motion.h1>
 
-        {/* Title — hidden until intro done, revealed by GSAP */}
-        <div ref={titleWrapRef} style={{ opacity: 0, flexShrink: 0 }}>
-          <div style={{
-            display: 'flex', justifyContent: 'center', alignItems: 'center',
-            paddingTop: '1.2rem', paddingBottom: '0.4rem'
-          }}>
-            <div style={{ textAlign: 'center', padding: '0 1rem', maxWidth: 720 }}>
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="gs"
+            style={{
+              fontSize: 'clamp(1rem, 2.2vw, 1.2rem)',
+              color: 'var(--text-secondary)',
+              fontWeight: 400,
+              maxWidth: 560,
+              lineHeight: 1.6,
+              margin: 0,
+              marginBottom: '2.25rem',
+              letterSpacing: '-0.005em',
+            }}
+          >
+            A <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>Java Backend Engineer</span> building
+            scalable, production-grade systems with{' '}
+            <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>Spring Boot</span> and modern
+            cloud architecture.
+          </motion.p>
 
-              {/* Available pill */}
-              <div className="gs" style={{
-                display: 'inline-flex', alignItems: 'center', gap: '0.45rem',
-                marginBottom: '0.9rem', padding: '0.25rem 0.9rem',
-                border: '1px solid rgba(255,179,71,0.14)', borderRadius: '999px',
-                background: 'rgba(58,31,21,0.16)', backdropFilter: 'blur(8px)',
-              }}>
-                <span style={{
-                  width: 6, height: 6, borderRadius: '50%', background: '#7fb069',
-                  display: 'inline-block', animation: 'dotPulse 2s ease-in-out infinite'
-                }} />
-                <span style={{
-                  color: 'rgba(255,179,71,0.5)', fontSize: '0.56rem',
-                  fontFamily: "'Cinzel',serif", letterSpacing: '0.3em'
-                }}>
-                  AVAILABLE FOR WORK
-                </span>
-              </div>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            className="gs"
+            style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '2.5rem' }}
+          >
+            <a href="/My-Portfolio/projects" className="btn-primary">
+              View Projects
+              <ArrowUpRight size={15} strokeWidth={2.25} />
+            </a>
+            <a href="/My-Portfolio/about" className="btn-ghost">
+              About Me
+            </a>
+          </motion.div>
 
-              {/* Greeting */}
-              <div className="gs" style={{
-                color: 'rgba(255,185,128,0.65)', fontFamily: "'Cinzel',serif",
-                fontSize: '0.75rem', letterSpacing: '0.5em', marginBottom: '0.8rem',
-              }}>
-                HEY THERE · WELCOME
-              </div>
-
-              {/* Name */}
-              <div className="gs" style={{ marginBottom: '0.55rem', animation: 'namePulse 3.5s ease-in-out infinite' }}>
-                <span style={{
-                  fontFamily: "'DM Sans',serif", fontSize: 'clamp(2rem,5.5vw,3.8rem)',
-                  fontWeight: 700, color: '#fff', marginRight: '0.3rem'
-                }}>I'M  </span>
-                <span style={{
-                  fontFamily: "'DM Sans',serif", fontSize: 'clamp(2rem,5.5vw,3.8rem)', fontWeight: 700,
-                  backgroundImage: 'linear-gradient(90deg,#c46a2b,#ffb347,#fff1d6,#ffb347,#c46a2b)',
-                  backgroundSize: '300% auto',
-                  WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-                  animation: 'shimmer 4s linear infinite',
-                }}>OM</span>
-              </div>
-
-              {/* Role */}
-              <div className="gs" style={{
-                fontFamily: "'Cinzel',serif", fontSize: 'clamp(0.9rem,2.6vw,1.45rem)',
-                fontWeight: 600, marginBottom: '1rem',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                gap: '0.4rem', flexWrap: 'wrap',
-              }}>
-                <span style={{ color: 'rgba(200,200,200,0.7)' }}>A</span>
-                <span style={{ position: 'relative', display: 'inline-block' }}>
-                  <span style={{
-                    backgroundImage: 'linear-gradient(90deg,#c46a2b,#ffb347)',
-                    WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-                  }}>JAVA</span>
-                  <span style={{
-                    position: 'absolute', bottom: -3, left: 0, height: 2, borderRadius: 999,
-                    background: 'linear-gradient(90deg,#c46a2b,#ffb347)',
-                    animation: 'underlineIn 1s 0.8s ease both', width: 0
-                  }} />
-                </span>
-                <span style={{ color: 'rgba(200,200,200,0.7)' }}>Backend Engineer</span>
-              </div>
-
-              {/* Tech badges */}
-              <div className="gs" style={{ display: 'flex', justifyContent: 'center', gap: '0.45rem', flexWrap: 'wrap' }}>
-                {[
-                  { label: 'Spring Boot', icon: '⚡' },
-                  { label: 'Microservices', icon: '⬡' },
-                  { label: 'REST API', icon: '◆' },
-                  { label: 'Java', icon: '♛' },
-                ].map((tech, idx) => (
-                  <span key={idx}
-                    onMouseEnter={e => {
-                      e.currentTarget.style.background = 'rgba(58,31,21,0.5)';
-                      e.currentTarget.style.borderColor = 'rgba(255,179,71,0.5)';
-                      e.currentTarget.style.boxShadow = '0 0 18px rgba(255,179,71,0.2)';
-                      e.currentTarget.style.transform = 'translateY(-2px)';
-                    }}
-                    onMouseLeave={e => {
-                      e.currentTarget.style.background = 'rgba(58,31,21,0.2)';
-                      e.currentTarget.style.borderColor = 'rgba(255,179,71,0.18)';
-                      e.currentTarget.style.boxShadow = 'none';
-                      e.currentTarget.style.transform = 'translateY(0)';
-                    }}
-                    style={{
-                      display: 'inline-flex', alignItems: 'center', gap: '0.3rem',
-                      padding: '0.28rem 0.8rem',
-                      background: 'rgba(58,31,21,0.2)',
-                      border: '1px solid rgba(255,179,71,0.18)',
-                      borderRadius: '999px',
-                      color: 'rgba(255,185,128,0.85)',
-                      fontFamily: "'Cinzel',serif", fontSize: '0.58rem', letterSpacing: '0.12em',
-                      backdropFilter: 'blur(8px)',
-                      animation: `floatBadge ${3.5 + idx * 0.5}s ease-in-out infinite`,
-                      animationDelay: `${idx * 0.25}s`,
-                      cursor: 'default', transition: 'all 0.3s ease',
-                    }}>
-                    <span>{tech.icon}</span><span>{tech.label}</span>
-                  </span>
-                ))}
-              </div>
-
-            </div>
-          </div>
-
-          {/* Rune divider */}
-          {introComplete && (
-            <div style={{
-              display: 'flex', alignItems: 'center', gap: '1rem',
-              padding: '0.35rem 2rem',
-              animation: 'dividerIn 0.8s 0.2s ease both',
-              transformOrigin: 'center',
-            }}>
-              <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg,transparent,rgba(255,179,71,0.18))' }} />
-              <span style={{ color: 'rgba(255,179,71,0.3)', fontSize: '0.62rem', fontFamily: "'Cinzel',serif", letterSpacing: '0.5em' }}>
-                ✦ ♛ ✦
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            className="gs"
+            style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'center' }}
+          >
+            {techs.map((tech) => (
+              <span
+                key={tech.label}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  padding: '0.4rem 0.9rem',
+                  background: 'rgba(255, 255, 255, 0.025)',
+                  border: '1px solid var(--border-default)',
+                  borderRadius: 999,
+                  fontSize: '0.82rem',
+                  color: 'var(--text-secondary)',
+                  fontWeight: 450,
+                  letterSpacing: '-0.005em',
+                  transition: 'all 0.3s var(--ease-out)',
+                  cursor: 'default',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                  e.currentTarget.style.borderColor = 'var(--border-strong)';
+                  e.currentTarget.style.color = 'var(--text-primary)';
+                  e.currentTarget.style.transform = 'translateY(-1px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.025)';
+                  e.currentTarget.style.borderColor = 'var(--border-default)';
+                  e.currentTarget.style.color = 'var(--text-secondary)';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                }}
+              >
+                <Sparkles size={12} style={{ color: 'var(--accent)' }} />
+                {tech.label}
               </span>
-              <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg,rgba(255,179,71,0.18),transparent)' }} />
-            </div>
-          )}
+            ))}
+          </motion.div>
         </div>
+      </section>
 
-        {/*
-          JavaMain sits here in the normal flex column.
-          Its <section ref={targetRef}> is the GSAP shrink destination —
-          it must be in the normal document flow so getBoundingClientRect()
-          returns the correct in-page position for the shrink animation.
-          Its position:fixed overlay (zIndex 9999) is unaffected by any
-          parent styling because this wrapper has NO transform, NO filter,
-          and NO will-change — so no stacking context is created and the
-          fixed overlay correctly covers the full viewport.
-        */}
-        <JavaMain onIntroComplete={handleIntroComplete} />
+      {/* ── #skills ──────────────────────────────────────────── */}
+      <section id="skills" style={{ position: 'relative', zIndex: 2, padding: '8rem 1.5rem 4rem' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <SectionHeader kicker="Skills & Technologies" lead="Tools I use" accent="every day." />
 
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ amount: 0.2 }}
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '1rem' }}
+          >
+            {skills.map((skill) => (
+              <motion.div
+                key={skill.name}
+                variants={cardVariants}
+                className="surface-card"
+                style={{ padding: '1.5rem' }}
+                /* Replay animation when scrolled back into view */
+                onAnimationComplete={(def) => {
+                  if (def === 'hidden') {
+                    /* no-op, framer handles state */
+                  }
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '1rem' }}>
+                  {skill.icon ? (
+                    <div
+                      style={{
+                        width: 44,
+                        height: 44,
+                        borderRadius: 10,
+                        background: 'rgba(255, 255, 255, 0.04)',
+                        border: '1px solid var(--border-default)',
+                        display: 'grid',
+                        placeItems: 'center',
+                        padding: 8,
+                      }}
+                    >
+                      <img src={skill.icon} alt={skill.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                    </div>
+                  ) : (
+                    <div
+                      style={{
+                        width: 44,
+                        height: 44,
+                        borderRadius: 10,
+                        background: 'linear-gradient(135deg, #f0d4a8 0%, #d4af7a 100%)',
+                        display: 'grid',
+                        placeItems: 'center',
+                        fontFamily: 'Fraunces, serif',
+                        fontWeight: 600,
+                        fontSize: '1.15rem',
+                        color: '#0a0a0b',
+                      }}
+                    >
+                      {skill.name.charAt(0)}
+                    </div>
+                  )}
+                  <h3 style={{ fontSize: '1rem', fontWeight: 550, color: 'var(--text-primary)', margin: 0, letterSpacing: '-0.01em' }}>
+                    {skill.name}
+                  </h3>
+                </div>
+                <div style={{ marginBottom: '0.85rem' }}>
+                  <span
+                    style={{
+                      display: 'inline-block',
+                      padding: '0.22rem 0.6rem',
+                      borderRadius: 999,
+                      fontSize: '0.7rem',
+                      fontWeight: 500,
+                      letterSpacing: '0.01em',
+                      ...levelStyle(skill.level),
+                    }}
+                  >
+                    {skill.level}
+                  </span>
+                </div>
+                <p style={{ fontSize: '0.88rem', color: 'var(--text-tertiary)', lineHeight: 1.55, margin: 0 }}>
+                  {skill.description}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── #projects ────────────────────────────────────────── */}
+      <section id="projects" style={{ position: 'relative', zIndex: 2, padding: '8rem 1.5rem 4rem' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <SectionHeader kicker="Selected Work" lead="Recent" accent="projects." />
+
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ amount: 0.2 }}
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.25rem' }}
+          >
+            {projects.map((project) => (
+              <motion.div
+                key={project.title}
+                variants={cardVariants}
+                className="surface-card"
+                style={{ padding: '1.75rem', display: 'flex', flexDirection: 'column' }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: '1.25rem',
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 36,
+                      height: 36,
+                      borderRadius: 10,
+                      background: 'rgba(212, 175, 122, 0.1)',
+                      border: '1px solid rgba(212, 175, 122, 0.25)',
+                      display: 'grid',
+                      placeItems: 'center',
+                    }}
+                  >
+                    <span style={{ fontFamily: 'Fraunces, serif', fontSize: '0.95rem', color: 'var(--accent-soft)', fontWeight: 600 }}>
+                      {project.title.charAt(0)}
+                    </span>
+                  </div>
+                  <ArrowUpRight size={18} style={{ color: 'var(--text-muted)' }} />
+                </div>
+
+                <h3 style={{ fontSize: '1.1rem', fontWeight: 550, color: 'var(--text-primary)', margin: 0, marginBottom: '0.6rem', letterSpacing: '-0.01em' }}>
+                  {project.title}
+                </h3>
+                <p style={{ fontSize: '0.92rem', color: 'var(--text-tertiary)', lineHeight: 1.6, margin: 0, marginBottom: '1.25rem', flex: 1 }}>
+                  {project.description}
+                </p>
+
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '1.5rem' }}>
+                  {project.technologies.map((tech) => (
+                    <span
+                      key={tech}
+                      style={{
+                        padding: '0.25rem 0.65rem',
+                        borderRadius: 999,
+                        background: 'rgba(255, 255, 255, 0.04)',
+                        border: '1px solid var(--border-default)',
+                        color: 'var(--text-secondary)',
+                        fontSize: '0.74rem',
+                        fontWeight: 450,
+                        letterSpacing: '-0.005em',
+                      }}
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                <div style={{ display: 'flex', gap: '0.5rem', paddingTop: '1.25rem', borderTop: '1px solid var(--border-subtle)' }}>
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-ghost"
+                    style={{ flex: 1, justifyContent: 'center', padding: '0.5rem 0.8rem' }}
+                  >
+                    <Github size={14} />
+                    Code
+                  </a>
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-primary"
+                    style={{ flex: 1, justifyContent: 'center', padding: '0.5rem 0.8rem' }}
+                  >
+                    <ExternalLink size={14} />
+                    Live
+                  </a>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── #about ───────────────────────────────────────────── */}
+      <section id="about" style={{ position: 'relative', zIndex: 2, padding: '8rem 1.5rem 4rem' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+          <SectionHeader kicker="About Me" lead="Crafting reliable" accent="backend systems." />
+          <p
+            style={{
+              textAlign: 'center',
+              color: 'var(--text-tertiary)',
+              maxWidth: 540,
+              margin: '-2.5rem auto 4rem',
+              fontSize: '1.05rem',
+              lineHeight: 1.6,
+            }}
+          >
+            A passionate Java backend developer focused on scalable architecture and clean engineering.
+          </p>
+
+          <div
+            className="about-grid"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'minmax(0, 320px) minmax(0, 1fr)',
+              gap: '1.5rem',
+            }}
+          >
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ amount: 0.3 }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="surface-card" style={{ padding: '2rem', textAlign: 'center' }}>
+                <div style={{ position: 'relative', display: 'inline-block', marginBottom: '1.5rem' }}>
+                  <div
+                    style={{
+                      width: 120,
+                      height: 120,
+                      borderRadius: '50%',
+                      padding: 3,
+                      background: 'linear-gradient(135deg, #f0d4a8 0%, #d4af7a 50%, #a87c4b 100%)',
+                    }}
+                  >
+                    <img
+                      src="https://images.unsplash.com/photo-1768463852001-811ead5844fb?q=80&w=1974&auto=format&fit=crop"
+                      alt="Om Prakash"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        borderRadius: '50%',
+                        objectFit: 'cover',
+                        border: '3px solid var(--bg-base)',
+                      }}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      position: 'absolute',
+                      bottom: 4,
+                      right: 4,
+                      width: 18,
+                      height: 18,
+                      borderRadius: '50%',
+                      background: '#4ade80',
+                      border: '3px solid var(--bg-elev-1)',
+                      boxShadow: '0 0 12px rgba(74, 222, 128, 0.4)',
+                    }}
+                  />
+                </div>
+
+                <h2 style={{ fontFamily: 'Fraunces, serif', fontSize: '1.4rem', fontWeight: 500, color: 'var(--text-primary)', margin: 0, marginBottom: '0.3rem', letterSpacing: '-0.015em' }}>
+                  Om Prakash
+                </h2>
+                <p style={{ color: 'var(--accent-soft)', fontSize: '0.85rem', fontWeight: 450, margin: 0, marginBottom: '1.5rem' }}>
+                  Java Backend Developer
+                </p>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginBottom: '1.5rem' }}>
+                  {stats.map((stat) => (
+                    <div
+                      key={stat.label}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.85rem',
+                        padding: '0.75rem 0.95rem',
+                        borderRadius: 12,
+                        background: 'rgba(255, 255, 255, 0.025)',
+                        border: '1px solid var(--border-subtle)',
+                        textAlign: 'left',
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 32,
+                          height: 32,
+                          borderRadius: 8,
+                          background: 'rgba(212, 175, 122, 0.1)',
+                          display: 'grid',
+                          placeItems: 'center',
+                        }}
+                      >
+                        <stat.icon size={15} style={{ color: 'var(--accent)' }} />
+                      </div>
+                      <div>
+                        <div style={{ fontFamily: 'Fraunces, serif', fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.1 }}>
+                          {stat.value}
+                        </div>
+                        <div style={{ fontSize: '0.74rem', color: 'var(--text-tertiary)' }}>{stat.label}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem' }}>
+                  {socialLinks.map((link) => (
+                    <motion.a
+                      key={link.name}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ y: -2 }}
+                      aria-label={link.name}
+                      style={{
+                        width: 40,
+                        height: 40,
+                        borderRadius: 10,
+                        background: 'rgba(255, 255, 255, 0.03)',
+                        border: '1px solid var(--border-default)',
+                        display: 'grid',
+                        placeItems: 'center',
+                        color: 'var(--text-secondary)',
+                        textDecoration: 'none',
+                      }}
+                    >
+                      <link.icon size={16} />
+                    </motion.a>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ amount: 0.2 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}
+            >
+              <div className="surface-card" style={{ padding: '2rem' }}>
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 550, color: 'var(--text-primary)', margin: 0, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.6rem', letterSpacing: '-0.01em' }}>
+                  <span style={{ width: 3, height: 16, borderRadius: 2, background: 'linear-gradient(180deg, #f0d4a8, #d4af7a)' }} />
+                  Overview
+                </h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.65, fontSize: '0.95rem' }}>
+                  <p style={{ margin: 0 }}>Hello! I'm Om Prakash, a passionate Java backend developer with over 3 years of experience building robust and scalable server-side applications. I specialize in crafting efficient RESTful APIs, microservices architectures, and enterprise-level solutions.</p>
+                  <p style={{ margin: 0 }}>My journey started with a fascination for solving complex problems, and has grown into a career focused on backend technologies. I work extensively across the Spring ecosystem — Spring Boot, Spring Security, and Spring Data JPA.</p>
+                  <p style={{ margin: 0 }}>I'm particularly interested in system design, performance optimization, and applying best practices in software architecture.</p>
+                </div>
+              </div>
+
+              <div className="surface-card" style={{ padding: '2rem' }}>
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 550, color: 'var(--text-primary)', margin: 0, marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.6rem', letterSpacing: '-0.01em' }}>
+                  <span style={{ width: 3, height: 16, borderRadius: 2, background: 'linear-gradient(180deg, #f0d4a8, #d4af7a)' }} />
+                  What I Do
+                </h3>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '0.75rem' }}>
+                  {services.map((item, idx) => (
+                    <motion.div
+                      key={item.title}
+                      initial={{ opacity: 0, y: 12 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ amount: 0.3 }}
+                      transition={{ delay: idx * 0.05, duration: 0.4 }}
+                      style={{
+                        padding: '1rem',
+                        borderRadius: 12,
+                        background: 'rgba(255, 255, 255, 0.02)',
+                        border: '1px solid var(--border-subtle)',
+                        cursor: 'default',
+                      }}
+                    >
+                      <div style={{ width: 28, height: 28, borderRadius: 8, background: 'rgba(212, 175, 122, 0.1)', display: 'grid', placeItems: 'center', marginBottom: '0.6rem' }}>
+                        <Sparkles size={13} style={{ color: 'var(--accent)' }} />
+                      </div>
+                      <h4 style={{ fontSize: '0.92rem', fontWeight: 550, color: 'var(--text-primary)', margin: 0, marginBottom: '0.25rem', letterSpacing: '-0.005em' }}>
+                        {item.title}
+                      </h4>
+                      <p style={{ fontSize: '0.82rem', color: 'var(--text-tertiary)', lineHeight: 1.5, margin: 0 }}>{item.desc}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── #contact ─────────────────────────────────────────── */}
+      <section id="contact" style={{ position: 'relative', zIndex: 2, padding: '8rem 1.5rem 6rem' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ amount: 0.3 }}
+          transition={{ duration: 0.6 }}
+          className="surface-card"
+          style={{
+            maxWidth: 880,
+            margin: '0 auto',
+            padding: '3rem 2.5rem',
+            textAlign: 'center',
+            background: 'linear-gradient(135deg, rgba(212, 175, 122, 0.04) 0%, rgba(212, 175, 122, 0.02) 100%)',
+            border: '1px solid rgba(212, 175, 122, 0.2)',
+          }}
+        >
+          <h2
+            className="font-display"
+            style={{
+              fontSize: 'clamp(2rem, 4vw, 3rem)',
+              fontWeight: 500,
+              letterSpacing: '-0.025em',
+              lineHeight: 1.1,
+              margin: 0,
+              marginBottom: '0.75rem',
+            }}
+          >
+            <span className="text-gradient">Let's build </span>
+            <span className="text-gradient-gold">something together.</span>
+          </h2>
+          <p style={{ color: 'var(--text-tertiary)', maxWidth: 520, margin: '0 auto 1.75rem', fontSize: '1rem', lineHeight: 1.6 }}>
+            Open to new projects, ideas, and collaborations. Drop a message and I'll get back to you.
+          </p>
+          <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <a href="mailto:omprakash@example.com" className="btn-primary">
+              <Mail size={14} />
+              Send Email
+            </a>
+            <a
+              href="https://github.com/omprakash"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-ghost"
+            >
+              <Github size={14} />
+              GitHub
+            </a>
+            <a
+              href="https://linkedin.com/in/omprakash"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-ghost"
+            >
+              <Linkedin size={14} />
+              LinkedIn
+            </a>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Scroll hint — hidden once user scrolls past the hero. */}
+      <div
+        ref={scrollHintRef}
+        style={{
+          position: 'fixed',
+          bottom: 28,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '0.4rem',
+          opacity: hideScrollHint ? 0 : 1,
+          pointerEvents: 'none',
+          zIndex: 3,
+          transition: 'opacity 0.4s var(--ease-out)',
+        }}
+      >
+        <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 500 }}>
+          Scroll
+        </span>
+        <ArrowDown size={14} style={{ color: 'var(--text-muted)', animation: 'float 2.4s ease-in-out infinite' }} />
       </div>
+
+      <JavaMain onIntroComplete={handleIntroComplete} />
+
+      <style>{`
+        @media (max-width: 820px) {
+          .about-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </>
   );
 };
 
 export default Index;
-
-
-

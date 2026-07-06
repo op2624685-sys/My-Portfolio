@@ -2,24 +2,21 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Index from "./pages/Index";
-import Skills from "./pages/Skills";
-import Projects from "./pages/Projects";
-import About from "./pages/About";
-
-import FuturisticBackground from "./component/FuturisticBackground";
 
 const App = () => {
   return (
     <Router>
-      {/* Full‑screen container – background sits behind the routed pages */}
-      <div className="min-h-screen relative">
-        <FuturisticBackground />                   {/* ← single background component */}
-        <div className="relative z-10">              {/* ← content stays on top */}
+      <div className="min-h-screen relative" style={{ background: 'var(--bg-base)' }}>
+        <div className="relative z-10">
+          {/* All routes render the same single-page Index.
+              The page reads the path and scrolls to the matching section. */}
           <Routes>
             <Route path="/My-Portfolio" element={<Index />} />
-            <Route path="/My-Portfolio/skills" element={<Skills />} />
-            <Route path="/My-Portfolio/projects" element={<Projects />} />
-            <Route path="/My-Portfolio/about" element={<About />} />
+            <Route path="/My-Portfolio/skills" element={<Index />} />
+            <Route path="/My-Portfolio/projects" element={<Index />} />
+            <Route path="/My-Portfolio/about" element={<Index />} />
+            <Route path="/My-Portfolio/contact" element={<Index />} />
+            <Route path="*" element={<Index />} />
           </Routes>
         </div>
       </div>
