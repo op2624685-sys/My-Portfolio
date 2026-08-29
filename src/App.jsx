@@ -1,11 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 
 import Index from "./pages/Index";
 
 const App = () => {
   return (
-    <Router basename="/My-Portfolio">
+    <Router>
       <div className="min-h-screen relative" style={{ background: 'var(--bg-base)' }}>
         <div className="relative z-10">
           <Routes>
