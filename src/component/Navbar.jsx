@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, ArrowUpRight, Mail } from 'lucide-react';
+import { Menu, X, ArrowUpRight, Mail, Download } from 'lucide-react';
 import TextRotation from './TextRotation';
 
 const HOME_PATH = '/';
@@ -287,7 +287,15 @@ const Navbar = () => {
           {/* ── RIGHT: CTAs + mobile toggle ── */}
           <div className="nb-segment right">
             <a
-              href="mailto:omprakash@example.com"
+              href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/resume.pdf`}
+              download="Om_Prakash_Resume.pdf"
+              className="btn-ghost nb-desktop"
+              aria-label="Download Resume"
+            >
+              <Download size={14} strokeWidth={2} />
+            </a>
+            <a
+              href="mailto:op2624685@gmail.com"
               className="btn-ghost nb-desktop"
               aria-label="Email"
             >
@@ -318,10 +326,20 @@ const Navbar = () => {
               </a>
             ))}
             <a
-              href="mailto:omprakash@example.com"
+              href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/resume.pdf`}
+              download="Om_Prakash_Resume.pdf"
               onClick={() => setIsMenuOpen(false)}
               className="nb-mobile-link"
               style={{ borderTop: '1px solid var(--border-subtle)', marginTop: '0.4rem', paddingTop: '0.85rem' }}
+            >
+              <span>Resume</span>
+              <Download size={16} strokeWidth={1.75} style={{ opacity: 0.5 }} />
+            </a>
+            <a
+              href="mailto:op2624685@gmail.com"
+              onClick={() => setIsMenuOpen(false)}
+              className="nb-mobile-link"
+              style={{ borderTop: 'none', marginTop: '0', paddingTop: '0' }}
             >
               <span>Email</span>
               <Mail size={16} strokeWidth={1.75} style={{ opacity: 0.5 }} />
