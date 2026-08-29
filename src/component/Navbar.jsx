@@ -151,8 +151,9 @@ const Navbar = () => {
             0 6px 16px -6px var(--accent-glow);
           transition: transform 0.5s var(--ease-out);
           flex-shrink: 0;
+          object-fit: cover;
         }
-        .nb-logo:hover .nb-logo-glyph { transform: rotate(-6deg) scale(1.04); }
+        .nb-logo:hover .nb-logo-glyph { transform: scale(1.1); }
 
         .nb-logo-name {
           font-family: 'Inter', sans-serif;
@@ -193,47 +194,51 @@ const Navbar = () => {
 
         .nb-mobile-panel {
           pointer-events: auto;
-          margin: 10px auto 0;
-          max-width: 1100px;
-          padding: 0.6rem;
-          background: rgba(17, 17, 20, 0.92);
+          margin: 12px auto 0;
+          width: 90%;
+          max-width: 400px;
+          padding: 1.5rem;
+          background: rgba(17, 17, 20, 0.95);
           backdrop-filter: blur(24px) saturate(180%);
           -webkit-backdrop-filter: blur(24px) saturate(180%);
           border: 1px solid var(--border-default);
-          border-radius: 18px;
-          box-shadow: 0 24px 48px -16px rgba(0, 0, 0, 0.6);
+          border-radius: 24px;
+          box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.8);
           display: flex;
           flex-direction: column;
-          gap: 2px;
-          animation: fadeInUp 0.3s var(--ease-out) both;
+          gap: 0.5rem;
+          animation: fadeInUp 0.4s var(--ease-out) both;
         }
 
         .nb-mobile-link {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 0.85rem 1rem;
+          padding: 1rem 1.25rem;
           color: var(--text-secondary);
           text-decoration: none;
-          font-size: 0.95rem;
+          font-size: 1rem;
           font-weight: 450;
-          border-radius: 12px;
-          transition: all 0.25s var(--ease-out);
+          border-radius: 16px;
+          transition: all 0.3s var(--ease-out);
           cursor: pointer;
         }
         .nb-mobile-link:hover, .nb-mobile-link.active {
-          background: rgba(255, 255, 255, 0.04);
+          background: rgba(255, 255, 255, 0.06);
           color: var(--text-primary);
+          transform: translateX(5px);
         }
         .nb-mobile-link.active {
-          background: rgba(212, 175, 122, 0.08);
+          background: rgba(212, 175, 122, 0.12);
           color: var(--accent-soft);
+          font-weight: 500;
         }
 
         @media (max-width: 880px) {
           .nb-desktop { display: none !important; }
           .nb-mobile  { display: inline-flex !important; }
           .nb-menu-btn { display: inline-flex !important; }
+          .nb-logo-name { font-size: 0.85rem; }
         }
         @media (min-width: 881px) {
           .nb-desktop { display: inline-flex !important; }
@@ -252,10 +257,14 @@ const Navbar = () => {
               onKeyDown={(e) => { if (e.key === 'Enter') handleNavClick(e, HOME_PATH); }}
               className="nb-logo"
             >
-              <span className="nb-logo-glyph">OP</span>
-              <span className="nb-desktop nb-logo-name">Om Prakash</span>
+              <img
+                src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/profile/om-photo.jpg`}
+                alt="Profile"
+                className="nb-logo-glyph"
+              />
+              <span className="nb-logo-name">Om Prakash</span>
               <span className="nb-desktop nb-logo-dot" />
-              <span className="nb-desktop nb-logo-meta">
+              <span className="nb-logo-meta">
                 <TextRotation size="sm" />
               </span>
             </span>

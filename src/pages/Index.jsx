@@ -144,11 +144,11 @@ const SectionHeader = ({ kicker, lead, accent }) => (
 
 /* ─── Section data (reused from dedicated pages) ─────────────── */
 const skills = [
-  { name: 'Java',             icon: `${BASE_URL}/icons/java.svg`,   level: 'Expert',       description: 'Core Java, Java 8+, Collections, Multithreading, Streams' },
-  { name: 'Spring Framework', icon: `${BASE_URL}/icons/spring.svg`, level: 'Advanced',     description: 'Spring Boot, Spring MVC, Spring Security, Spring Data JPA' },
-  { name: 'MySQL',            icon: `${BASE_URL}/icons/mysql.svg`,  level: 'Advanced',     description: 'Database design, query optimization, stored procedures' },
-  { name: 'Git',              icon: `${BASE_URL}/icons/git.svg`,    level: 'Advanced',     description: 'Version control, branching, merging, CI/CD pipelines' },
-  { name: 'Docker',           icon: `${BASE_URL}/icons/docker.svg`, level: 'Intermediate', description: 'Containerization, Docker Compose, deployment workflows' },
+  { name: 'Java',             icon: `${BASE_URL.replace(/\/$/, '')}/icons/java.svg`,   level: 'Expert',       description: 'Core Java, Java 8+, Collections, Multithreading, Streams' },
+  { name: 'Spring Framework', icon: `${BASE_URL.replace(/\/$/, '')}/icons/spring.svg`, level: 'Advanced',     description: 'Spring Boot, Spring MVC, Spring Security, Spring Data JPA' },
+  { name: 'MySQL',            icon: `${BASE_URL.replace(/\/$/, '')}/icons/mysql.svg`,  level: 'Advanced',     description: 'Database design, query optimization, stored procedures' },
+  { name: 'Git',              icon: `${BASE_URL.replace(/\/$/, '')}/icons/git.svg`,    level: 'Advanced',     description: 'Version control, branching, merging, CI/CD pipelines' },
+  { name: 'Docker',           icon: `${BASE_URL.replace(/\/$/, '')}/icons/docker.svg`, level: 'Intermediate', description: 'Containerization, Docker Compose, deployment workflows' },
   { name: 'REST API',                                       level: 'Expert',       description: 'RESTful services, API design, microservices architecture' },
   { name: 'Hibernate',                                      level: 'Advanced',     description: 'ORM, JPA, entity relationships, query language' },
   { name: 'Maven / Gradle',                                level: 'Advanced',     description: 'Build tools, dependency management, project configuration' },
@@ -208,9 +208,8 @@ const Index = () => {
   const [hideScrollHint, setHideScrollHint] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const isInitialMount = useRef(true);
   const isManualNavigating = useRef(false);
-  const mountTime = useRef(Date.now());
+  const mountTime = useRef(null);
 
   const handleIntroComplete = () => setIntroComplete(true);
 
@@ -760,7 +759,7 @@ const Index = () => {
                     }}
                   >
                     <img
-                      src="/profile/OM photo.jpg"
+                      src={`${BASE_URL.replace(/\/$/, '')}/profile/om-photo.jpg`}
                       alt="Om Prakash"
                       style={{
                         width: '100%',
