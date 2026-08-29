@@ -26,6 +26,8 @@ const SECTION_ROUTES = {
   '/contact':   '#contact',
 };
 
+const BASE_URL = import.meta.env.BASE_URL;
+
 
 // Remove HOME_PATH as we now use basename in App.jsx
 
@@ -142,11 +144,11 @@ const SectionHeader = ({ kicker, lead, accent }) => (
 
 /* ─── Section data (reused from dedicated pages) ─────────────── */
 const skills = [
-  { name: 'Java',             icon: '/icons/java.svg',   level: 'Expert',       description: 'Core Java, Java 8+, Collections, Multithreading, Streams' },
-  { name: 'Spring Framework', icon: '/icons/spring.svg', level: 'Advanced',     description: 'Spring Boot, Spring MVC, Spring Security, Spring Data JPA' },
-  { name: 'MySQL',            icon: '/icons/mysql.svg',  level: 'Advanced',     description: 'Database design, query optimization, stored procedures' },
-  { name: 'Git',              icon: '/icons/git.svg',    level: 'Advanced',     description: 'Version control, branching, merging, CI/CD pipelines' },
-  { name: 'Docker',           icon: '/icons/docker.svg', level: 'Intermediate', description: 'Containerization, Docker Compose, deployment workflows' },
+  { name: 'Java',             icon: `${BASE_URL}/icons/java.svg`,   level: 'Expert',       description: 'Core Java, Java 8+, Collections, Multithreading, Streams' },
+  { name: 'Spring Framework', icon: `${BASE_URL}/icons/spring.svg`, level: 'Advanced',     description: 'Spring Boot, Spring MVC, Spring Security, Spring Data JPA' },
+  { name: 'MySQL',            icon: `${BASE_URL}/icons/mysql.svg`,  level: 'Advanced',     description: 'Database design, query optimization, stored procedures' },
+  { name: 'Git',              icon: `${BASE_URL}/icons/git.svg`,    level: 'Advanced',     description: 'Version control, branching, merging, CI/CD pipelines' },
+  { name: 'Docker',           icon: `${BASE_URL}/icons/docker.svg`, level: 'Intermediate', description: 'Containerization, Docker Compose, deployment workflows' },
   { name: 'REST API',                                       level: 'Expert',       description: 'RESTful services, API design, microservices architecture' },
   { name: 'Hibernate',                                      level: 'Advanced',     description: 'ORM, JPA, entity relationships, query language' },
   { name: 'Maven / Gradle',                                level: 'Advanced',     description: 'Build tools, dependency management, project configuration' },
@@ -758,7 +760,7 @@ const Index = () => {
                     }}
                   >
                     <img
-                      src="https://images.unsplash.com/photo-1768463852001-811ead5844fb?q=80&w=1974&auto=format&fit=crop"
+                      src="/profile/OM photo.jpg"
                       alt="Om Prakash"
                       style={{
                         width: '100%',
