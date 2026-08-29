@@ -3,14 +3,14 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, ArrowUpRight, Mail } from 'lucide-react';
 import TextRotation from './TextRotation';
 
-const HOME_PATH = '/My-Portfolio';
+const HOME_PATH = '/';
 
 const navLinks = [
   { name: 'Home',     path: HOME_PATH               },
-  { name: 'Skills',   path: `${HOME_PATH}/skills`   },
-  { name: 'Projects', path: `${HOME_PATH}/projects` },
-  { name: 'About',    path: `${HOME_PATH}/about`    },
-  { name: 'Contact',  path: `${HOME_PATH}/contact`  },
+  { name: 'Skills',   path: `${HOME_PATH}skills`   },
+  { name: 'Projects', path: `${HOME_PATH}projects` },
+  { name: 'About',    path: `${HOME_PATH}about`    },
+  { name: 'Contact',  path: `${HOME_PATH}contact`  },
 ];
 
 const Navbar = () => {
@@ -36,6 +36,10 @@ const Navbar = () => {
     (e, path) => {
       e.preventDefault();
       setIsMenuOpen(false);
+
+      // Signal to Index page that manual navigation is happening
+      window.dispatchEvent(new CustomEvent('manual-nav', { detail: { path } }));
+
       navigate(path);
     },
     [navigate]

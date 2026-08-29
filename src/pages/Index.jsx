@@ -18,17 +18,16 @@ import JavaMain from '../component/JavaMain';
 import AmbientBackdrop from '../component/AmbientBackdrop';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-const HOME_PATH = '/My-Portfolio';
-
-// Each section gets a clean URL. All routes render <Index />; the page
-// detects the path and scrolls to the matching section on mount / change.
 const SECTION_ROUTES = {
-  '/My-Portfolio':          '#hero',
-  '/My-Portfolio/skills':   '#skills',
-  '/My-Portfolio/projects': '#projects',
-  '/My-Portfolio/about':    '#about',
-  '/My-Portfolio/contact':  '#contact',
+  '/':          '#hero',
+  '/skills':    '#skills',
+  '/projects':  '#projects',
+  '/about':     '#about',
+  '/contact':   '#contact',
 };
+
+
+// Remove HOME_PATH as we now use basename in App.jsx
 
 /* ─── Ambient Particle Field ─────────────────────────────────── */
 function ParticleField() {
@@ -207,6 +206,9 @@ const Index = () => {
   const [hideScrollHint, setHideScrollHint] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const isInitialMount = useRef(true);
+  const isManualNavigating = useRef(false);
+  const mountTime = useRef(Date.now());
 
   const handleIntroComplete = () => setIntroComplete(true);
 
@@ -236,6 +238,18 @@ const Index = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  useEffect(() => {
+    const handleManualNav = () => {
+      isManualNavigating.current = true;
+      setTimeout(() => {
+        isManualNavigating.current = false;
+      }, 1500);
+    };
+
+    window.addEventListener('manual-nav', handleManualNav);
+    return () => window.removeEventListener('manual-nav', handleManualNav);
+  }, []);
+
   /* Scroll-spy: as the user scrolls through sections, update the URL
      (and therefore the navbar's active link) to reflect the section
      currently in view. Uses IntersectionObserver on a thin band at
@@ -254,8 +268,6 @@ const Index = () => {
     const intersecting = new Set();
 
     const pickActive = () => {
-      // Prefer an intersecting section, fall back to the one whose top is
-      // closest to (and just above) the viewport mid-line.
       const midY = window.innerHeight / 2;
       let best = null;
       let bestDist = Infinity;
@@ -263,27 +275,33 @@ const Index = () => {
       sectionEls.forEach((el) => {
         const rect = el.getBoundingClientRect();
         if (intersecting.has(el)) {
-          // Distance from section top to viewport mid-line; smaller = closer.
           const dist = Math.abs(rect.top - midY);
           if (dist < bestDist) { bestDist = dist; best = el; }
         } else if (rect.top < midY && rect.bottom > 0) {
-          // Section is above mid-line but its top is the closest still-on-screen.
           const dist = midY - rect.top;
           if (dist < bestDist) { bestDist = dist; best = el; }
         }
       });
 
-      // If nothing matched (e.g. very top of page), use the first section.
       if (!best) best = sectionEls[0];
 
       const match = sectionEntries.find(([, anchor]) =>
         document.querySelector(anchor) === best
       );
       const newPath = match?.[0];
+
+      // FIX: Absolute lock to prevent "Landing Redirect"
+      // 1. Don't redirect if we just mounted (first 3 seconds)
+      if (Date.now() - mountTime.current < 3000) {
+        return;
+      }
+
+      // 2. Don't redirect if we are currently navigating manually
+      if (isManualNavigating.current) {
+        return;
+      }
+
       if (newPath && newPath !== location.pathname) {
-        // Sync URL via React Router so useLocation updates and the
-        // Navbar re-renders with the new active link. `replace: true`
-        // keeps the back button stack clean.
         navigate(newPath, { replace: true });
       }
     };
@@ -317,11 +335,16 @@ const Index = () => {
   /* Scroll-to-section when the URL changes (via click or back/forward). */
   useEffect(() => {
     const target = SECTION_ROUTES[location.pathname] || '#hero';
+
     // Defer to allow layout / fonts to settle, then smooth-scroll.
     const id = setTimeout(() => {
       const el = document.querySelector(target);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 80);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        console.warn(`Target section ${target} not found for path ${location.pathname}`);
+      }
+    }, 200);
     return () => clearTimeout(id);
   }, [location.pathname]);
 
@@ -890,64 +913,157 @@ const Index = () => {
       </section>
 
       {/* ── #contact ─────────────────────────────────────────── */}
-      <section id="contact" style={{ position: 'relative', zIndex: 2, padding: '8rem 1.5rem 6rem' }}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ amount: 0.3 }}
-          transition={{ duration: 0.6 }}
-          className="surface-card"
-          style={{
-            maxWidth: 880,
-            margin: '0 auto',
-            padding: '3rem 2.5rem',
-            textAlign: 'center',
-            background: 'linear-gradient(135deg, rgba(212, 175, 122, 0.04) 0%, rgba(212, 175, 122, 0.02) 100%)',
-            border: '1px solid rgba(212, 175, 122, 0.2)',
-          }}
-        >
-          <h2
-            className="font-display"
+      <section id="contact" style={{
+        position: 'relative',
+        zIndex: 2,
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '7rem 1.5rem 6rem',
+        gap: '2rem'
+      }}>
+        <div style={{
+          maxWidth: 1100,
+          width: '100%',
+          margin: '0 auto',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          gap: '2rem',
+          alignItems: 'center'
+        }}>
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            style={{ textAlign: 'left' }}
+          >
+            <h2
+              className="font-display"
+              style={{
+                fontSize: 'clamp(2.8rem, 6vw, 4.5rem)',
+                fontWeight: 500,
+                letterSpacing: '-0.03em',
+                lineHeight: 1.05,
+                margin: 0,
+                marginBottom: '1.5rem',
+              }}
+            >
+              <span className="text-gradient">Let's build </span>
+              <span className="text-gradient-gold">something together.</span>
+            </h2>
+            <p style={{
+              color: 'var(--text-secondary)',
+              fontSize: 'clamp(1.1rem, 2vw, 1.25rem)',
+              lineHeight: 1.6,
+              maxWidth: 500,
+              marginBottom: '2.5rem',
+              fontWeight: 400
+            }}>
+              I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
+            </p>
+
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '1rem',
+              padding: '0.75rem 1.25rem',
+              borderRadius: '999px',
+              background: 'rgba(212, 175, 122, 0.05)',
+              border: '1px solid rgba(212, 175, 122, 0.2)',
+              width: 'fit-content'
+            }}>
+              <span style={{
+                width: 8,
+                height: 8,
+                borderRadius: '50%',
+                background: '#4ade80',
+                boxShadow: '0 0 8px #4ade80'
+              }} />
+              <span style={{ fontSize: '0.85rem', color: 'var(--text-primary)', fontWeight: 500 }}>
+                Available for new opportunities
+              </span>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
             style={{
-              fontSize: 'clamp(2rem, 4vw, 3rem)',
-              fontWeight: 500,
-              letterSpacing: '-0.025em',
-              lineHeight: 1.1,
-              margin: 0,
-              marginBottom: '0.75rem',
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+              gap: '1rem'
             }}
           >
-            <span className="text-gradient">Let's build </span>
-            <span className="text-gradient-gold">something together.</span>
-          </h2>
-          <p style={{ color: 'var(--text-tertiary)', maxWidth: 520, margin: '0 auto 1.75rem', fontSize: '1rem', lineHeight: 1.6 }}>
-            Open to new projects, ideas, and collaborations. Drop a message and I'll get back to you.
-          </p>
-          <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-            <a href="mailto:omprakash@example.com" className="btn-primary">
-              <Mail size={14} />
-              Send Email
-            </a>
-            <a
-              href="https://github.com/omprakash"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-ghost"
-            >
-              <Github size={14} />
-              GitHub
-            </a>
-            <a
-              href="https://linkedin.com/in/omprakash"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-ghost"
-            >
-              <Linkedin size={14} />
-              LinkedIn
-            </a>
-          </div>
-        </motion.div>
+            {[
+              {
+                label: 'Email Me',
+                desc: 'The best way to reach me',
+                link: 'mailto:omprakash@example.com',
+                icon: Mail,
+                color: 'var(--accent)'
+              },
+              {
+                label: 'GitHub',
+                desc: 'Check out my open source work',
+                link: 'https://github.com/omprakash',
+                icon: Github,
+                color: 'var(--text-primary)'
+              },
+              {
+                label: 'LinkedIn',
+                desc: 'Connect for professional networking',
+                link: 'https://linkedin.com/in/omprakash',
+                icon: Linkedin,
+                color: 'var(--accent-soft)'
+              }
+            ].map((item, idx) => (
+              <motion.a
+                key={item.label}
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ y: -5, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="surface-card"
+                style={{
+                  padding: '2rem',
+                  textDecoration: 'none',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1rem',
+                  border: '1px solid var(--border-default)',
+                  transition: 'border-color 0.3s ease'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--accent)'}
+                onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--border-default)'}
+              >
+                <div style={{
+                  width: 48,
+                  height: 48,
+                  borderRadius: 12,
+                  background: 'rgba(212, 175, 122, 0.1)',
+                  display: 'grid',
+                  placeItems: 'center',
+                  color: item.color
+                }}>
+                  <item.icon size={24} />
+                </div>
+                <div style={{ textAlign: 'left' }}>
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: 550, color: 'var(--text-primary)', margin: 0, marginBottom: '0.4rem' }}>
+                    {item.label}
+                  </h3>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-tertiary)', margin: 0, lineHeight: 1.4 }}>
+                    {item.desc}
+                  </p>
+                </div>
+              </motion.a>
+            ))}
+          </motion.div>
+        </div>
       </section>
 
       {/* Scroll hint — hidden once user scrolls past the hero. */}
