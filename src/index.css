@@ -2,10 +2,10 @@
    Premium Design System
    - Modern, refined, sophisticated
    - Subtle gold/champagne accents on deep neutral base
-   - Inter + Space Grotesk + Fraunces
+   - Typography: Poppins (Coder Gyan style) + Inter (Apple-style) + JetBrains Mono (Dev)
    ───────────────────────────────────────────────────────────── */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100..900;1,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap');
 @import "tailwindcss";
 
 /* ── Design tokens ────────────────────────────────────────── */
@@ -39,7 +39,7 @@
 
 @layer base {
   * {
-    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -58,7 +58,10 @@
   body {
     min-height: 100vh;
     overflow-x: hidden;
-    font-feature-settings: 'cv11', 'ss01', 'ss03';
+    /* Apple-style font rendering */
+    text-rendering: optimizeLegibility;
+    font-variant-numeric: tabular-nums;
+    -webkit-font-variant-numeric: tabular-nums;
   }
 
   ::selection {
@@ -86,17 +89,18 @@
 
 /* ── Typography helpers ───────────────────────────────────── */
 .font-display {
-  font-family: 'Fraunces', 'Inter', serif;
-  font-feature-settings: 'ss01', 'ss02';
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
   letter-spacing: -0.02em;
 }
 .font-sans-tight {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Inter', sans-serif;
   letter-spacing: -0.011em;
+  font-weight: 500;
 }
 .font-mono-mix {
-  font-family: 'Space Grotesk', 'Inter', sans-serif;
-  letter-spacing: -0.01em;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: -0.02em;
 }
 
 /* ── Premium gradient text ────────────────────────────────── */
