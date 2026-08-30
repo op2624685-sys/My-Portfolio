@@ -104,7 +104,7 @@ function ParticleField() {
 }
 
 /* ─── Reusable section primitives ────────────────────────────── */
-const SectionHeader = ({ kicker, lead, accent }) => (
+const SectionHeader = ({ kicker, lead, accent, tag: Tag = 'h2' }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
@@ -125,7 +125,7 @@ const SectionHeader = ({ kicker, lead, accent }) => (
     >
       {kicker}
     </span>
-    <h1
+    <Tag
       className="font-display"
       style={{
         fontSize: 'clamp(2.5rem, 5.5vw, 4rem)',
@@ -138,7 +138,7 @@ const SectionHeader = ({ kicker, lead, accent }) => (
     >
       <span className="text-gradient">{lead} </span>
       <span className="text-gradient-gold">{accent}</span>
-    </h1>
+    </Tag>
   </motion.div>
 );
 
@@ -366,7 +366,8 @@ const Index = () => {
 
       <Navbar />
 
-      {/* ── #hero ────────────────────────────────────────────── */}
+      <main>
+        {/* ── #hero ────────────────────────────────────────────── */}
       <section
         id="hero"
         style={{
@@ -1069,6 +1070,7 @@ const Index = () => {
           </motion.div>
         </div>
       </section>
+      </main>
 
       {/* Scroll hint — hidden once user scrolls past the hero. */}
       <div
