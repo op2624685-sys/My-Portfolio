@@ -11,8 +11,8 @@
 
 <p align="center">
   <a href="https://linkedin.com/in/omprakash"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" /></a>
-  <a href="https://github.com/omprakash"><img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" /></a>
-  <a href="mailto:omprakash@example.com"><img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" /></a>
+  <a href="https://github.com/op2624685-sys"><img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" /></a>
+  <a href="mailto:op2624685@gmail.com"><img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" /></a>
 </p>
 
 ---
@@ -70,8 +70,8 @@ I thrive on solving complex architectural challenges, optimizing system performa
 I'm always open to discussing new projects, creative ideas, or professional opportunities.
 
 - **LinkedIn:** [linkedin.com/in/omprakash](https://linkedin.com/in/omprakash)
-- **GitHub:** [github.com/omprakash](https://github.com/omprakash)
-- **Email:** omprakash@example.com
+- **GitHub:** [github.com/op2624685-sys](https://github.com/op2624685-sys)
+- **Email:** op2624685@gmail.com
 - **Resume:** [📄 Download My Resume](/resume.pdf)
 
 ---

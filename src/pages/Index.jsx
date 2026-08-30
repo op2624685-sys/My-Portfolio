@@ -169,12 +169,12 @@ const levelStyle = (level) => {
 };
 
 const projects = [
-  { title: 'E-Commerce Backend API',  description: 'A comprehensive RESTful API for an e-commerce platform with user authentication, product management, shopping cart, and order processing.', technologies: ['Spring Boot', 'MySQL', 'JWT', 'Spring Security'], githubUrl: 'https://github.com/omprakash', liveUrl: 'https://demo-project.com' },
-  { title: 'Task Management System',  description: 'Enterprise task management application with role-based access control, real-time notifications, and advanced filtering.',                technologies: ['Java', 'Spring MVC', 'Hibernate', 'PostgreSQL'],     githubUrl: 'https://github.com/omprakash', liveUrl: 'https://demo-project.com' },
-  { title: 'Microservices Architecture', description: 'Scalable microservices-based application with service discovery, API gateway, and distributed tracing.',                          technologies: ['Spring Cloud', 'Docker', 'Kubernetes', 'Redis'],      githubUrl: 'https://github.com/omprakash', liveUrl: 'https://demo-project.com' },
-  { title: 'Real-time Chat Application', description: 'WebSocket-based real-time messaging platform with group chats, file sharing, and user presence indicators.',                     technologies: ['Spring Boot', 'WebSocket', 'MongoDB', 'RabbitMQ'],   githubUrl: 'https://github.com/omprakash', liveUrl: 'https://demo-project.com' },
-  { title: 'Payment Gateway Integration', description: 'Secure payment processing system with multiple providers, transaction management, and fraud detection.',                          technologies: ['Spring Boot', 'Stripe API', 'MySQL', 'Redis'],       githubUrl: 'https://github.com/omprakash', liveUrl: 'https://demo-project.com' },
-  { title: 'Analytics Dashboard API',   description: 'High-performance backend for analytics dashboard with data aggregation, caching, and export functionality.',                    technologies: ['Java', 'Spring Boot', 'ElasticSearch', 'Kafka'],    githubUrl: 'https://github.com/omprakash', liveUrl: 'https://demo-project.com' },
+  { title: 'E-Commerce Backend API',  description: 'A comprehensive RESTful API for an e-commerce platform with user authentication, product management, shopping cart, and order processing.', technologies: ['Spring Boot', 'MySQL', 'JWT', 'Spring Security'], githubUrl: 'https://github.com/op2624685-sys', liveUrl: 'https://demo-project.com' },
+  { title: 'Task Management System',  description: 'Enterprise task management application with role-based access control, real-time notifications, and advanced filtering.',                technologies: ['Java', 'Spring MVC', 'Hibernate', 'PostgreSQL'],     githubUrl: 'https://github.com/op2624685-sys', liveUrl: 'https://demo-project.com' },
+  { title: 'Microservices Architecture', description: 'Scalable microservices-based application with service discovery, API gateway, and distributed tracing.',                          technologies: ['Spring Cloud', 'Docker', 'Kubernetes', 'Redis'],      githubUrl: 'https://github.com/op2624685-sys', liveUrl: 'https://demo-project.com' },
+  { title: 'Real-time Chat Application', description: 'WebSocket-based real-time messaging platform with group chats, file sharing, and user presence indicators.',                     technologies: ['Spring Boot', 'WebSocket', 'MongoDB', 'RabbitMQ'],   githubUrl: 'https://github.com/op2624685-sys', liveUrl: 'https://demo-project.com' },
+  { title: 'Payment Gateway Integration', description: 'Secure payment processing system with multiple providers, transaction management, and fraud detection.',                          technologies: ['Spring Boot', 'Stripe API', 'MySQL', 'Redis'],       githubUrl: 'https://github.com/op2624685-sys', liveUrl: 'https://demo-project.com' },
+  { title: 'Analytics Dashboard API',   description: 'High-performance backend for analytics dashboard with data aggregation, caching, and export functionality.',                    technologies: ['Java', 'Spring Boot', 'ElasticSearch', 'Kafka'],    githubUrl: 'https://github.com/op2624685-sys', liveUrl: 'https://demo-project.com' },
 ];
 
 const stats = [
@@ -193,9 +193,9 @@ const services = [
 ];
 
 const socialLinks = [
-  { name: 'GitHub',   icon: Github,   url: 'https://github.com/omprakash' },
+  { name: 'GitHub',   icon: Github,   url: 'https://github.com/op2624685-sys' },
   { name: 'LinkedIn', icon: Linkedin, url: 'https://linkedin.com/in/omprakash' },
-  { name: 'Email',    icon: Mail,     url: 'mailto:omprakash@example.com' },
+  { name: 'Email',    icon: Mail,     url: 'mailto:op2624685@gmail.com' },
 ];
 
 /* ─── Framer variants ────────────────────────────────────────── */
@@ -483,11 +483,11 @@ const Index = () => {
             className="gs"
             style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '2.5rem' }}
           >
-            <a href="/My-Portfolio/projects" className="btn-primary">
+            <a href="/projects" className="btn-primary">
               View Projects
               <ArrowUpRight size={15} strokeWidth={2.25} />
             </a>
-            <a href="/My-Portfolio/about" className="btn-ghost">
+            <a href="/about" className="btn-ghost">
               About Me
             </a>
           </motion.div>
@@ -926,7 +926,10 @@ const Index = () => {
       <section id="contact" style={{
         position: 'relative',
         zIndex: 2,
-        padding: '3rem 1.5rem 6rem',
+        padding: '8rem 1.5rem 6rem',
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
       }}>
         <div style={{
           maxWidth: 1100,
@@ -934,7 +937,7 @@ const Index = () => {
           margin: '0 auto',
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '2rem',
+          gap: '4rem',
           alignItems: 'center'
         }}>
           <motion.div
@@ -1007,14 +1010,14 @@ const Index = () => {
               {
                 label: 'Email Me',
                 desc: 'The best way to reach me',
-                link: 'mailto:omprakash@example.com',
+                link: 'mailto:op2624685@gmail.com',
                 icon: Mail,
                 color: 'var(--accent)'
               },
               {
                 label: 'GitHub',
                 desc: 'Check out my open source work',
-                link: 'https://github.com/omprakash',
+                link: 'https://github.com/op2624685-sys',
                 icon: Github,
                 color: 'var(--text-primary)'
               },
