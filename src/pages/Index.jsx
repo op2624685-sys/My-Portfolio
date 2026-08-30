@@ -547,7 +547,7 @@ const Index = () => {
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ amount: 0.2 }}
+            viewport={{ amount: 0.1 }}
             style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '1rem' }}
           >
             {skills.map((skill) => (
@@ -634,7 +634,7 @@ const Index = () => {
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ amount: 0.2 }}
+            viewport={{ amount: 0.1 }}
             style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.25rem' }}
           >
             {projects.map((project) => (
@@ -869,7 +869,7 @@ const Index = () => {
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ amount: 0.2 }}
+              viewport={{ amount: 0.1 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}
             >
