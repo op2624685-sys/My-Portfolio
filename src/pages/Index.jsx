@@ -147,8 +147,16 @@ const skills = [
   { name: 'Java',             icon: `${BASE_URL.replace(/\/$/, '')}/icons/java.svg`,   level: 'Expert',       description: 'Core Java, Java 8+, Collections, Multithreading, Streams' },
   { name: 'Spring Framework', icon: `${BASE_URL.replace(/\/$/, '')}/icons/spring.svg`, level: 'Advanced',     description: 'Spring Boot, Spring MVC, Spring Security, Spring Data JPA' },
   { name: 'MySQL',            icon: `${BASE_URL.replace(/\/$/, '')}/icons/mysql.svg`,  level: 'Advanced',     description: 'Database design, query optimization, stored procedures' },
+  { name: 'PostgreSQL',       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg', level: 'Advanced',     description: 'Relational data modeling, complex queries, performance tuning' },
   { name: 'Git',              icon: `${BASE_URL.replace(/\/$/, '')}/icons/git.svg`,    level: 'Advanced',     description: 'Version control, branching, merging, CI/CD pipelines' },
   { name: 'Docker',           icon: `${BASE_URL.replace(/\/$/, '')}/icons/docker.svg`, level: 'Intermediate', description: 'Containerization, Docker Compose, deployment workflows' },
+  { name: 'AWS',              icon: 'https://zonalogo.com/assets/aws-logo-png-svg.webp?asset=1862',    level: 'Intermediate', description: 'Cloud infrastructure, EC2, S3, Lambda, IAM' },
+  { name: 'Linux',            icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg',   level: 'Advanced',     description: 'Shell scripting, system administration, SSH, kernel basics' },
+  { name: 'Redis',            icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg',   level: 'Intermediate', description: 'In-memory caching, pub/sub, distributed locking' },
+  { name: 'Kafka',            icon: 'https://cdn.freebiesupply.com/logos/thumbs/2x/kafka-logo.png',    level: 'Intermediate', description: 'Event streaming, producers/consumers, topic management', customStyle: { background: '#fff' } },
+  { name: 'JUnit / Mockito',  level: 'Expert',       description: 'TDD, unit testing, mock objects, integration testing' },
+  { name: 'Observability',    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/grafana/grafana-original.svg', level: 'Intermediate', description: 'Monitoring with Grafana & Prometheus, alerting, metrics' },
+  { name: 'Postman',          icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg',   level: 'Expert',       description: 'API testing, automated collections, environment variables' },
   { name: 'REST API',                                       level: 'Expert',       description: 'RESTful services, API design, microservices architecture' },
   { name: 'Hibernate',                                      level: 'Advanced',     description: 'ORM, JPA, entity relationships, query language' },
   { name: 'Maven / Gradle',                                level: 'Advanced',     description: 'Build tools, dependency management, project configuration' },
@@ -368,7 +376,7 @@ const Index = () => {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '7rem 1.5rem 4rem',
+          padding: '3rem 1.5rem 4rem',
           position: 'relative',
           zIndex: 2,
         }}
@@ -530,7 +538,7 @@ const Index = () => {
       </section>
 
       {/* ── #skills ──────────────────────────────────────────── */}
-      <section id="skills" style={{ position: 'relative', zIndex: 2, padding: '8rem 1.5rem 4rem' }}>
+      <section id="skills" style={{ position: 'relative', zIndex: 2, padding: '3rem 1.5rem 4rem' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <SectionHeader kicker="Skills & Technologies" lead="Tools I use" accent="every day." />
 
@@ -558,14 +566,14 @@ const Index = () => {
                   {skill.icon ? (
                     <div
                       style={{
-                        width: 44,
-                        height: 44,
-                        borderRadius: 10,
-                        background: 'rgba(255, 255, 255, 0.04)',
+                        width: 56,
+                        height: 56,
+                        borderRadius: 12,
+                        background: skill.customStyle?.background || 'rgba(255, 255, 255, 0.04)',
                         border: '1px solid var(--border-default)',
                         display: 'grid',
                         placeItems: 'center',
-                        padding: 8,
+                        padding: 6,
                       }}
                     >
                       <img src={skill.icon} alt={skill.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
@@ -573,15 +581,15 @@ const Index = () => {
                   ) : (
                     <div
                       style={{
-                        width: 44,
-                        height: 44,
-                        borderRadius: 10,
+                        width: 56,
+                        height: 56,
+                        borderRadius: 12,
                         background: 'linear-gradient(135deg, #f0d4a8 0%, #d4af7a 100%)',
                         display: 'grid',
                         placeItems: 'center',
                         fontFamily: 'Fraunces, serif',
                         fontWeight: 600,
-                        fontSize: '1.15rem',
+                        fontSize: '1.4rem',
                         color: '#0a0a0b',
                       }}
                     >
@@ -617,7 +625,7 @@ const Index = () => {
       </section>
 
       {/* ── #projects ────────────────────────────────────────── */}
-      <section id="projects" style={{ position: 'relative', zIndex: 2, padding: '8rem 1.5rem 4rem' }}>
+      <section id="projects" style={{ position: 'relative', zIndex: 2, padding: '3rem 1.5rem 4rem' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <SectionHeader kicker="Selected Work" lead="Recent" accent="projects." />
 
@@ -717,7 +725,7 @@ const Index = () => {
       </section>
 
       {/* ── #about ───────────────────────────────────────────── */}
-      <section id="about" style={{ position: 'relative', zIndex: 2, padding: '8rem 1.5rem 4rem' }}>
+      <section id="about" style={{ position: 'relative', zIndex: 2, padding: '3rem 1.5rem 4rem' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <SectionHeader kicker="About Me" lead="Crafting reliable" accent="backend systems." />
           <p
@@ -917,12 +925,7 @@ const Index = () => {
       <section id="contact" style={{
         position: 'relative',
         zIndex: 2,
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '7rem 1.5rem 6rem',
-        gap: '2rem'
+        padding: '3rem 1.5rem 6rem',
       }}>
         <div style={{
           maxWidth: 1100,
