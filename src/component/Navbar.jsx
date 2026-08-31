@@ -41,6 +41,13 @@ const Navbar = () => {
       window.dispatchEvent(new CustomEvent('manual-nav', { detail: { path } }));
 
       navigate(path);
+
+      // Manually scroll to the target section since automatic scroll-spy snapping was removed
+      const targetId = path === HOME_PATH ? '#hero' : `#${path.replace(HOME_PATH, '')}`;
+      const element = document.querySelector(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     },
     [navigate]
   );

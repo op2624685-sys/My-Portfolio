@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
 import {
   ArrowDown,
@@ -16,7 +17,10 @@ import {
 import Navbar from '../component/Navbar';
 import JavaMain from '../component/JavaMain';
 import AmbientBackdrop from '../component/AmbientBackdrop';
+import { IconCloud } from '../component/IconCloud';
 import { useLocation, useNavigate } from 'react-router-dom';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const SECTION_ROUTES = {
   '/':          '#hero',
@@ -213,11 +217,19 @@ const Index = () => {
   const [introComplete, setIntroComplete] = useState(false);
   const heroRef = useRef(null);
   const scrollHintRef = useRef(null);
+  const ballRef = useRef(null);
   const [hideScrollHint, setHideScrollHint] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const isManualNavigating = useRef(false);
   const mountTime = useRef(null);
+
+  const skillSlugs = [
+    "typescript", "javascript", "dart", "java", "react", "flutter", "android", "html5", "css3", "nodedotjs",
+    "express", "nextdotjs", "prisma", "amazonaws", "postgresql", "firebase", "nginx", "vercel", "testinglibrary",
+    "jest", "cypress", "docker", "git", "jira", "github", "gitlab", "visualstudiocode", "androidstudio",
+    "sonarqube", "figma"
+  ];
 
   const handleIntroComplete = () => setIntroComplete(true);
 
@@ -246,6 +258,74 @@ const Index = () => {
     onScroll();
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  /* Skills Ball Scroll Animation */
+  useEffect(() => {
+    if (!ballRef.current) return;
+
+    const ball = ballRef.current;
+
+    // Initial position - completely off-screen to the right
+    gsap.set(ball, { x: '120vw', y: '50vh', xPercent: -50, yPercent: -50, opacity: 0 });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#skills',
+        start: 'top center',
+        endTrigger: '#skills',
+        end: 'bottom center',
+        scrub: 1.5,
+      }
+    });
+
+    tl.to(ball, {
+      opacity: 1,
+      duration: 0.3
+    }, 0)
+    // 1. Slow, cinematic entry from far right
+    .to(ball, {
+      x: '85vw',
+      y: '60vh',
+      ease: 'power1.inOut',
+      duration: 2
+    }, 0.3)
+    // 2. First Jump: Arc to Center-Bottom (right -> center-bottom)
+    .to(ball, {
+      x: '50vw',
+      y: '85vh',
+      ease: 'back.out(2)',
+      duration: 2.5
+    }, 2.3)
+    // 3. Smooth glide to Middle-Center (The a-ha moment)
+    .to(ball, {
+      x: '50vw',
+      y: '60vh',
+      ease: 'power2.inOut',
+      duration: 3
+    }, 4.8)
+    // 4. Pause/Settle feel (Hold position)
+    .to(ball, {
+      x: '50vw',
+      y: '60vh',
+      duration: 3
+    }, 7.8)
+    // 5. Second Jump: Center-Bottom again before exit
+    .to(ball, {
+      x: '50vw',
+      y: '85vh',
+      ease: 'back.in(2)',
+      duration: 2.5
+    }, 10.8)
+    // 6. Final Dramatic Jump exit to Left
+    .to(ball, {
+      x: '-25vw',
+      y: '120vh',
+      rotation: 720,
+      ease: 'bounce.out',
+      duration: 3
+    }, 13.3);
+
+  }, [introComplete]);
 
   useEffect(() => {
     const handleManualNav = () => {
@@ -342,19 +422,10 @@ const Index = () => {
   }, [location.pathname, navigate]);
 
   /* Scroll-to-section when the URL changes (via click or back/forward). */
+  // Removed automatic scrollIntoView to prevent "page pulling" effect.
+  // Manual navigation is now handled in the Navbar component.
   useEffect(() => {
-    const target = SECTION_ROUTES[location.pathname] || '#hero';
-
-    // Defer to allow layout / fonts to settle, then smooth-scroll.
-    const id = setTimeout(() => {
-      const el = document.querySelector(target);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      } else {
-        console.warn(`Target section ${target} not found for path ${location.pathname}`);
-      }
-    }, 200);
-    return () => clearTimeout(id);
+    // This effect is now disabled to prevent automatic snapping during scroll-spy updates.
   }, [location.pathname]);
 
   const techs = [{ label: 'Spring Boot' }, { label: 'Microservices' }, { label: 'REST APIs' }, { label: 'Java' }];
@@ -367,6 +438,22 @@ const Index = () => {
       <Navbar />
 
       <main>
+        <div
+          ref={ballRef}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: 'auto',
+            height: 'auto',
+            zIndex: 10,
+            pointerEvents: 'auto',
+            perspective: '1000px',
+          }}
+        >
+          <IconCloud slugs={skillSlugs} />
+        </div>
+
         {/* ── #hero ────────────────────────────────────────────── */}
       <section
         id="hero"
@@ -543,85 +630,8 @@ const Index = () => {
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <SectionHeader kicker="Skills & Technologies" lead="Tools I use" accent="every day." />
 
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ amount: 0.1 }}
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '1rem' }}
-          >
-            {skills.map((skill) => (
-              <motion.div
-                key={skill.name}
-                variants={cardVariants}
-                className="surface-card"
-                style={{ padding: '1.5rem' }}
-                /* Replay animation when scrolled back into view */
-                onAnimationComplete={(def) => {
-                  if (def === 'hidden') {
-                    /* no-op, framer handles state */
-                  }
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '1rem' }}>
-                  {skill.icon ? (
-                    <div
-                      style={{
-                        width: 56,
-                        height: 56,
-                        borderRadius: 12,
-                        background: skill.customStyle?.background || 'rgba(255, 255, 255, 0.04)',
-                        border: '1px solid var(--border-default)',
-                        display: 'grid',
-                        placeItems: 'center',
-                        padding: 6,
-                      }}
-                    >
-                      <img src={skill.icon} alt={skill.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                    </div>
-                  ) : (
-                    <div
-                      style={{
-                        width: 56,
-                        height: 56,
-                        borderRadius: 12,
-                        background: 'linear-gradient(135deg, #f0d4a8 0%, #d4af7a 100%)',
-                        display: 'grid',
-                        placeItems: 'center',
-                        fontFamily: 'Fraunces, serif',
-                        fontWeight: 600,
-                        fontSize: '1.4rem',
-                        color: '#0a0a0b',
-                      }}
-                    >
-                      {skill.name.charAt(0)}
-                    </div>
-                  )}
-                  <h3 style={{ fontSize: '1rem', fontWeight: 550, color: 'var(--text-primary)', margin: 0, letterSpacing: '-0.01em' }}>
-                    {skill.name}
-                  </h3>
-                </div>
-                <div style={{ marginBottom: '0.85rem' }}>
-                  <span
-                    style={{
-                      display: 'inline-block',
-                      padding: '0.22rem 0.6rem',
-                      borderRadius: 999,
-                      fontSize: '0.7rem',
-                      fontWeight: 500,
-                      letterSpacing: '0.01em',
-                      ...levelStyle(skill.level),
-                    }}
-                  >
-                    {skill.level}
-                  </span>
-                </div>
-                <p style={{ fontSize: '0.88rem', color: 'var(--text-tertiary)', lineHeight: 1.55, margin: 0 }}>
-                  {skill.description}
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
+          {/* Increased height to give the ball more space to be centered and rotate */}
+          <div style={{ height: '100vh' }} />
         </div>
       </section>
 
