@@ -18,6 +18,8 @@ import Navbar from '../component/Navbar';
 import JavaMain from '../component/JavaMain';
 import AmbientBackdrop from '../component/AmbientBackdrop';
 import { IconCloud } from '../component/IconCloud';
+import ScrollableCardStack from '../component/ScrollableCardStack';
+import ViewAllProjectsButton from '../component/ViewAllProjectsButton';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -640,98 +642,10 @@ const Index = () => {
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <SectionHeader kicker="Selected Work" lead="Recent" accent="projects." />
 
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ amount: 0.1 }}
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.25rem' }}
-          >
-            {projects.map((project) => (
-              <motion.div
-                key={project.title}
-                variants={cardVariants}
-                className="surface-card"
-                style={{ padding: '1.75rem', display: 'flex', flexDirection: 'column' }}
-              >
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    marginBottom: '1.25rem',
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 36,
-                      height: 36,
-                      borderRadius: 10,
-                      background: 'rgba(212, 175, 122, 0.1)',
-                      border: '1px solid rgba(212, 175, 122, 0.25)',
-                      display: 'grid',
-                      placeItems: 'center',
-                    }}
-                  >
-                    <span style={{ fontFamily: 'Fraunces, serif', fontSize: '0.95rem', color: 'var(--accent-soft)', fontWeight: 600 }}>
-                      {project.title.charAt(0)}
-                    </span>
-                  </div>
-                  <ArrowUpRight size={18} style={{ color: 'var(--text-muted)' }} />
-                </div>
-
-                <h3 style={{ fontSize: '1.1rem', fontWeight: 550, color: 'var(--text-primary)', margin: 0, marginBottom: '0.6rem', letterSpacing: '-0.01em' }}>
-                  {project.title}
-                </h3>
-                <p style={{ fontSize: '0.92rem', color: 'var(--text-tertiary)', lineHeight: 1.6, margin: 0, marginBottom: '1.25rem', flex: 1 }}>
-                  {project.description}
-                </p>
-
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '1.5rem' }}>
-                  {project.technologies.map((tech) => (
-                    <span
-                      key={tech}
-                      style={{
-                        padding: '0.25rem 0.65rem',
-                        borderRadius: 999,
-                        background: 'rgba(255, 255, 255, 0.04)',
-                        border: '1px solid var(--border-default)',
-                        color: 'var(--text-secondary)',
-                        fontSize: '0.74rem',
-                        fontWeight: 450,
-                        letterSpacing: '-0.005em',
-                      }}
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                <div style={{ display: 'flex', gap: '0.5rem', paddingTop: '1.25rem', borderTop: '1px solid var(--border-subtle)' }}>
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-ghost"
-                    style={{ flex: 1, justifyContent: 'center', padding: '0.5rem 0.8rem' }}
-                  >
-                    <Github size={14} />
-                    Code
-                  </a>
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-primary"
-                    style={{ flex: 1, justifyContent: 'center', padding: '0.5rem 0.8rem' }}
-                  >
-                    <ExternalLink size={14} />
-                    Live
-                  </a>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
+            <ScrollableCardStack items={projects} perspective={1200} />
+            <ViewAllProjectsButton />
+          </div>
         </div>
       </section>
 
