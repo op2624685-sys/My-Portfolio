@@ -225,10 +225,10 @@ const Index = () => {
   const mountTime = useRef(null);
 
   const skillSlugs = [
-    "typescript", "javascript", "dart", "java", "react", "flutter", "android", "html5", "css3", "nodedotjs",
-    "express", "nextdotjs", "prisma", "amazonaws", "postgresql", "firebase", "nginx", "vercel", "testinglibrary",
-    "jest", "cypress", "docker", "git", "jira", "github", "gitlab", "visualstudiocode", "androidstudio",
-    "sonarqube", "figma"
+    "java", "springboot", "mysql", "postgresql", "git", "docker", "aws", "linux", "redis", "apachekafka",
+    "grafana", "prometheus", "postman", "hibernate", "apachemaven", "gradle", "github", "gitlab",
+    "visualstudiocode", "intellijidea", "apachetomcat", "kubernetes", "jenkins", "sonarqube", "mongodb",
+    "rabbitmq", "microsoftazure", "googlecloud", "openai"
   ];
 
   const handleIntroComplete = () => setIntroComplete(true);
@@ -316,12 +316,12 @@ const Index = () => {
       ease: 'back.in(2)',
       duration: 2.5
     }, 10.8)
-    // 6. Final Dramatic Jump exit to Left
+    // 6. Final Dramatic Jump exit to Left (Horizontal)
     .to(ball, {
-      x: '-25vw',
-      y: '120vh',
+      x: '-120vw',
+      y: '40vh',
       rotation: 720,
-      ease: 'bounce.out',
+      ease: 'power2.in',
       duration: 3
     }, 13.3);
 

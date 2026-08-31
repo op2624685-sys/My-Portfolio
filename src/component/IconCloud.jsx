@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 
 export const IconCloud = ({ slugs = [] }) => {
   const containerRef = useRef(null);
-  const radius = 200;
+  const radius = 300;
   const isDragging = useRef(false);
   const startX = useRef(0);
   const startY = useRef(0);
@@ -103,8 +103,8 @@ export const IconCloud = ({ slugs = [] }) => {
           key={idx}
           style={{
             position: 'absolute',
-            width: 48,
-            height: 48,
+            width: 64,
+            height: 64,
             transform: `translate3d(${icon.x}px, ${icon.y}px, ${icon.z}px)`,
             display: 'grid',
             placeItems: 'center',
@@ -113,7 +113,7 @@ export const IconCloud = ({ slugs = [] }) => {
           }}
         >
           <img
-            src={`https://cdn.simpleicons.org/${icon.slug}/${icon.slug}`}
+            src={`https://cdn.simpleicons.org/${icon.slug}`}
             alt={icon.slug}
             style={{
               width: '100%',
