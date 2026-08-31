@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import { useWindowSize } from '@/hooks/useWindowSize'; // Assuming this hook exists or I should create it
 
-// Helper to get window size if hook is not available
 const useWindowWidth = () => {
   const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
   useEffect(() => {
@@ -16,7 +14,8 @@ const useWindowWidth = () => {
 export const IconCloud = ({ slugs = [] }) => {
   const containerRef = useRef(null);
   const width = useWindowWidth();
-  const radius = width < 768 ? 180 : 300;
+  const isMobile = width < 768;
+  const radius = isMobile ? 150 : 300;
 
   const isDragging = useRef(false);
   const startX = useRef(0);
@@ -35,13 +34,16 @@ export const IconCloud = ({ slugs = [] }) => {
   };
 
   useEffect(() => {
-    startAutoRotation();
+    if (!isMobile) {
+      startAutoRotation();
+    }
     return () => {
       gsap.killTweensOf(containerRef.current);
     };
-  }, [radius]); // Restart when radius changes
+  }, [isMobile, radius]);
 
   const handleStart = (clientX, clientY) => {
+    if (isMobile) return;
     isDragging.current = true;
     startX.current = clientX;
     startY.current = clientY;
@@ -51,7 +53,7 @@ export const IconCloud = ({ slugs = [] }) => {
   };
 
   const handleMove = (clientX, clientY) => {
-    if (!isDragging.current) return;
+    if (isMobile || !isDragging.current) return;
     const deltaX = clientX - startX.current;
     const deltaY = clientY - startY.current;
     currentRotationY.current += deltaX * 0.5;
@@ -65,36 +67,80 @@ export const IconCloud = ({ slugs = [] }) => {
   };
 
   const handleEnd = () => {
-    if (!isDragging.current) return;
+    if (isMobile || !isDragging.current) return;
     isDragging.current = false;
     startAutoRotation();
   };
 
-  // Mouse events
   const onMouseDown = (e) => handleStart(e.clientX, e.clientY);
   const onMouseMove = (e) => handleMove(e.clientX, e.clientY);
   const onMouseUp = () => handleEnd();
-
-  // Touch events
-  const onTouchStart = (e) => {
-    const touch = e.touches[0];
-    handleStart(touch.clientX, touch.clientY);
-  };
-  const onTouchMove = (e) => {
-    const touch = e.touches[0];
-    handleMove(touch.clientX, touch.clientY);
-  };
+  const onTouchStart = (e) => handleStart(e.touches[0].clientX, e.touches[0].clientY);
+  const onTouchMove = (e) => handleMove(e.touches[0].clientX, e.touches[0].clientY);
   const onTouchEnd = () => handleEnd();
 
-  const icons = slugs.map((slug, i) => {
+  // 3D Ball Layout
+  const ballIcons = slugs.map((slug, i) => {
     const N = slugs.length;
     const phi = Math.acos(1 - 2 * (i / N));
     const theta = Math.PI * (1 + Math.sqrt(5)) * i;
-    const x = Math.cos(theta) * Math.sin(phi) * radius;
-    const y = Math.cos(phi) * radius;
-    const z = Math.sin(theta) * Math.sin(phi) * radius;
-    return { slug, x, y, z };
+    return {
+      slug,
+      x: Math.cos(theta) * Math.sin(phi) * radius,
+      y: Math.cos(phi) * radius,
+      z: Math.sin(theta) * Math.sin(phi) * radius,
+    };
   });
+
+  if (isMobile) {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '1.5rem',
+          maxWidth: '400px',
+          margin: '0 auto',
+          padding: '2rem',
+          perspective: '1000px'
+        }}
+      >
+        {slugs.map((slug, idx) => (
+          <motion-div
+            key={slug}
+            style={{
+              width: 56,
+              height: 56,
+              display: 'grid',
+              placeItems: 'center',
+              position: 'relative',
+              animation: `float ${3 + Math.random()}s ease-in-out infinite`,
+              animationDelay: `${idx * 0.2}s`
+            }}
+          >
+            <img
+              src={`https://cdn.simpleicons.org/${slug}`}
+              alt={slug}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'contain',
+                filter: 'drop-shadow(0 0 8px rgba(212, 175, 122, 0.4))',
+              }}
+            />
+            <style>{`
+              @keyframes float {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-10px); }
+              }
+            `}</style>
+          </motion-div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div
@@ -115,16 +161,16 @@ export const IconCloud = ({ slugs = [] }) => {
         alignItems: 'center',
         justifyContent: 'center',
         cursor: 'grab',
-        touchAction: 'none', // Important for touch dragging
+        touchAction: 'none',
       }}
     >
-      {icons.map((icon, idx) => (
+      {ballIcons.map((icon, idx) => (
         <div
           key={idx}
           style={{
             position: 'absolute',
-            width: width < 768 ? 48 : 64,
-            height: width < 768 ? 48 : 64,
+            width: 64,
+            height: 64,
             transform: `translate3d(${icon.x}px, ${icon.y}px, ${icon.z}px)`,
             display: 'grid',
             placeItems: 'center',
