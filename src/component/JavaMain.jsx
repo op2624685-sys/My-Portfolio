@@ -162,7 +162,7 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
                 'linear-gradient(180deg, rgba(22, 22, 26, 0.95) 0%, rgba(17, 17, 20, 0.95) 100%)',
               border: `1px solid ${isComplete ? 'rgba(212, 175, 122, 0.35)' : 'var(--border-default)'}`,
               borderRadius: 16,
-              padding: '1.25rem',
+              padding: 0,
               boxShadow: isComplete
                 ? '0 0 0 1px rgba(212, 175, 122, 0.1), 0 30px 80px -20px rgba(0, 0, 0, 0.7), 0 0 60px -10px rgba(212, 175, 122, 0.25)'
                 : '0 30px 80px -20px rgba(0, 0, 0, 0.7)',
@@ -193,92 +193,70 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.5rem',
-                marginBottom: '1rem',
+                justifyContent: 'space-between',
+                padding: '0.75rem 1rem',
+                marginBottom: '0',
+                background: 'rgba(0, 0, 0, 0.2)',
+                borderBottom: '1px solid var(--border-default)',
+                borderRadius: '16px 16px 0 0',
                 position: 'relative',
                 zIndex: 2,
               }}
             >
+              <div style={{ display: 'flex', gap: '6px' }}>
+                <div style={{ width: 12, height: 12, borderRadius: '50%', background: '#ff5f56' }} />
+                <div style={{ width: 12, height: 12, borderRadius: '50%', background: '#ffbd2e' }} />
+                <div style={{ width: 12, height: 12, borderRadius: '50%', background: '#27c93f' }} />
+              </div>
+
               <div
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '0.4rem',
-                  padding: '0.3rem 0.6rem',
-                  borderRadius: 6,
-                  background: 'rgba(255, 255, 255, 0.04)',
-                  border: '1px solid var(--border-default)',
+                  gap: '0.5rem',
+                  fontFamily: 'JetBrains Mono, monospace',
+                  fontSize: '0.75rem',
+                  color: 'var(--text-secondary)',
+                  opacity: 0.8,
                 }}
               >
                 <Terminal size={12} style={{ color: 'var(--accent)' }} />
-                <span
-                  style={{
-                    fontFamily: 'JetBrains Mono, monospace',
-                    fontSize: '0.78rem',
-                    color: 'var(--text-secondary)',
-                    letterSpacing: '0.02em',
-                  }}
-                >
-                  Main.java
-                </span>
+                <span>Main.java</span>
               </div>
-              <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                 {isComplete && (
                   <span
                     style={{
                       display: 'inline-flex',
                       alignItems: 'center',
                       gap: '0.3rem',
-                      padding: '0.25rem 0.6rem',
-                      borderRadius: 999,
+                      padding: '0.2rem 0.5rem',
+                      borderRadius: 4,
                       background: 'rgba(74, 222, 128, 0.1)',
                       border: '1px solid rgba(74, 222, 128, 0.3)',
                       color: '#86efac',
-                      fontSize: '0.72rem',
+                      fontSize: '0.65rem',
                       fontWeight: 500,
                       animation: 'slideUp 0.4s var(--ease-out) both',
                     }}
                   >
-                    <Check size={11} strokeWidth={2.5} />
+                    <Check size={10} strokeWidth={2.5} />
                     Compiled
                   </span>
                 )}
                 <span
                   style={{
                     fontFamily: 'JetBrains Mono, monospace',
-                    fontSize: '0.7rem',
+                    fontSize: '0.65rem',
                     color: 'var(--text-muted)',
-                    letterSpacing: '0.05em',
                   }}
                 >
                   {progress}%
                 </span>
               </div>
             </div>
-
-            {/* Progress bar */}
-            {!isComplete && (
-              <div
-                style={{
-                  height: 2,
-                  borderRadius: 999,
-                  background: 'rgba(255, 255, 255, 0.06)',
-                  marginBottom: '1rem',
-                  overflow: 'hidden',
-                }}
-              >
-                <div
-                  style={{
-                    height: '100%',
-                    width: `${progress}%`,
-                    background: 'linear-gradient(90deg, #a87c4b, #d4af7a, #f0d4a8)',
-                    borderRadius: 999,
-                    boxShadow: '0 0 12px rgba(212, 175, 122, 0.6)',
-                    transition: 'width 0.05s linear',
-                  }}
-                />
-              </div>
-            )}
+            <div style={{ padding: '1.25rem' }}>
 
             {/* Divider */}
             <div
@@ -401,6 +379,7 @@ export default function CodeAnimationIntro({ onIntroComplete }) {
                 </span>
               </div>
             )}
+            </div>
           </div>
         </div>
       )}
