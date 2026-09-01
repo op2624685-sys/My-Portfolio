@@ -177,12 +177,60 @@ const levelStyle = (level) => {
 };
 
 const projects = [
-  { title: 'E-Commerce Backend API',  description: 'A comprehensive RESTful API for an e-commerce platform with user authentication, product management, shopping cart, and order processing.', technologies: ['Spring Boot', 'MySQL', 'JWT', 'Spring Security'], githubUrl: 'https://github.com/op2624685-sys', liveUrl: 'https://demo-project.com' },
-  { title: 'Task Management System',  description: 'Enterprise task management application with role-based access control, real-time notifications, and advanced filtering.',                technologies: ['Java', 'Spring MVC', 'Hibernate', 'PostgreSQL'],     githubUrl: 'https://github.com/op2624685-sys', liveUrl: 'https://demo-project.com' },
-  { title: 'Microservices Architecture', description: 'Scalable microservices-based application with service discovery, API gateway, and distributed tracing.',                          technologies: ['Spring Cloud', 'Docker', 'Kubernetes', 'Redis'],      githubUrl: 'https://github.com/op2624685-sys', liveUrl: 'https://demo-project.com' },
-  { title: 'Real-time Chat Application', description: 'WebSocket-based real-time messaging platform with group chats, file sharing, and user presence indicators.',                     technologies: ['Spring Boot', 'WebSocket', 'MongoDB', 'RabbitMQ'],   githubUrl: 'https://github.com/op2624685-sys', liveUrl: 'https://demo-project.com' },
-  { title: 'Payment Gateway Integration', description: 'Secure payment processing system with multiple providers, transaction management, and fraud detection.',                          technologies: ['Spring Boot', 'Stripe API', 'MySQL', 'Redis'],       githubUrl: 'https://github.com/op2624685-sys', liveUrl: 'https://demo-project.com' },
-  { title: 'Analytics Dashboard API',   description: 'High-performance backend for analytics dashboard with data aggregation, caching, and export functionality.',                    technologies: ['Java', 'Spring Boot', 'ElasticSearch', 'Kafka'],    githubUrl: 'https://github.com/op2624685-sys', liveUrl: 'https://demo-project.com' },
+  {
+    title: 'E-Commerce Backend API',
+    category: 'E-Commerce Backend',
+    icon: 'ShoppingCart',
+    description: 'A comprehensive RESTful API for an e-commerce platform with user authentication, product management, shopping cart, and order processing.',
+    technologies: ['Spring Boot', 'MySQL', 'JWT', 'Spring Security'],
+    githubUrl: 'https://github.com/op2624685-sys',
+    liveUrl: 'https://demo-project.com'
+  },
+  {
+    title: 'Task Management System',
+    category: 'Enterprise Solution',
+    icon: 'CheckSquare',
+    description: 'Enterprise task management application with role-based access control, real-time notifications, and advanced filtering.',
+    technologies: ['Java', 'Spring MVC', 'Hibernate', 'PostgreSQL'],
+    githubUrl: 'https://github.com/op2624685-sys',
+    liveUrl: 'https://demo-project.com'
+  },
+  {
+    title: 'Microservices Architecture',
+    category: 'Cloud Infrastructure',
+    icon: 'Cpu',
+    description: 'Scalable microservices-based application with service discovery, API gateway, and distributed tracing.',
+    technologies: ['Spring Cloud', 'Docker', 'Kubernetes', 'Redis'],
+    githubUrl: 'https://github.com/op2624685-sys',
+    liveUrl: 'https://demo-project.com'
+  },
+  {
+    title: 'Real-time Chat Application',
+    category: 'Communication System',
+    icon: 'MessageSquare',
+    description: 'WebSocket-based real-time messaging platform with group chats, file sharing, and user presence indicators.',
+    technologies: ['Spring Boot', 'WebSocket', 'MongoDB', 'RabbitMQ'],
+    githubUrl: 'https://github.com/op2624685-sys',
+    liveUrl: 'https://demo-project.com'
+  },
+  {
+    title: 'Payment Gateway Integration',
+    category: 'Fintech Platform',
+    icon: 'CreditCard',
+    description: 'Secure payment processing system with multiple providers, transaction management, and fraud detection.',
+    technologies: ['Spring Boot', 'Stripe API', 'MySQL', 'Redis'],
+    githubUrl: 'https://github.com/op2624685-sys',
+    liveUrl: 'https://demo-project.com'
+  },
+  {
+    title: 'Analytics Dashboard API',
+    category: 'Big Data & Analytics',
+    icon: 'BarChart3',
+    description: 'High-performance backend for analytics dashboard with data aggregation, caching, and export functionality.',
+    technologies: ['Java', 'Spring Boot', 'ElasticSearch', 'Kafka'],
+    githubUrl: 'https://github.com/op2624685-sys',
+    liveUrl: 'https://demo-project.com'
+  },
 ];
 
 const stats = [
