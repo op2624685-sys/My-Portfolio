@@ -646,11 +646,29 @@ const Index = () => {
               className="gs"
               style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '1.75rem' }}
             >
-              <a href="#projects" className="btn-primary" style={{ padding: '0.75rem 1.6rem', fontSize: '0.92rem' }}>
+              <a
+                href="/projects"
+                className="btn-primary"
+                style={{ padding: '0.75rem 1.6rem', fontSize: '0.92rem' }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate('/projects');
+                  document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
                 Explore Projects
                 <ArrowUpRight size={17} strokeWidth={2.25} />
               </a>
-              <a href="#contact" className="btn-ghost" style={{ padding: '0.75rem 1.6rem', fontSize: '0.92rem' }}>
+              <a
+                href="/contact"
+                className="btn-ghost"
+                style={{ padding: '0.75rem 1.6rem', fontSize: '0.92rem' }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate('/contact');
+                  document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
                 Get In Touch
               </a>
             </motion.div>
@@ -671,29 +689,30 @@ const Index = () => {
                     alignItems: 'center',
                     gap: '0.45rem',
                     padding: '0.45rem 1.05rem',
-                    background: 'rgba(255, 255, 255, 0.035)',
+                    background: '#000000',
                     backdropFilter: 'blur(10px)',
-                    border: '1px solid var(--border-default)',
+                    border: '1px solid rgba(255, 255, 255, 0.14)',
                     borderRadius: 999,
                     fontSize: '0.84rem',
                     color: 'var(--text-secondary)',
                     fontWeight: 500,
                     transition: 'all 0.3s var(--ease-out)',
                     cursor: 'default',
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4)',
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(230, 167, 86, 0.12)';
-                    e.currentTarget.style.borderColor = 'rgba(230, 167, 86, 0.4)';
+                    e.currentTarget.style.background = 'rgba(230, 167, 86, 0.15)';
+                    e.currentTarget.style.borderColor = 'rgba(230, 167, 86, 0.5)';
                     e.currentTarget.style.color = '#ffffff';
                     e.currentTarget.style.transform = 'translateY(-2px) scale(1.03)';
                     e.currentTarget.style.boxShadow = '0 8px 20px -6px rgba(230, 167, 86, 0.3)';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.035)';
-                    e.currentTarget.style.borderColor = 'var(--border-default)';
+                    e.currentTarget.style.background = '#000000';
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.14)';
                     e.currentTarget.style.color = 'var(--text-secondary)';
                     e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                    e.currentTarget.style.boxShadow = 'none';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.4)';
                   }}
                 >
                   <Sparkles size={13} style={{ color: 'var(--accent)' }} />
