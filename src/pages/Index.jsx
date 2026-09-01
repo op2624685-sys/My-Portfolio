@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
 import {
   ArrowDown,
+  ChevronDown,
   ArrowUpRight,
   Sparkles,
   Github,
@@ -17,6 +18,7 @@ import {
 import Navbar from '../component/Navbar';
 import JavaMain from '../component/JavaMain';
 import AmbientBackdrop from '../component/AmbientBackdrop';
+import TextRotation from '../component/TextRotation';
 import { IconCloud } from '../component/IconCloud';
 import ScrollableCardStack from '../component/ScrollableCardStack';
 import ViewAllProjectsButton from '../component/ViewAllProjectsButton';
@@ -464,165 +466,226 @@ const Index = () => {
           width: '100%',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '3rem 1.5rem 4rem',
+          justifyContent: 'space-between',
+          padding: '6.5rem 1.5rem 4rem',
           position: 'relative',
           zIndex: 2,
+          maxWidth: '100%',
+          margin: 0,
         }}
       >
         <div
           ref={heroRef}
           style={{
             width: '100%',
-            maxWidth: 880,
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
-            textAlign: 'center',
-            margin: '0 auto',
+            gap: '2.5rem',
           }}
         >
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="gs"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              padding: '0.4rem 0.9rem 0.4rem 0.7rem',
-              borderRadius: 999,
-              background: 'rgba(255, 255, 255, 0.03)',
-              border: '1px solid var(--border-default)',
-              marginBottom: '1.75rem',
-              backdropFilter: 'blur(12px)',
-            }}
-          >
-            <span
+          {/* 1. Far Left-Aligned Name & Status Header */}
+          <div style={{ textAlign: 'left', width: '100%', paddingLeft: 0, marginLeft: 0 }}>
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={introComplete ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="gs"
               style={{
-                width: 7,
-                height: 7,
-                borderRadius: '50%',
-                background: '#4ade80',
-                animation: 'pulseDot 2s infinite',
-                flexShrink: 0,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.6rem',
+                padding: '0.45rem 1.1rem',
+                borderRadius: 999,
+                background: 'rgba(18, 18, 22, 0.70)',
+                border: '1px solid rgba(230, 167, 86, 0.35)',
+                marginBottom: '1rem',
+                backdropFilter: 'blur(16px)',
+                WebkitBackdropFilter: 'blur(16px)',
+                boxShadow: '0 8px 24px -6px rgba(0, 0, 0, 0.4)',
               }}
-            />
-            <span style={{ fontSize: '0.78rem', color: 'var(--text-tertiary)', fontWeight: 450, letterSpacing: '0.01em' }}>
-              Available for new opportunities
-            </span>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="gs"
-            style={{ fontSize: '0.88rem', color: 'var(--text-tertiary)', marginBottom: '1.1rem', fontWeight: 450, letterSpacing: '0.01em' }}
-          >
-            Hey there, welcome — I'm
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 12 }}
-            animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="gs font-display"
-            style={{
-              fontSize: 'clamp(2.75rem, 7.5vw, 5rem)',
-              fontWeight: 500,
-              letterSpacing: '-0.035em',
-              lineHeight: 1.02,
-              margin: 0,
-              marginBottom: '1.5rem',
-            }}
-          >
-            <span className="text-gradient">Om </span>
-            <span className="text-gradient-gold">Prakash.</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="gs"
-            style={{
-              fontSize: 'clamp(1rem, 2.2vw, 1.2rem)',
-              color: 'var(--text-secondary)',
-              fontWeight: 400,
-              maxWidth: 560,
-              lineHeight: 1.6,
-              margin: 0,
-              marginBottom: '2.25rem',
-              letterSpacing: '-0.005em',
-            }}
-          >
-            A <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>Java Backend Engineer</span> building
-            scalable, production-grade systems with{' '}
-            <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>Spring Boot</span> and modern
-            cloud architecture.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="gs"
-            style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '2.5rem' }}
-          >
-            <a href="/projects" className="btn-primary">
-              View Projects
-              <ArrowUpRight size={15} strokeWidth={2.25} />
-            </a>
-            <a href="/about" className="btn-ghost">
-              About Me
-            </a>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            className="gs"
-            style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'center' }}
-          >
-            {techs.map((tech) => (
+            >
               <span
-                key={tech.label}
                 style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.4rem',
-                  padding: '0.4rem 0.9rem',
-                  background: 'rgba(255, 255, 255, 0.025)',
-                  border: '1px solid var(--border-default)',
-                  borderRadius: 999,
-                  fontSize: '0.82rem',
-                  color: 'var(--text-secondary)',
-                  fontWeight: 450,
-                  letterSpacing: '-0.005em',
-                  transition: 'all 0.3s var(--ease-out)',
-                  cursor: 'default',
+                  width: 8,
+                  height: 8,
+                  borderRadius: '50%',
+                  background: '#34d399',
+                  boxShadow: '0 0 12px #34d399',
+                  animation: 'pulseDot 2s infinite',
+                  flexShrink: 0,
                 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
-                  e.currentTarget.style.borderColor = 'var(--border-strong)';
-                  e.currentTarget.style.color = 'var(--text-primary)';
-                  e.currentTarget.style.transform = 'translateY(-1px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.025)';
-                  e.currentTarget.style.borderColor = 'var(--border-default)';
-                  e.currentTarget.style.color = 'var(--text-secondary)';
-                  e.currentTarget.style.transform = 'translateY(0)';
+              />
+              <span
+                style={{
+                  fontSize: '0.78rem',
+                  fontFamily: "'JetBrains Mono', monospace",
+                  color: 'var(--accent-soft)',
+                  fontWeight: 600,
+                  letterSpacing: '0.04em',
+                  textTransform: 'uppercase',
                 }}
               >
-                <Sparkles size={12} style={{ color: 'var(--accent)' }} />
-                {tech.label}
+                Available for New Opportunities
               </span>
-            ))}
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={introComplete ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="gs"
+              style={{
+                fontSize: '0.84rem',
+                fontFamily: "'JetBrains Mono', monospace",
+                color: 'var(--text-tertiary)',
+                marginBottom: '0.4rem',
+                fontWeight: 500,
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase',
+              }}
+            >
+              &lt; JAVA BACKEND ENGINEER &amp; FULL STACK DEVELOPER /&gt;
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, x: -30 }}
+              animate={introComplete ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="gs font-syne text-gradient"
+              style={{
+                fontSize: 'clamp(3.2rem, 7vw, 5.8rem)',
+                fontWeight: 800,
+                letterSpacing: '-0.04em',
+                lineHeight: 1.0,
+                margin: 0,
+                paddingLeft: 0,
+              }}
+            >
+              OM PRAKASH.
+            </motion.h1>
+          </div>
+
+          {/* 2. Centered "Building Scalable" + Typing Text Animation & Links */}
+          <div style={{ textAlign: 'center', width: '100%', margin: '0 auto', maxWidth: 850 }}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="gs"
+            >
+              <h2
+                className="font-display text-gradient-gold"
+                style={{
+                  fontSize: 'clamp(2rem, 5vw, 3.6rem)',
+                  fontWeight: 700,
+                  letterSpacing: '-0.03em',
+                  lineHeight: 1.15,
+                  margin: '0 0 1.25rem 0',
+                }}
+              >
+                BUILDING SCALABLE <br />
+                <span className="inline-block mt-2">
+                  <TextRotation size="lg" />
+                </span>
+              </h2>
+            </motion.div>
+
+            {/* 2 Links directly below Typing Animation */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="gs"
+              style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '1.75rem' }}
+            >
+              <a href="#projects" className="btn-primary" style={{ padding: '0.75rem 1.6rem', fontSize: '0.92rem' }}>
+                Explore Projects
+                <ArrowUpRight size={17} strokeWidth={2.25} />
+              </a>
+              <a href="#contact" className="btn-ghost" style={{ padding: '0.75rem 1.6rem', fontSize: '0.92rem' }}>
+                Get In Touch
+              </a>
+            </motion.div>
+
+            {/* Tech Badges */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="gs"
+              style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', justifyContent: 'center' }}
+            >
+              {techs.map((tech) => (
+                <span
+                  key={tech.label}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.45rem',
+                    padding: '0.45rem 1.05rem',
+                    background: 'rgba(255, 255, 255, 0.035)',
+                    backdropFilter: 'blur(10px)',
+                    border: '1px solid var(--border-default)',
+                    borderRadius: 999,
+                    fontSize: '0.84rem',
+                    color: 'var(--text-secondary)',
+                    fontWeight: 500,
+                    transition: 'all 0.3s var(--ease-out)',
+                    cursor: 'default',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(230, 167, 86, 0.12)';
+                    e.currentTarget.style.borderColor = 'rgba(230, 167, 86, 0.4)';
+                    e.currentTarget.style.color = '#ffffff';
+                    e.currentTarget.style.transform = 'translateY(-2px) scale(1.03)';
+                    e.currentTarget.style.boxShadow = '0 8px 20px -6px rgba(230, 167, 86, 0.3)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.035)';
+                    e.currentTarget.style.borderColor = 'var(--border-default)';
+                    e.currentTarget.style.color = 'var(--text-secondary)';
+                    e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
+                >
+                  <Sparkles size={13} style={{ color: 'var(--accent)' }} />
+                  {tech.label}
+                </span>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* 3. Overview Bio Box (Translucent Glassmorphism, pushed lower down) */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
+            className="gs"
+            style={{
+              maxWidth: 820,
+              width: '100%',
+              margin: '3rem auto 0',
+              padding: '1.6rem 2.2rem',
+              borderRadius: '24px',
+              border: '1px solid rgba(230, 167, 86, 0.30)',
+              background: 'rgba(16, 16, 22, 0.35)',
+              backdropFilter: 'blur(24px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(24px) saturate(180%)',
+              boxShadow: '0 24px 48px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15)',
+              textAlign: 'center',
+            }}
+          >
+            <p
+              style={{
+                fontSize: 'clamp(0.98rem, 2vw, 1.12rem)',
+                color: 'var(--text-secondary)',
+                fontWeight: 450,
+                lineHeight: 1.7,
+                margin: 0,
+              }}
+            >
+              Specializing in high-throughput <span style={{ color: '#ffffff', fontWeight: 600 }}>Spring Boot Microservices</span>, RESTful APIs, and distributed cloud architectures designed for maximum scalability, security, and low latency.
+            </p>
           </motion.div>
         </div>
       </section>
@@ -999,28 +1062,95 @@ const Index = () => {
       </section>
       </main>
 
-      {/* Scroll hint — hidden once user scrolls past the hero. */}
+      {/* Unique Futuristic Animated Scroll Down Indicator */}
       <div
         ref={scrollHintRef}
+        onClick={() => {
+          const nextSection = document.querySelector('#skills') || document.querySelector('#projects');
+          if (nextSection) nextSection.scrollIntoView({ behavior: 'smooth' });
+        }}
         style={{
           position: 'fixed',
-          bottom: 28,
+          bottom: 24,
           left: '50%',
           transform: 'translateX(-50%)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '0.4rem',
+          gap: 6,
           opacity: hideScrollHint ? 0 : 1,
-          pointerEvents: 'none',
-          zIndex: 3,
-          transition: 'opacity 0.4s var(--ease-out)',
+          pointerEvents: hideScrollHint ? 'none' : 'auto',
+          zIndex: 40,
+          cursor: 'pointer',
+          transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
         }}
+        className="group"
       >
-        <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 500 }}>
-          Scroll
+        {/* Glass Mouse Capsule with animated sliding dot */}
+        <div
+          style={{
+            width: 22,
+            height: 38,
+            borderRadius: 18,
+            border: '1.5px solid rgba(230, 167, 86, 0.45)',
+            background: 'rgba(17, 19, 28, 0.65)',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+            display: 'flex',
+            justifyContent: 'center',
+            paddingTop: 5,
+            boxShadow: '0 0 20px rgba(230, 167, 86, 0.15)',
+            transition: 'all 0.3s ease',
+          }}
+          className="group-hover:border-amber-400 group-hover:scale-105 group-hover:shadow-[0_0_24px_rgba(230,167,86,0.35)]"
+        >
+          <div
+            style={{
+              width: 3.5,
+              height: 7,
+              borderRadius: 2,
+              background: 'linear-gradient(180deg, #f8e1bf, #e6a756)',
+              animation: 'scrollMouseDot 1.8s ease-in-out infinite',
+            }}
+          />
+        </div>
+
+        {/* Cascading Dual Chevron Indicator */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: -2 }}>
+          <ChevronDown
+            size={13}
+            style={{
+              color: 'var(--accent)',
+              opacity: 0.9,
+              animation: 'chevronPulse 1.8s ease-in-out infinite',
+            }}
+          />
+          <ChevronDown
+            size={13}
+            style={{
+              color: 'var(--accent)',
+              opacity: 0.4,
+              marginTop: -8,
+              animation: 'chevronPulse 1.8s ease-in-out 0.3s infinite',
+            }}
+          />
+        </div>
+
+        {/* Glowing Monospaced Caption */}
+        <span
+          style={{
+            fontSize: '0.62rem',
+            fontFamily: "'JetBrains Mono', monospace",
+            color: 'var(--text-tertiary)',
+            letterSpacing: '0.25em',
+            textTransform: 'uppercase',
+            fontWeight: 600,
+            transition: 'color 0.3s ease',
+          }}
+          className="group-hover:text-amber-300"
+        >
+          SCROLL
         </span>
-        <ArrowDown size={14} style={{ color: 'var(--text-muted)', animation: 'float 2.4s ease-in-out infinite' }} />
       </div>
 
       <JavaMain onIntroComplete={handleIntroComplete} />

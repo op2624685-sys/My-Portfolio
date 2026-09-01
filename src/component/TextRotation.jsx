@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 
-export default function TextRotation({ size = 'md' }) {
-  const texts = useMemo(() => ['Java', 'Backend', 'API'], []);
+export default function TextRotation({ size = 'md', words = ['Java', 'Backend', 'Microservices', 'REST APIs'] }) {
+  const texts = useMemo(() => words, [words]);
   // Longest word reserves the width so the surrounding layout never shifts
   // while the typed text cycles between shorter/longer strings.
   const longestText = useMemo(
@@ -42,8 +42,8 @@ export default function TextRotation({ size = 'md' }) {
   const fontSize = size === 'sm' ? '0.78rem' : size === 'lg' ? '2.4rem' : '1rem';
   const isLarge = size === 'lg';
   const gradient = isLarge
-    ? 'linear-gradient(135deg, #f0d4a8 0%, #d4af7a 50%, #a87c4b 100%)'
-    : 'linear-gradient(135deg, #f0d4a8 0%, #d4af7a 100%)';
+    ? 'linear-gradient(135deg, #fff2e0 0%, #f3c892 40%, #e6a756 75%, #c97f34 100%)'
+    : 'linear-gradient(135deg, #f8e1bf 0%, #e6a756 100%)';
 
   return (
     <span
