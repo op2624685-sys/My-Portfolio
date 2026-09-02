@@ -516,7 +516,7 @@ const Index = () => {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          padding: '2.5rem 1.5rem 4rem',
+          padding: '6rem 1.5rem 4rem',
           position: 'relative',
           zIndex: 2,
           maxWidth: '100%',
@@ -530,14 +530,14 @@ const Index = () => {
             width: '100%',
             display: 'flex',
             flexDirection: 'column',
-            gap: '2.5rem',
+            gap: '3.5rem',
           }}
         >
           {/* 1. Left-Aligned Role & Name Header (just below navbar) */}
-          <div className="hero-head" style={{ textAlign: 'left', width: '100%', paddingLeft: 0, marginLeft: 0 }}>
+          <div className="hero-head" style={{ textAlign: 'left', width: '100%' }}>
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={introComplete ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+              initial={{ opacity: 0 }}
+              animate={introComplete ? { opacity: 1 } : { opacity: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               className="gs hero-role"
               style={{
@@ -554,8 +554,8 @@ const Index = () => {
             </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, x: -30 }}
-              animate={introComplete ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+              initial={{ opacity: 0 }}
+              animate={introComplete ? { opacity: 1 } : { opacity: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
               className="gs font-syne text-gradient hero-name"
               style={{
@@ -564,7 +564,6 @@ const Index = () => {
                 letterSpacing: '-0.04em',
                 lineHeight: 1.0,
                 margin: 0,
-                paddingLeft: 0,
               }}
             >
               OM PRAKASH.
@@ -690,7 +689,7 @@ const Index = () => {
             style={{
               maxWidth: 820,
               width: '100%',
-              margin: '3rem auto 0',
+              margin: '4rem auto 0',
               padding: '1.6rem 2.2rem',
               borderRadius: '24px',
               border: '1px solid rgba(230, 167, 86, 0.30)',
@@ -1195,6 +1194,10 @@ const Index = () => {
 
           .hero-head {
             text-align: left !important;
+            padding-left: 1rem !important;
+          }
+          .hero-main {
+            margin-top: 8rem !important;
           }
 
           .hero-status {
@@ -1271,7 +1274,7 @@ const Index = () => {
 
           .hero-bio {
             max-width: 92% !important;
-            margin: 0 auto !important;
+            margin: 1rem auto 0 !important;
             padding: 0.8rem 0.9rem !important;
             border-radius: 14px !important;
             text-align: left !important;
@@ -1293,6 +1296,10 @@ const Index = () => {
 
           .hero-head {
             text-align: left !important;
+            padding-left: 1rem !important;
+          }
+          .hero-main {
+            margin-top: 8rem !important;
           }
 
           .hero-name {
