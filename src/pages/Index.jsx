@@ -537,7 +537,7 @@ const Index = () => {
           <div className="hero-head" style={{ textAlign: 'left', width: '100%' }}>
             <motion.div
               initial={{ opacity: 0 }}
-              animate={introComplete ? { opacity: 1 } : { opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               className="gs hero-role"
               style={{
@@ -555,7 +555,7 @@ const Index = () => {
 
             <motion.h1
               initial={{ opacity: 0 }}
-              animate={introComplete ? { opacity: 1 } : { opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.3 }}
               className="gs font-syne text-gradient hero-name"
               style={{
@@ -1311,12 +1311,11 @@ const Index = () => {
           }
 
           .hero-actions {
-            flex-wrap: nowrap !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
           }
 
           .hero-actions a {
-            flex: 1 1 0 !important;
-            min-width: 0 !important;
             white-space: nowrap !important;
           }
         }
