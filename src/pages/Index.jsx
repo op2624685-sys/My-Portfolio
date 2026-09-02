@@ -83,7 +83,7 @@ function ParticleField() {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(212, 175, 122, ${(1 - d / 110) * 0.14})`;
+            ctx.strokeStyle = `rgba(16, 185, 129, ${(1 - d / 110) * 0.14})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -93,9 +93,9 @@ function ParticleField() {
         const a = p.alpha * (0.55 + 0.45 * Math.sin(p.pulse));
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(212, 175, 122, ${a})`;
+        ctx.fillStyle = `rgba(16, 185, 129, ${a})`;
         ctx.shadowBlur = 4;
-        ctx.shadowColor = 'rgba(212, 175, 122, 0.3)';
+        ctx.shadowColor = 'rgba(16, 185, 129, 0.3)';
         ctx.fill();
         ctx.shadowBlur = 0;
       });
@@ -145,7 +145,7 @@ const SectionHeader = ({ kicker, lead, accent, tag: Tag = 'h2' }) => (
       }}
     >
       <span className="text-gradient">{lead} </span>
-      <span className="text-gradient-gold">{accent}</span>
+      <span className="text-gradient-emerald">{accent}</span>
     </Tag>
   </motion.div>
 );
@@ -171,7 +171,7 @@ const skills = [
 ];
 
 const levelStyle = (level) => {
-  if (level === 'Expert')   return { background: 'rgba(212, 175, 122, 0.12)',  color: '#f0d4a8', border: '1px solid rgba(212, 175, 122, 0.4)' };
+  if (level === 'Expert')   return { background: 'rgba(16, 185, 129, 0.12)',  color: '#a7f3d0', border: '1px solid rgba(16, 185, 129, 0.4)' };
   if (level === 'Advanced') return { background: 'rgba(74, 222, 128, 0.10)',   color: '#86efac', border: '1px solid rgba(74, 222, 128, 0.35)' };
   return                            { background: 'rgba(255, 255, 255, 0.04)', color: 'var(--text-tertiary)', border: '1px solid var(--border-default)' };
 };
@@ -579,7 +579,7 @@ const Index = () => {
               className="gs"
             >
               <h2
-                className="font-display text-gradient-gold hero-title"
+                className="font-display text-gradient-emerald hero-title"
                 style={{
                   fontSize: 'clamp(2rem, 5vw, 3.6rem)',
                   fontWeight: 700,
@@ -590,7 +590,7 @@ const Index = () => {
               >
                 BUILDING SCALABLE <br />
                 <span className="inline-block mt-2">
-                  <TextRotation size="lg" />
+                  <TextRotation size="lg" align="center" />
                 </span>
               </h2>
             </motion.div>
@@ -659,11 +659,11 @@ const Index = () => {
                     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4)',
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(230, 167, 86, 0.15)';
-                    e.currentTarget.style.borderColor = 'rgba(230, 167, 86, 0.5)';
+                    e.currentTarget.style.background = 'rgba(16, 185, 129, 0.15)';
+                    e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.5)';
                     e.currentTarget.style.color = '#ffffff';
                     e.currentTarget.style.transform = 'translateY(-2px) scale(1.03)';
-                    e.currentTarget.style.boxShadow = '0 8px 20px -6px rgba(230, 167, 86, 0.3)';
+                    e.currentTarget.style.boxShadow = '0 8px 20px -6px rgba(16, 185, 129, 0.3)';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.background = '#000000';
@@ -692,7 +692,7 @@ const Index = () => {
               margin: '4rem auto 0',
               padding: '1.6rem 2.2rem',
               borderRadius: '24px',
-              border: '1px solid rgba(230, 167, 86, 0.30)',
+              border: '1px solid rgba(16, 185, 129, 0.30)',
               background: 'rgba(16, 16, 22, 0.35)',
               backdropFilter: 'blur(24px) saturate(180%)',
               WebkitBackdropFilter: 'blur(24px) saturate(180%)',
@@ -776,7 +776,7 @@ const Index = () => {
                       height: 120,
                       borderRadius: '50%',
                       padding: 3,
-                      background: 'linear-gradient(135deg, #f0d4a8 0%, #d4af7a 50%, #a87c4b 100%)',
+                      background: 'linear-gradient(135deg, #ecfdf5 0%, #a7f3d0 50%, #10b981 100%)',
                     }}
                   >
                     <img
@@ -833,7 +833,7 @@ const Index = () => {
                           width: 32,
                           height: 32,
                           borderRadius: 8,
-                          background: 'rgba(212, 175, 122, 0.1)',
+                          background: 'rgba(16, 185, 129, 0.1)',
                           display: 'grid',
                           placeItems: 'center',
                         }}
@@ -887,7 +887,7 @@ const Index = () => {
             >
               <div className="surface-card" style={{ padding: '2rem' }}>
                 <h3 style={{ fontSize: '1.05rem', fontWeight: 550, color: 'var(--text-primary)', margin: 0, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.6rem', letterSpacing: '-0.01em' }}>
-                  <span style={{ width: 3, height: 16, borderRadius: 2, background: 'linear-gradient(180deg, #f0d4a8, #d4af7a)' }} />
+                  <span style={{ width: 3, height: 16, borderRadius: 2, background: 'linear-gradient(180deg, #a7f3d0, #10b981)' }} />
                   Overview
                 </h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.65, fontSize: '0.95rem' }}>
@@ -899,7 +899,7 @@ const Index = () => {
 
               <div className="surface-card" style={{ padding: '2rem' }}>
                 <h3 style={{ fontSize: '1.05rem', fontWeight: 550, color: 'var(--text-primary)', margin: 0, marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.6rem', letterSpacing: '-0.01em' }}>
-                  <span style={{ width: 3, height: 16, borderRadius: 2, background: 'linear-gradient(180deg, #f0d4a8, #d4af7a)' }} />
+                  <span style={{ width: 3, height: 16, borderRadius: 2, background: 'linear-gradient(180deg, #a7f3d0, #10b981)' }} />
                   What I Do
                 </h3>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '0.75rem' }}>
@@ -918,7 +918,7 @@ const Index = () => {
                         cursor: 'default',
                       }}
                     >
-                      <div style={{ width: 28, height: 28, borderRadius: 8, background: 'rgba(212, 175, 122, 0.1)', display: 'grid', placeItems: 'center', marginBottom: '0.6rem' }}>
+                      <div style={{ width: 28, height: 28, borderRadius: 8, background: 'rgba(16, 185, 129, 0.1)', display: 'grid', placeItems: 'center', marginBottom: '0.6rem' }}>
                         <Sparkles size={13} style={{ color: 'var(--accent)' }} />
                       </div>
                       <h4 style={{ fontSize: '0.92rem', fontWeight: 550, color: 'var(--text-primary)', margin: 0, marginBottom: '0.25rem', letterSpacing: '-0.005em' }}>
@@ -971,7 +971,7 @@ const Index = () => {
               }}
             >
               <span className="text-gradient">Let's build </span>
-              <span className="text-gradient-gold">something together.</span>
+              <span className="text-gradient-emerald">something together.</span>
             </h2>
             <p style={{
               color: 'var(--text-secondary)',
@@ -990,8 +990,8 @@ const Index = () => {
               gap: '1rem',
               padding: '0.75rem 1.25rem',
               borderRadius: '999px',
-              background: 'rgba(212, 175, 122, 0.05)',
-              border: '1px solid rgba(212, 175, 122, 0.2)',
+              background: 'rgba(16, 185, 129, 0.05)',
+              border: '1px solid rgba(16, 185, 129, 0.2)',
               width: 'fit-content'
             }}>
               <span style={{
@@ -1065,7 +1065,7 @@ const Index = () => {
                   width: 48,
                   height: 48,
                   borderRadius: 12,
-                  background: 'rgba(212, 175, 122, 0.1)',
+                  background: 'rgba(16, 185, 129, 0.1)',
                   display: 'grid',
                   placeItems: 'center',
                   color: item.color
@@ -1117,24 +1117,24 @@ const Index = () => {
             width: 22,
             height: 38,
             borderRadius: 18,
-            border: '1.5px solid rgba(230, 167, 86, 0.45)',
+            border: '1.5px solid rgba(16, 185, 129, 0.45)',
             background: 'rgba(17, 19, 28, 0.65)',
             backdropFilter: 'blur(12px)',
             WebkitBackdropFilter: 'blur(12px)',
             display: 'flex',
             justifyContent: 'center',
             paddingTop: 5,
-            boxShadow: '0 0 20px rgba(230, 167, 86, 0.15)',
+            boxShadow: '0 0 20px rgba(16, 185, 129, 0.15)',
             transition: 'all 0.3s ease',
           }}
-          className="group-hover:border-amber-400 group-hover:scale-105 group-hover:shadow-[0_0_24px_rgba(230,167,86,0.35)]"
+          className="group-hover:border-emerald-400 group-hover:scale-105 group-hover:shadow-[0_0_24px_rgba(16,185,129,0.35)]"
         >
           <div
             style={{
               width: 3.5,
               height: 7,
               borderRadius: 2,
-              background: 'linear-gradient(180deg, #f8e1bf, #e6a756)',
+              background: 'linear-gradient(180deg, #ecfdf5, #10b981)',
               animation: 'scrollMouseDot 1.8s ease-in-out infinite',
             }}
           />
@@ -1172,7 +1172,7 @@ const Index = () => {
             fontWeight: 600,
             transition: 'color 0.3s ease',
           }}
-          className="group-hover:text-amber-300"
+          className="group-hover:text-emerald-300"
         >
           SCROLL
         </span>

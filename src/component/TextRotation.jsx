@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 
-export default function TextRotation({ size = 'md', words = ['Java', 'Backend', 'Microservices', 'REST APIs'] }) {
+export default function TextRotation({ size = 'md', words = ['Java', 'Backend', 'Microservices', 'REST APIs'], align = 'left' }) {
   const texts = useMemo(() => words, [words]);
   // Longest word reserves the width so the surrounding layout never shifts
   // while the typed text cycles between shorter/longer strings.
@@ -42,18 +42,19 @@ export default function TextRotation({ size = 'md', words = ['Java', 'Backend', 
   const fontSize = size === 'sm' ? '0.78rem' : size === 'lg' ? '2.4rem' : '1rem';
   const isLarge = size === 'lg';
   const gradient = isLarge
-    ? 'linear-gradient(135deg, #fff2e0 0%, #f3c892 40%, #e6a756 75%, #c97f34 100%)'
-    : 'linear-gradient(135deg, #f8e1bf 0%, #e6a756 100%)';
+    ? 'linear-gradient(135deg, #e0f2fe 0%, #7dd3fc 40%, #0ea5e9 75%, #0369a1 100%)'
+    : 'linear-gradient(135deg, #bae6fd 0%, #0ea5e9 100%)';
 
   return (
     <span
       style={{
         position: 'relative',
-        display: 'inline-block',
-        fontFamily: 'Inter, system-ui, sans-serif',
-        fontWeight: 500,
+        display: align === 'center' ? 'inline-flex' : 'inline-block',
+        justifyContent: align === 'center' ? 'center' : 'unset',
+        fontFamily: "'Bebas Neue', sans-serif",
+        fontWeight: 400,
         fontSize,
-        letterSpacing: '-0.01em',
+        letterSpacing: '0.05em',
         lineHeight: 1.1,
         // Extra padding on the right so the blinking cursor never overflows
         // the reserved width of the longest word.
@@ -70,9 +71,11 @@ export default function TextRotation({ size = 'md', words = ['Java', 'Backend', 
       <span
         style={{
           position: 'absolute',
-          left: 0,
+          left: align === 'center' ? '50%' : 0,
           top: '50%',
-          transform: 'translateY(-50%)',
+          transform: align === 'center'
+            ? 'translate(-50%, -50%)'
+            : 'translateY(-50%)',
           display: 'inline-flex',
           alignItems: 'center',
           whiteSpace: 'pre',
@@ -80,7 +83,9 @@ export default function TextRotation({ size = 'md', words = ['Java', 'Backend', 
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           backgroundClip: 'text',
+          filter: isLarge ? 'drop-shadow(0 0 12px rgba(14, 165, 233, 0.4))' : 'none',
         }}
+
       >
         {displayText || ' '}
         <span
@@ -89,7 +94,7 @@ export default function TextRotation({ size = 'md', words = ['Java', 'Backend', 
             display: 'inline-block',
             width: 1.5,
             height: isLarge ? '1em' : '0.95em',
-            background: '#d4af7a',
+            background: '#0ea5e9',
             marginLeft: 2,
             animation: 'rbCursor 0.85s steps(2) infinite',
             flexShrink: 0,
