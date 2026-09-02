@@ -509,13 +509,14 @@ const Index = () => {
         {/* ── #hero ────────────────────────────────────────────── */}
       <section
         id="hero"
+        className="portfolio-hero"
         style={{
           minHeight: '100vh',
           width: '100%',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          padding: '6.5rem 1.5rem 4rem',
+          padding: '2.5rem 1.5rem 4rem',
           position: 'relative',
           zIndex: 2,
           maxWidth: '100%',
@@ -524,6 +525,7 @@ const Index = () => {
       >
         <div
           ref={heroRef}
+          className="hero-content"
           style={{
             width: '100%',
             display: 'flex',
@@ -531,57 +533,13 @@ const Index = () => {
             gap: '2.5rem',
           }}
         >
-          {/* 1. Far Left-Aligned Name & Status Header */}
-          <div style={{ textAlign: 'left', width: '100%', paddingLeft: 0, marginLeft: 0 }}>
+          {/* 1. Left-Aligned Role & Name Header (just below navbar) */}
+          <div className="hero-head" style={{ textAlign: 'left', width: '100%', paddingLeft: 0, marginLeft: 0 }}>
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={introComplete ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="gs"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.6rem',
-                padding: '0.45rem 1.1rem',
-                borderRadius: 999,
-                background: 'rgba(18, 18, 22, 0.70)',
-                border: '1px solid rgba(230, 167, 86, 0.35)',
-                marginBottom: '1rem',
-                backdropFilter: 'blur(16px)',
-                WebkitBackdropFilter: 'blur(16px)',
-                boxShadow: '0 8px 24px -6px rgba(0, 0, 0, 0.4)',
-              }}
-            >
-              <span
-                style={{
-                  width: 8,
-                  height: 8,
-                  borderRadius: '50%',
-                  background: '#34d399',
-                  boxShadow: '0 0 12px #34d399',
-                  animation: 'pulseDot 2s infinite',
-                  flexShrink: 0,
-                }}
-              />
-              <span
-                style={{
-                  fontSize: '0.78rem',
-                  fontFamily: "'JetBrains Mono', monospace",
-                  color: 'var(--accent-soft)',
-                  fontWeight: 600,
-                  letterSpacing: '0.04em',
-                  textTransform: 'uppercase',
-                }}
-              >
-                Available for New Opportunities
-              </span>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={introComplete ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="gs"
+              className="gs hero-role"
               style={{
                 fontSize: '0.84rem',
                 fontFamily: "'JetBrains Mono', monospace",
@@ -599,7 +557,7 @@ const Index = () => {
               initial={{ opacity: 0, x: -30 }}
               animate={introComplete ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="gs font-syne text-gradient"
+              className="gs font-syne text-gradient hero-name"
               style={{
                 fontSize: 'clamp(3.2rem, 7vw, 5.8rem)',
                 fontWeight: 800,
@@ -614,7 +572,7 @@ const Index = () => {
           </div>
 
           {/* 2. Centered "Building Scalable" + Typing Text Animation & Links */}
-          <div style={{ textAlign: 'center', width: '100%', margin: '0 auto', maxWidth: 850 }}>
+          <div className="hero-main" style={{ textAlign: 'center', width: '100%', margin: '0 auto', maxWidth: 850 }}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -622,7 +580,7 @@ const Index = () => {
               className="gs"
             >
               <h2
-                className="font-display text-gradient-gold"
+                className="font-display text-gradient-gold hero-title"
                 style={{
                   fontSize: 'clamp(2rem, 5vw, 3.6rem)',
                   fontWeight: 700,
@@ -643,7 +601,7 @@ const Index = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="gs"
+              className="gs hero-actions"
               style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '1.75rem' }}
             >
               <a
@@ -678,12 +636,13 @@ const Index = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="gs"
+              className="gs hero-tech-list"
               style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', justifyContent: 'center' }}
             >
               {techs.map((tech) => (
                 <span
                   key={tech.label}
+                  className="hero-tech-pill"
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -727,7 +686,7 @@ const Index = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.7 }}
-            className="gs"
+            className="gs hero-bio"
             style={{
               maxWidth: 820,
               width: '100%',
@@ -751,7 +710,7 @@ const Index = () => {
                 margin: 0,
               }}
             >
-              Specializing in high-throughput <span style={{ color: '#ffffff', fontWeight: 600 }}>Spring Boot Microservices</span>, RESTful APIs, and distributed cloud architectures designed for maximum scalability, security, and low latency.
+              I build scalable <span style={{ color: '#ffffff', fontWeight: 600 }}>Spring Boot microservices</span>, REST APIs, and cloud-ready backend systems with performance, security, and clean architecture in mind.
             </p>
           </motion.div>
         </div>
@@ -1224,7 +1183,135 @@ const Index = () => {
 
       <style>{`
         @media (max-width: 820px) {
+          .portfolio-hero {
+            min-height: 100svh !important;
+            padding: 1rem 1rem 3.5rem !important;
+            justify-content: center !important;
+          }
+
+          .hero-content {
+            gap: 2rem !important;
+          }
+
+          .hero-head {
+            text-align: left !important;
+          }
+
+          .hero-status {
+            padding: 0.38rem 0.7rem !important;
+            gap: 0.45rem !important;
+            margin-bottom: 1rem !important;
+          }
+
+          .hero-status span:first-child {
+            width: 6px !important;
+            height: 6px !important;
+          }
+
+          .hero-status span:last-child {
+            font-size: 0.63rem !important;
+            letter-spacing: 0.025em !important;
+            line-height: 1.3 !important;
+          }
+
+          .hero-role {
+            font-size: 0.62rem !important;
+            letter-spacing: 0.07em !important;
+            line-height: 1.45 !important;
+            margin-bottom: 0.65rem !important;
+          }
+
+          .hero-name {
+            font-size: clamp(2.3rem, 11vw, 3.35rem) !important;
+            letter-spacing: 0 !important;
+            line-height: 1 !important;
+          }
+
+          .hero-title {
+            font-size: clamp(1.55rem, 7.8vw, 2.25rem) !important;
+            letter-spacing: 0 !important;
+            line-height: 1.12 !important;
+            margin-bottom: 1.1rem !important;
+          }
+
+          .hero-actions {
+            display: flex !important;
+            gap: 0.55rem !important;
+            margin-bottom: 1.15rem !important;
+          }
+
+          .hero-actions a {
+            min-height: 38px !important;
+            padding: 0.5rem 0.82rem !important;
+            font-size: 0.74rem !important;
+            gap: 0.4rem !important;
+          }
+
+          .hero-actions svg {
+            width: 13px !important;
+            height: 13px !important;
+          }
+
+          .hero-tech-list {
+            gap: 0.4rem !important;
+            max-width: 310px !important;
+            margin: 0 auto !important;
+          }
+
+          .hero-tech-pill {
+            padding: 0.36rem 0.5rem !important;
+            gap: 0.28rem !important;
+            font-size: 0.66rem !important;
+          }
+
+          .hero-tech-pill svg {
+            width: 10px !important;
+            height: 10px !important;
+          }
+
+          .hero-bio {
+            max-width: 92% !important;
+            margin: 0 auto !important;
+            padding: 0.8rem 0.9rem !important;
+            border-radius: 14px !important;
+            text-align: left !important;
+          }
+
+          .hero-bio p {
+            font-size: 0.8rem !important;
+            line-height: 1.5 !important;
+            font-weight: 420 !important;
+          }
+
           .about-grid { grid-template-columns: 1fr !important; }
+        }
+
+        @media (max-width: 420px) {
+          .hero-content {
+            gap: 2rem !important;
+          }
+
+          .hero-head {
+            text-align: left !important;
+          }
+
+          .hero-name {
+            font-size: clamp(2.1rem, 10.5vw, 2.8rem) !important;
+          }
+
+          .hero-title {
+            font-size: clamp(1.42rem, 7.3vw, 1.95rem) !important;
+          }
+
+          .hero-actions {
+            flex-wrap: nowrap !important;
+          }
+
+          .hero-actions a {
+            flex: 1 1 0 !important;
+            min-width: 0 !important;
+            white-space: nowrap !important;
+          }
         }
       `}</style>
     </>
