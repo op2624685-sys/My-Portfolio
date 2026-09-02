@@ -730,9 +730,10 @@ const Index = () => {
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <SectionHeader kicker="Selected Work" lead="Recent" accent="projects." />
 
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
-            <ScrollableCardStack items={projects} perspective={1200} />
-            <ViewAllProjectsButton />
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <ScrollableCardStack items={projects} perspective={1200}>
+              <ViewAllProjectsButton />
+            </ScrollableCardStack>
           </div>
         </div>
       </section>

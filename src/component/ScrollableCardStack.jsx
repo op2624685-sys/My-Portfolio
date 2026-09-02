@@ -322,7 +322,7 @@ const ProjectCard = ({ project, index, totalCount, activeIndex }) => {
   );
 };
 
-const ScrollableCardStack = ({ items }) => {
+const ScrollableCardStack = ({ items, children }) => {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -346,7 +346,7 @@ const ScrollableCardStack = ({ items }) => {
       ref={containerRef}
       style={{
         position: 'relative',
-        height: `${items.length * 75}vh`,
+        height: `${items.length * 50}vh`,
         width: '100%',
         display: 'flex',
         justifyContent: 'center',
@@ -374,45 +374,23 @@ const ScrollableCardStack = ({ items }) => {
             activeIndex={index}
           />
         ))}
-        <div
-          className="stack-indicator"
-          style={{
-            position: 'absolute',
-            bottom: '-1rem',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            padding: '0.45rem 1.1rem',
-            borderRadius: '999px',
-            background: 'rgba(10, 22, 18, 0.85)',
-            border: '1px solid rgba(52, 211, 153, 0.35)',
-            backdropFilter: 'blur(20px)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.6rem',
-            fontSize: '0.78rem',
-            color: '#a7f3d0',
-            fontFamily: "'JetBrains Mono', monospace",
-            zIndex: 110,
-            boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
-          }}
-        >
-          <span
+        {index === items.length - 1 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
             style={{
-              width: 6,
-              height: 6,
-              borderRadius: '50%',
-              background: '#34d399',
-              boxShadow: '0 0 8px #34d399',
+              position: 'absolute',
+              bottom: '2rem',
+              zIndex: 120,
+              display: 'flex',
+              justifyContent: 'center',
+              width: '100%',
             }}
-          />
-          <span style={{ fontWeight: 600, letterSpacing: '0.04em' }}>
-            PROJECT {index + 1} OF {items.length}
-          </span>
-          <span style={{ opacity: 0.5 }}>•</span>
-          <span style={{ opacity: 0.8, display: 'inline-flex', alignItems: 'center', gap: '0.2rem' }}>
-            SCROLL TO UNSTACK <ChevronDown size={14} style={{ animation: 'chevronPulse 1.5s infinite' }} />
-          </span>
-        </div>
+          >
+            {children}
+          </motion.div>
+        )}
       </div>
       <style>{`
         .glass-project-card-emerald:hover {
@@ -471,12 +449,6 @@ const ScrollableCardStack = ({ items }) => {
             justify-content: center !important;
             padding: 0.75rem !important;
             font-size: 0.85rem !important;
-          }
-          .stack-indicator {
-            padding: 0.3rem 0.8rem !important;
-            font-size: 0.65rem !important;
-            gap: 0.4rem !important;
-            bottom: -0.5rem !important;
           }
         }
       `}</style>

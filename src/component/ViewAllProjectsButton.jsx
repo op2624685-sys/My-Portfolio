@@ -15,15 +15,14 @@ const ViewAllProjectsButton = () => {
       style={{
         textDecoration: 'none',
         width: 'fit-content',
-        margin: '4rem auto',
-        padding: '0.6rem 1.2rem',
+        margin: '0 auto',
+        padding: '0.4rem 0.8rem',
         borderRadius: '999px',
-        background: 'rgba(255, 255, 255, 0.05)',
+        background: 'rgba(255, 255, 255, 0.1)',
         border: '1px solid var(--border-default)',
-        backdropFilter: 'blur(12px)',
         display: 'flex',
         alignItems: 'center',
-        gap: '0.8rem',
+        gap: '0.6rem',
         transition: 'all 0.3s ease',
         cursor: 'pointer',
         zIndex: 100,
@@ -33,8 +32,8 @@ const ViewAllProjectsButton = () => {
     >
       <div
         style={{
-          width: 36,
-          height: 36,
+          width: 30,
+          height: 30,
           borderRadius: '50%',
           overflow: 'hidden',
           border: '2px solid var(--accent)',
@@ -49,14 +48,14 @@ const ViewAllProjectsButton = () => {
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', paddingRight: '0.4rem' }}>
         <span style={{
-          fontSize: '0.95rem',
+          fontSize: '0.85rem',
           fontWeight: 500,
           color: 'var(--text-primary)',
           letterSpacing: '-0.01em'
         }}>
           View All Projects
         </span>
-        <ArrowUpRight size={16} style={{ color: 'var(--accent)' }} />
+        <ArrowUpRight size={14} style={{ color: 'var(--accent)' }} />
       </div>
       <style>{`
         .view-all-btn:hover {
