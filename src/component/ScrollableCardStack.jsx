@@ -27,7 +27,7 @@ const ICON_MAP = {
 const ProjectCard = ({ project, index, totalCount, activeIndex }) => {
   const isPast = index < activeIndex;
   const isCurrent = index === activeIndex;
-  const futureOffset = index - activeIndex; // Number of steps behind the active card
+  const futureOffset = index - activeIndex;
   const cardRef = useRef(null);
 
   const [mousePos, setMousePos] = useState({ x: 0, y: 0, isHovered: false });
@@ -48,24 +48,9 @@ const ProjectCard = ({ project, index, totalCount, activeIndex }) => {
 
   const IconComponent = (project.icon && ICON_MAP[project.icon]) || Layers;
 
-  // Stacking transform calculations so underlying cards peek out visibly in 3D:
-  const cardY = isPast
-    ? -180
-    : isCurrent
-    ? 0
-    : futureOffset * 24; // Shifts each card underneath down by 24px so its top & bottom peek out!
-
-  const cardScale = isPast
-    ? 0.88
-    : isCurrent
-    ? 1
-    : Math.max(0.82, 1 - futureOffset * 0.04); // 4% narrower per card behind so side glass edges peek out!
-
-  const cardOpacity = isPast
-    ? 0
-    : isCurrent
-    ? 1
-    : Math.max(0.3, 1 - futureOffset * 0.2); // Cards behind remain visible without fading into zero prematurely
+  const cardY = isPast ? -180 : isCurrent ? 0 : futureOffset * 24;
+  const cardScale = isPast ? 0.88 : isCurrent ? 1 : Math.max(0.82, 1 - futureOffset * 0.04);
+  const cardOpacity = isPast ? 0 : isCurrent ? 1 : Math.max(0.3, 1 - futureOffset * 0.2);
 
   return (
     <motion.div
@@ -99,20 +84,16 @@ const ProjectCard = ({ project, index, totalCount, activeIndex }) => {
           flexDirection: 'column',
           minHeight: '420px',
           borderRadius: '32px',
-          // High-Opacity Dark Emerald Background to prevent text bleeding/overlap from cards underneath
-          background:
-            'linear-gradient(135deg, rgba(14, 28, 23, 0.98) 0%, rgba(9, 18, 15, 0.99) 50%, rgba(5, 11, 9, 1.0) 100%)',
+          background: 'linear-gradient(135deg, rgba(14, 28, 23, 0.98) 0%, rgba(9, 18, 15, 0.99) 50%, rgba(5, 11, 9, 1.0) 100%)',
           backdropFilter: 'blur(28px) saturate(190%)',
           WebkitBackdropFilter: 'blur(28px) saturate(190%)',
           border: '1px solid rgba(52, 211, 153, 0.24)',
-          boxShadow:
-            '0 30px 70px -15px rgba(0, 0, 0, 0.85), inset 0 1px 1px 0 rgba(167, 243, 208, 0.35), inset 0 0 35px 0 rgba(52, 211, 153, 0.08)',
+          boxShadow: '0 30px 70px -15px rgba(0, 0, 0, 0.85), inset 0 1px 1px 0 rgba(167, 243, 208, 0.35), inset 0 0 35px 0 rgba(52, 211, 153, 0.08)',
           position: 'relative',
           overflow: 'hidden',
           transition: 'border-color 0.4s ease, box-shadow 0.4s ease',
         }}
       >
-        {/* Top Glare Light Edge (Cyber Mint Highlight) */}
         <div
           style={{
             position: 'absolute',
@@ -120,13 +101,10 @@ const ProjectCard = ({ project, index, totalCount, activeIndex }) => {
             left: '10%',
             right: '10%',
             height: '1px',
-            background:
-              'linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.4) 30%, rgba(167, 243, 208, 0.6) 50%, rgba(52, 211, 153, 0.4) 70%, transparent)',
+            background: 'linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.4) 30%, rgba(167, 243, 208, 0.6) 50%, rgba(52, 211, 153, 0.4) 70%, transparent)',
             pointerEvents: 'none',
           }}
         />
-
-        {/* Ambient Top-Right Radial Glow (Cyber Mint Glow) */}
         <div
           style={{
             position: 'absolute',
@@ -134,14 +112,11 @@ const ProjectCard = ({ project, index, totalCount, activeIndex }) => {
             right: '-10%',
             width: '50%',
             height: '80%',
-            background:
-              'radial-gradient(circle, rgba(52, 211, 153, 0.18) 0%, transparent 65%)',
+            background: 'radial-gradient(circle, rgba(52, 211, 153, 0.18) 0%, transparent 65%)',
             pointerEvents: 'none',
             filter: 'blur(20px)',
           }}
         />
-
-        {/* Ambient Bottom-Left Radial Glow (Teal/Cyan Accent) */}
         <div
           style={{
             position: 'absolute',
@@ -149,14 +124,11 @@ const ProjectCard = ({ project, index, totalCount, activeIndex }) => {
             left: '-10%',
             width: '45%',
             height: '75%',
-            background:
-              'radial-gradient(circle, rgba(45, 212, 191, 0.12) 0%, transparent 65%)',
+            background: 'radial-gradient(circle, rgba(45, 212, 191, 0.12) 0%, transparent 65%)',
             pointerEvents: 'none',
             filter: 'blur(24px)',
           }}
         />
-
-        {/* Interactive Mouse Spotlight Tracking Overlay (Cyber Mint Beam) */}
         {isCurrent && mousePos.isHovered && (
           <div
             style={{
@@ -168,8 +140,6 @@ const ProjectCard = ({ project, index, totalCount, activeIndex }) => {
             }}
           />
         )}
-
-        {/* Header Row */}
         <div
           style={{
             display: 'flex',
@@ -181,63 +151,23 @@ const ProjectCard = ({ project, index, totalCount, activeIndex }) => {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-            {/* 3D Glass Icon Container (Emerald / Cyber Mint Glow) */}
             <div
               style={{
                 width: 56,
                 height: 56,
                 borderRadius: 18,
-                background:
-                  'linear-gradient(135deg, rgba(52, 211, 153, 0.25) 0%, rgba(16, 185, 129, 0.08) 100%)',
+                background: 'linear-gradient(135deg, rgba(52, 211, 153, 0.25) 0%, rgba(16, 185, 129, 0.08) 100%)',
                 border: '1px solid rgba(52, 211, 153, 0.45)',
                 display: 'grid',
                 placeItems: 'center',
-                boxShadow:
-                  '0 8px 24px -4px rgba(52, 211, 153, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.4)',
+                boxShadow: '0 8px 24px -4px rgba(52, 211, 153, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.4)',
                 backdropFilter: 'blur(12px)',
                 flexShrink: 0,
               }}
             >
               <IconComponent size={26} style={{ color: '#34d399' }} />
             </div>
-
             <div>
-              <div
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.45rem',
-                  padding: '0.22rem 0.75rem',
-                  borderRadius: 999,
-                  background: 'rgba(52, 211, 153, 0.12)',
-                  border: '1px solid rgba(52, 211, 153, 0.3)',
-                  marginBottom: '0.4rem',
-                }}
-              >
-                <span
-                  style={{
-                    width: 6,
-                    height: 6,
-                    borderRadius: '50%',
-                    background: '#34d399',
-                    boxShadow: '0 0 10px #34d399',
-                    animation: 'pulseDot 2s infinite',
-                  }}
-                />
-                <span
-                  style={{
-                    fontSize: '0.72rem',
-                    fontFamily: "'JetBrains Mono', monospace",
-                    color: '#6ee7b7',
-                    fontWeight: 600,
-                    letterSpacing: '0.06em',
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  {project.category || 'Featured Project'}
-                </span>
-              </div>
-
               <h3
                 style={{
                   fontSize: '2rem',
@@ -253,11 +183,10 @@ const ProjectCard = ({ project, index, totalCount, activeIndex }) => {
               </h3>
             </div>
           </div>
-
-          {/* Right Header Element: Cyber Mint Counter Pill */}
           <div
+            className="project-counter-pill"
             style={{
-              padding: '0.4rem 0.95rem',
+              padding: '0.3rem 0.7rem',
               borderRadius: 999,
               background: 'rgba(52, 211, 153, 0.08)',
               border: '1px solid rgba(52, 211, 153, 0.35)',
@@ -267,7 +196,7 @@ const ProjectCard = ({ project, index, totalCount, activeIndex }) => {
               gap: '0.4rem',
               color: '#a7f3d0',
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: '0.85rem',
+              fontSize: '0.75rem',
               fontWeight: 600,
               boxShadow: '0 4px 14px -3px rgba(0,0,0,0.3)',
             }}
@@ -277,8 +206,6 @@ const ProjectCard = ({ project, index, totalCount, activeIndex }) => {
             <span style={{ opacity: 0.6 }}>0{totalCount}</span>
           </div>
         </div>
-
-        {/* Content Grid */}
         <div
           style={{
             display: 'grid',
@@ -290,7 +217,6 @@ const ProjectCard = ({ project, index, totalCount, activeIndex }) => {
           }}
           className="card-content-grid"
         >
-          {/* Left Column: Description & Tech Stack */}
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <p
               style={{
@@ -305,7 +231,6 @@ const ProjectCard = ({ project, index, totalCount, activeIndex }) => {
             >
               {project.description}
             </p>
-
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem' }}>
               {project.technologies.map((tech) => (
                 <span
@@ -333,8 +258,6 @@ const ProjectCard = ({ project, index, totalCount, activeIndex }) => {
               ))}
             </div>
           </div>
-
-          {/* Right Column: Action Buttons */}
           <div
             style={{
               display: 'flex',
@@ -344,7 +267,6 @@ const ProjectCard = ({ project, index, totalCount, activeIndex }) => {
               position: 'relative',
             }}
           >
-            {/* Secondary Action: Code Repo */}
             <a
               href={project.githubUrl}
               target="_blank"
@@ -369,8 +291,6 @@ const ProjectCard = ({ project, index, totalCount, activeIndex }) => {
             >
               <Github size={18} /> View Source Code
             </a>
-
-            {/* Primary Action: Live Demo */}
             <a
               href={project.liveUrl}
               target="_blank"
@@ -387,11 +307,9 @@ const ProjectCard = ({ project, index, totalCount, activeIndex }) => {
                 fontWeight: 600,
                 transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
                 color: '#022c22',
-                background:
-                  'linear-gradient(135deg, #a7f3d0 0%, #34d399 50%, #059669 100%)',
+                background: 'linear-gradient(135deg, #a7f3d0 0%, #34d399 50%, #059669 100%)',
                 border: '1px solid rgba(255, 255, 255, 0.5)',
-                boxShadow:
-                  'inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 8px 24px -4px rgba(52, 211, 153, 0.5)',
+                boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 8px 24px -4px rgba(52, 211, 153, 0.5)',
                 textDecoration: 'none',
               }}
             >
@@ -445,6 +363,7 @@ const ScrollableCardStack = ({ items }) => {
           justifyContent: 'center',
           overflow: 'visible',
         }}
+        className="stack-viewport"
       >
         {items.map((project, idx) => (
           <ProjectCard
@@ -455,9 +374,8 @@ const ScrollableCardStack = ({ items }) => {
             activeIndex={index}
           />
         ))}
-
-        {/* Stack Indicator Bar at the bottom of the stack */}
         <div
+          className="stack-indicator"
           style={{
             position: 'absolute',
             bottom: '-1rem',
@@ -523,23 +441,42 @@ const ScrollableCardStack = ({ items }) => {
         }
 
         @media (max-width: 768px) {
+          .stack-viewport {
+            top: 10vh !important;
+            height: 80vh !important;
+          }
           .card-content-grid {
             grid-template-columns: 1fr !important;
-            gap: 1.75rem !important;
+            gap: 1.25rem !important;
             text-align: left;
           }
           .glass-project-card-emerald {
-            padding: 1.5rem !important;
+            padding: 1.25rem !important;
             min-height: auto !important;
-            margin: 0 0.75rem;
+            margin: 0 1rem !important;
             border-radius: 24px !important;
           }
           .glass-project-card-emerald h3 {
-            font-size: 1.35rem !important;
+            font-size: 1.2rem !important;
+            margin-bottom: 0.5rem !important;
           }
           .glass-project-card-emerald p {
-            font-size: 0.95rem !important;
-            margin-bottom: 1.25rem !important;
+            font-size: 0.85rem !important;
+            line-height: 1.5 !important;
+            margin-bottom: 1rem !important;
+          }
+          .glass-action-btn-emerald-primary,
+          .glass-action-btn-emerald-secondary {
+            width: 100% !important;
+            justify-content: center !important;
+            padding: 0.75rem !important;
+            font-size: 0.85rem !important;
+          }
+          .stack-indicator {
+            padding: 0.3rem 0.8rem !important;
+            font-size: 0.65rem !important;
+            gap: 0.4rem !important;
+            bottom: -0.5rem !important;
           }
         }
       `}</style>
