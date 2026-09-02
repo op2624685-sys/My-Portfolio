@@ -536,14 +536,13 @@ const Index = () => {
           {/* 1. Left-Aligned Role & Name Header (just below navbar) */}
           <div className="hero-head" style={{ textAlign: 'left', width: '100%' }}>
             <motion.div
-              initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               className="gs hero-role"
               style={{
                 fontSize: '0.84rem',
                 fontFamily: "'JetBrains Mono', monospace",
-                color: 'var(--text-tertiary)',
+                color: 'rgba(240, 243, 250, 0.8)',
                 marginBottom: '0.4rem',
                 fontWeight: 500,
                 letterSpacing: '0.15em',
@@ -1185,8 +1184,8 @@ const Index = () => {
         @media (max-width: 820px) {
           .portfolio-hero {
             min-height: 100svh !important;
-            padding: 1rem 1rem 3.5rem !important;
-            justify-content: center !important;
+            padding: 8rem 1rem 3.5rem !important;
+            justify-content: flex-start !important;
           }
 
           .hero-content {
@@ -1198,7 +1197,7 @@ const Index = () => {
             padding-left: 1rem !important;
           }
           .hero-main {
-            margin-top: 8rem !important;
+            margin-top: 4rem !important;
           }
 
           .hero-status {
@@ -1223,6 +1222,8 @@ const Index = () => {
             letter-spacing: 0.07em !important;
             line-height: 1.45 !important;
             margin-bottom: 0.65rem !important;
+            position: relative !important;
+            zIndex: 10 !important;
           }
 
           .hero-name {
@@ -1300,7 +1301,7 @@ const Index = () => {
             padding-left: 1rem !important;
           }
           .hero-main {
-            margin-top: 8rem !important;
+            margin-top: 4rem !important;
           }
 
           .hero-name {
