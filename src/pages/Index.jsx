@@ -1184,7 +1184,7 @@ const Index = () => {
         @media (max-width: 820px) {
           .portfolio-hero {
             min-height: 100svh !important;
-            padding: 8rem 1rem 3.5rem !important;
+            padding: 5rem 1rem 3.5rem !important;
             justify-content: flex-start !important;
           }
 
@@ -1195,9 +1195,10 @@ const Index = () => {
           .hero-head {
             text-align: left !important;
             padding-left: 1rem !important;
+            margin-bottom: 1rem !important;
           }
           .hero-main {
-            margin-top: 4rem !important;
+            margin-top: 6rem !important;
           }
 
           .hero-status {
@@ -1299,9 +1300,10 @@ const Index = () => {
           .hero-head {
             text-align: left !important;
             padding-left: 1rem !important;
+            margin-bottom: 1rem !important;
           }
           .hero-main {
-            margin-top: 4rem !important;
+            margin-top: 6rem !important;
           }
 
           .hero-name {
