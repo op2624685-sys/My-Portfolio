@@ -50,32 +50,18 @@ export default function TextRotation({ size = 'md', words = ['Java', 'Backend', 
       style={{
         position: 'relative',
         display: align === 'center' ? 'inline-flex' : 'inline-block',
-        justifyContent: align === 'center' ? 'center' : 'unset',
+        justifyContent: align === 'center' ? 'center' : 'flex-start',
+        alignItems: 'center',
         fontFamily: "'Bebas Neue', sans-serif",
         fontWeight: 400,
         fontSize,
         letterSpacing: '0.05em',
         lineHeight: 1.1,
-        // Extra padding on the right so the blinking cursor never overflows
-        // the reserved width of the longest word.
-        paddingRight: '0.45ch',
+        minWidth: `${longestText.length + 0.5}ch`,
       }}
     >
-      {/* Ghost: invisible spacer that locks the span's width to the longest word */}
-      <span style={{ visibility: 'hidden', whiteSpace: 'pre' }} aria-hidden="true">
-        {longestText}
-      </span>
-
-      {/* Animated: absolutely positioned over the ghost so it can shrink/grow
-          without affecting surrounding layout (navbar, hero, etc.). */}
       <span
         style={{
-          position: 'absolute',
-          left: align === 'center' ? '50%' : 0,
-          top: '50%',
-          transform: align === 'center'
-            ? 'translate(-50%, -50%)'
-            : 'translateY(-50%)',
           display: 'inline-flex',
           alignItems: 'center',
           whiteSpace: 'pre',
@@ -85,7 +71,6 @@ export default function TextRotation({ size = 'md', words = ['Java', 'Backend', 
           backgroundClip: 'text',
           filter: isLarge ? 'drop-shadow(0 0 12px rgba(14, 165, 233, 0.4))' : 'none',
         }}
-
       >
         {displayText || ' '}
         <span
