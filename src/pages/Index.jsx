@@ -578,7 +578,7 @@ const Index = () => {
               className="gs"
             >
               <h2
-                className="font-display text-gradient-emerald hero-title"
+                className="font-display hero-title"
                 style={{
                   fontSize: 'clamp(2rem, 5vw, 3.6rem)',
                   fontWeight: 700,
@@ -587,7 +587,7 @@ const Index = () => {
                   margin: '0 0 1.25rem 0',
                 }}
               >
-                BUILDING SCALABLE <br />
+                <span className="text-gradient-emerald">BUILDING SCALABLE</span> <br />
                 <span className="inline-block mt-2">
                   <TextRotation size="lg" align="center" />
                 </span>
