@@ -490,7 +490,7 @@ const Index = () => {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          padding: '6rem 1.5rem 4rem',
+          padding: '7rem 1.5rem 2rem',
           position: 'relative',
           zIndex: 2,
           maxWidth: '100%',
@@ -504,47 +504,55 @@ const Index = () => {
             width: '100%',
             display: 'flex',
             flexDirection: 'column',
-            gap: '3.5rem',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '1rem',
+            textAlign: 'center',
           }}
         >
-          {/* 1. Left-Aligned Role & Name Header (just below navbar) */}
-          <div className="hero-head" style={{ textAlign: 'left', width: '100%' }}>
-            <motion.div
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="gs hero-role"
-              style={{
-                fontSize: '0.84rem',
-                fontFamily: "'JetBrains Mono', monospace",
-                color: 'rgba(240, 243, 250, 0.8)',
-                marginBottom: '0.4rem',
-                fontWeight: 500,
-                letterSpacing: '0.15em',
-                textTransform: 'uppercase',
-              }}
-            >
-              &lt; JAVA BACKEND ENGINEER &amp; FULL STACK DEVELOPER /&gt;
-            </motion.div>
+          {/* 1. Centered Role Header - Now a subtle kicker */}
+          <motion.div
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="gs hero-role"
+            style={{
+              fontSize: '0.75rem',
+              fontFamily: "'JetBrains Mono', monospace",
+              color: 'rgba(240, 243, 250, 0.6)',
+              marginBottom: '0.25rem',
+              fontWeight: 500,
+              letterSpacing: '0.3em',
+              textTransform: 'uppercase',
+            }}
+          >
+            &lt; JAVA BACKEND ENGINEER &amp; FULL STACK DEVELOPER /&gt;
+          </motion.div>
 
-            <motion.h1
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="gs font-syne text-gradient hero-name"
-              style={{
-                fontSize: 'clamp(3.2rem, 7vw, 5.8rem)',
-                fontWeight: 800,
-                letterSpacing: '-0.04em',
-                lineHeight: 1.0,
-                margin: 0,
-              }}
-            >
-              OM PRAKASH.
-            </motion.h1>
-          </div>
+          {/* 2. Massive Bold Name - Contact Section Style */}
+          <motion.h1
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="gs font-syne hero-name"
+            style={{
+              fontSize: 'clamp(4rem, 18vw, 12rem)',
+              fontWeight: 900,
+              letterSpacing: '-0.06em',
+              lineHeight: 0.8,
+              margin: '0 0 0.5rem 0',
+              textTransform: 'uppercase',
+              background: 'linear-gradient(180deg, #c8c8c8 0%, #ffffff 35%, #d0d0d0 60%, #888 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.3))',
+            }}
+          >
+            OM PRAKASH.
+          </motion.h1>
 
-          {/* 2. Centered "Building Scalable" + Typing Text Animation & Links */}
-          <div className="hero-main" style={{ textAlign: 'center', width: '100%', margin: '0 auto', maxWidth: 850 }}>
+          {/* 3. The Statement - Centered and High Impact */}
+          <div className="hero-main" style={{ width: '100%', maxWidth: 900 }}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -554,11 +562,11 @@ const Index = () => {
               <h2
                 className="font-display hero-title"
                 style={{
-                  fontSize: 'clamp(2rem, 5vw, 3.6rem)',
+                  fontSize: 'clamp(2rem, 6vw, 4.5rem)',
                   fontWeight: 700,
                   letterSpacing: '-0.03em',
-                  lineHeight: 1.15,
-                  margin: '0 0 1.25rem 0',
+                  lineHeight: 1.1,
+                  margin: '0 0 0.5rem 0',
                 }}
               >
                 <span className="text-gradient-emerald">BUILDING SCALABLE</span> <br />
@@ -568,18 +576,18 @@ const Index = () => {
               </h2>
             </motion.div>
 
-            {/* 2 Links directly below Typing Animation */}
+            {/* Action Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: 0.5 }}
               className="gs hero-actions"
-              style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '1.75rem' }}
+              style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '0.5rem' }}
             >
               <a
                 href="/projects"
                 className="btn-primary"
-                style={{ padding: '0.75rem 1.6rem', fontSize: '0.92rem' }}
+                style={{ padding: '0.8rem 2rem', fontSize: '0.95rem', fontWeight: 600 }}
                 onClick={(e) => {
                   e.preventDefault();
                   navigate('/projects');
@@ -587,12 +595,12 @@ const Index = () => {
                 }}
               >
                 Explore Projects
-                <ArrowUpRight size={17} strokeWidth={2.25} />
+                <ArrowUpRight size={18} strokeWidth={2.25} />
               </a>
               <a
                 href="/contact"
                 className="btn-ghost"
-                style={{ padding: '0.75rem 1.6rem', fontSize: '0.92rem' }}
+                style={{ padding: '0.8rem 2rem', fontSize: '0.95rem', fontWeight: 600 }}
                 onClick={(e) => {
                   e.preventDefault();
                   navigate('/contact');
@@ -603,13 +611,13 @@ const Index = () => {
               </a>
             </motion.div>
 
-            {/* Tech Badges */}
+            {/* Tech Badges - More spaced and cleaner */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: 0.6 }}
               className="gs hero-tech-list"
-              style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', justifyContent: 'center' }}
+              style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem', justifyContent: 'center' }}
             >
               {techs.map((tech) => (
                 <span
@@ -618,71 +626,83 @@ const Index = () => {
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
-                    gap: '0.45rem',
-                    padding: '0.45rem 1.05rem',
-                    background: '#000000',
+                    gap: '0.5rem',
+                    padding: '0.5rem 1.2rem',
+                    background: 'rgba(0, 0, 0, 0.6)',
                     backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(255, 255, 255, 0.14)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
                     borderRadius: 999,
-                    fontSize: '0.84rem',
+                    fontSize: '0.8rem',
                     color: 'var(--text-secondary)',
                     fontWeight: 500,
                     transition: 'all 0.3s var(--ease-out)',
                     cursor: 'default',
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4)',
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.background = 'rgba(16, 185, 129, 0.15)';
                     e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.5)';
                     e.currentTarget.style.color = '#ffffff';
-                    e.currentTarget.style.transform = 'translateY(-2px) scale(1.03)';
-                    e.currentTarget.style.boxShadow = '0 8px 20px -6px rgba(16, 185, 129, 0.3)';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = '#000000';
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.14)';
+                    e.currentTarget.style.background = 'rgba(0, 0, 0, 0.6)';
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
                     e.currentTarget.style.color = 'var(--text-secondary)';
-                    e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.4)';
+                    e.currentTarget.style.transform = 'translateY(0)';
                   }}
                 >
-                  <Sparkles size={13} style={{ color: 'var(--accent)' }} />
+                  <Sparkles size={12} style={{ color: 'var(--accent)' }} />
                   {tech.label}
                 </span>
               ))}
             </motion.div>
           </div>
 
-          {/* 3. Overview Bio Box (Translucent Glassmorphism, pushed lower down) */}
+          {/* 4. Premium Overview Card - High-End Statement Look */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.7 }}
             className="gs hero-bio"
             style={{
-              maxWidth: 820,
+              maxWidth: '900px',
               width: '100%',
-              margin: '4rem auto 0',
-              padding: '1.6rem 2.2rem',
+              margin: '0.5rem auto 0',
+              position: 'relative',
+              padding: '2rem',
               borderRadius: '24px',
-              border: '1px solid rgba(16, 185, 129, 0.30)',
-              background: 'rgba(16, 16, 22, 0.35)',
+              background: 'linear-gradient(145deg, rgba(20, 20, 26, 0.7) 0%, rgba(10, 10, 12, 0.8) 100%)',
               backdropFilter: 'blur(24px) saturate(180%)',
               WebkitBackdropFilter: 'blur(24px) saturate(180%)',
-              boxShadow: '0 24px 48px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15)',
+              border: '1px solid rgba(255, 255, 255, 0.08)',
+              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.1)',
               textAlign: 'center',
+              overflow: 'hidden',
             }}
           >
+            {/* Subtle Top Accent Line */}
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: '60px',
+              height: '3px',
+              background: 'linear-gradient(90deg, transparent, #10b981, transparent)',
+              opacity: 0.6,
+            }} />
+
             <p
               style={{
-                fontSize: 'clamp(0.98rem, 2vw, 1.12rem)',
-                color: 'var(--text-secondary)',
-                fontWeight: 450,
+                fontSize: 'clamp(1rem, 2.2vw, 1.15rem)',
+                color: 'rgba(240, 243, 250, 0.85)',
+                fontWeight: 400,
                 lineHeight: 1.7,
                 margin: 0,
+                letterSpacing: '-0.01em',
               }}
             >
-              I build scalable <span style={{ color: '#ffffff', fontWeight: 600 }}>Spring Boot microservices</span>, REST APIs, and cloud-ready backend systems with performance, security, and clean architecture in mind.
+              I build scalable <span style={{ color: '#ffffff', fontWeight: 600, textShadow: '0 0 20px rgba(16, 185, 129, 0.3)' }}>Spring Boot microservices</span>, REST APIs, and cloud-ready backend systems with performance, security, and clean architecture in mind.
             </p>
           </motion.div>
         </div>
