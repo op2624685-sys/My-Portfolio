@@ -196,6 +196,15 @@ const projects = [
     githubUrl: 'https://github.com/op2624685-sys/Hospital-Management-System',
     liveUrl: 'https://hms.omprakashjavadev.in'
   },
+  {
+    title: 'Docs-UI: Modern Documentation Interface',
+    category: 'Frontend Engineering',
+    icon: 'Layers',
+    description: 'A sleek, developer-centric documentation UI engineered for rapid content delivery and optimal readability. Focused on minimalist design principles, high-performance rendering via Vite, and an intuitive information architecture for technical documentation.',
+    technologies: ['React', 'Vite', 'Tailwind CSS', 'JavaScript'],
+    githubUrl: 'https://github.com/op2624685-sys/Doc-App',
+    liveUrl: 'https://op2624685-sys.github.io/Doc-App/'
+  },
 ];
 
 const stats = [
