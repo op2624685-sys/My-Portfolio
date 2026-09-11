@@ -29,72 +29,73 @@ export default function AmbientBackdrop() {
   };
 
   return (
-    <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
-      {/* 4K Aesthetic Background Video */}
-      <video
-        ref={videoRef}
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-        onLoadedData={() => setVideoLoaded(true)}
-        style={{
-          position: 'absolute',
-          inset: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          opacity: isVideoVisible && videoLoaded ? 0.85 : 0,
-          transition: 'opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1)',
-          filter: 'none',
-          transform: 'scale(1.02)',
-        }}
-      >
-        <source src="/bg-video.webm" type="video/webm" />
-      </video>
+    <>
+      <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
+        {/* 4K Aesthetic Background Video */}
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          onLoadedData={() => setVideoLoaded(true)}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            opacity: isVideoVisible && videoLoaded ? 0.85 : 0,
+            transition: 'opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1)',
+            filter: 'none',
+            transform: 'scale(1.02)',
+          }}
+        >
+          <source src="/bg-video.webm" type="video/webm" />
+        </video>
 
-      {/* Pure Neutral Dark Overlay (Enhanced for better content contrast) */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background:
-            'radial-gradient(ellipse 90% 90% at 50% 50%, rgba(0, 0, 0, 0.2) 0%, rgba(10, 10, 12, 0.70) 75%, #0a0a0c 100%),' +
-            'linear-gradient(180deg, rgba(10, 10, 12, 0.70) 0%, transparent 15%, transparent 85%, #0a0a0c 100%)',
-          backdropFilter: 'blur(1px)',
-          WebkitBackdropFilter: 'blur(1px)',
-        }}
-      />
+        {/* Pure Neutral Dark Overlay (Enhanced for better content contrast) */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background:
+              'radial-gradient(ellipse 90% 90% at 50% 50%, rgba(0, 0, 0, 0.2) 0%, rgba(10, 10, 12, 0.70) 75%, #0a0a0c 100%),' +
+              'linear-gradient(180deg, rgba(10, 10, 12, 0.70) 0%, transparent 15%, transparent 85%, #0a0a0c 100%)',
+            backdropFilter: 'blur(1px)',
+            WebkitBackdropFilter: 'blur(1px)',
+          }}
+        />
 
-
-      {/* Pure Neutral Silver/White Ambient Orbs */}
-      <div
-        style={{
-          position: 'absolute',
-          top: '15%',
-          left: '-5%',
-          width: 520,
-          height: 520,
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%)',
-          filter: 'blur(60px)',
-          animation: 'orbDrift 20s ease-in-out infinite',
-        }}
-      />
-      <div
-        style={{
-          position: 'absolute',
-          bottom: '10%',
-          right: '-5%',
-          width: 580,
-          height: 580,
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%)',
-          filter: 'blur(60px)',
-          animation: 'orbDrift 24s ease-in-out infinite reverse',
-        }}
-      />
+        {/* Pure Neutral Silver/White Ambient Orbs */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '15%',
+            left: '-5%',
+            width: 520,
+            height: 520,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%)',
+            filter: 'blur(60px)',
+            animation: 'orbDrift 20s ease-in-out infinite',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '10%',
+            right: '-5%',
+            width: 580,
+            height: 580,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%)',
+            filter: 'blur(60px)',
+            animation: 'orbDrift 24s ease-in-out infinite reverse',
+          }}
+        />
+      </div>
 
       {/* Sleek Floating Background Video Controls (Interactive) */}
       <div
@@ -146,7 +147,6 @@ export default function AmbientBackdrop() {
           50%      { transform: translate(40px, -30px) scale(1.05); }
         }
       `}</style>
-    </div>
+    </>
   );
 }
-
