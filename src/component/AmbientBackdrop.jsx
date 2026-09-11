@@ -54,14 +54,16 @@ export default function AmbientBackdrop() {
         <source src="/bg-video.webm" type="video/webm" />
       </video>
 
-      {/* Pure Neutral Dark Overlay (No Blue Tint) */}
+      {/* Pure Neutral Dark Overlay (Enhanced for better content contrast) */}
       <div
         style={{
           position: 'absolute',
           inset: 0,
           background:
-            'radial-gradient(ellipse 90% 90% at 50% 50%, rgba(0, 0, 0, 0.08) 0%, rgba(10, 10, 12, 0.50) 75%, #0a0a0c 100%),' +
-            'linear-gradient(180deg, rgba(10, 10, 12, 0.55) 0%, transparent 15%, transparent 85%, #0a0a0c 100%)',
+            'radial-gradient(ellipse 90% 90% at 50% 50%, rgba(0, 0, 0, 0.2) 0%, rgba(10, 10, 12, 0.70) 75%, #0a0a0c 100%),' +
+            'linear-gradient(180deg, rgba(10, 10, 12, 0.70) 0%, transparent 15%, transparent 85%, #0a0a0c 100%)',
+          backdropFilter: 'blur(1px)',
+          WebkitBackdropFilter: 'blur(1px)',
         }}
       />
 
