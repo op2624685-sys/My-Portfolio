@@ -180,66 +180,21 @@ const levelStyle = (level) => {
 const projects = [
   {
     title: 'Dadi Bulsara Ashihara Karate Foundation',
-    category: 'Community Portal',
+    category: 'Enterprise Management Ecosystem',
     icon: 'Layers',
-    description: 'A professional digital presence for the Ashihara Karate Foundation, showcasing martial arts excellence and community outreach.',
-    technologies: ['React', 'Tailwind CSS', 'Vercel'],
-    githubUrl: 'https://github.com/op2624685-sys/Dadi-Bulsara-Ashihara-Karate',
+    description: 'A full-scale enterprise system for martial arts administration. Featuring a hierarchical RBAC model (Admin, Sub-Admin, Teacher, Student), Redis-backed performance optimization, and specialized modules for managing global championships, tournaments, and training camps, including a dedicated teacher panel for student attendance and progress tracking.',
+    technologies: ['Java 21', 'Spring Boot 4.1', 'PostgreSQL', 'Redis', 'React 19', 'JWT', 'Nimbus JOSE', 'Tailwind CSS 4', 'Vercel'],
+    githubUrl: 'https://github.com/op2624685-sys/Dadi-Bulsara-Ashihara-Karate-Backend',
     liveUrl: 'https://dadi-bulsara-ashihara-karate.vercel.app'
   },
   {
-    title: 'NexHealth: Enterprise Healthcare Ecosystem',
+    title: 'MediCore: Enterprise Healthcare Ecosystem',
     category: 'Distributed Systems',
     icon: 'CheckSquare',
     description: 'An enterprise-scale distributed healthcare ecosystem engineered with a decoupled event-driven architecture via Apache Kafka. Featuring real-time notifications via WebSockets, automated prescription generation, secure JWT-based authentication, and a high-concurrency appointment booking system.',
     technologies: ['Java 21', 'Spring Boot 3.5', 'PostgreSQL', 'Apache Kafka', 'Redis', 'React 19', 'JWT', 'Spring Security', 'WebSockets', 'Cloudinary', 'SMTP'],
     githubUrl: 'https://github.com/op2624685-sys/Hospital-Management-System',
     liveUrl: 'https://hms.omprakashjavadev.in'
-  },
-  {
-    title: 'Task Management System',
-    category: 'Enterprise Solution',
-    icon: 'CheckSquare',
-    description: 'Enterprise task management application with role-based access control, real-time notifications, and advanced filtering.',
-    technologies: ['Java', 'Spring MVC', 'Hibernate', 'PostgreSQL'],
-    githubUrl: 'https://github.com/op2624685-sys',
-    liveUrl: 'https://demo-project.com'
-  },
-  {
-    title: 'Microservices Architecture',
-    category: 'Cloud Infrastructure',
-    icon: 'Cpu',
-    description: 'Scalable microservices-based application with service discovery, API gateway, and distributed tracing.',
-    technologies: ['Spring Cloud', 'Docker', 'Kubernetes', 'Redis'],
-    githubUrl: 'https://github.com/op2624685-sys',
-    liveUrl: 'https://demo-project.com'
-  },
-  {
-    title: 'Real-time Chat Application',
-    category: 'Communication System',
-    icon: 'MessageSquare',
-    description: 'WebSocket-based real-time messaging platform with group chats, file sharing, and user presence indicators.',
-    technologies: ['Spring Boot', 'WebSocket', 'MongoDB', 'RabbitMQ'],
-    githubUrl: 'https://github.com/op2624685-sys',
-    liveUrl: 'https://demo-project.com'
-  },
-  {
-    title: 'Payment Gateway Integration',
-    category: 'Fintech Platform',
-    icon: 'CreditCard',
-    description: 'Secure payment processing system with multiple providers, transaction management, and fraud detection.',
-    technologies: ['Spring Boot', 'Stripe API', 'MySQL', 'Redis'],
-    githubUrl: 'https://github.com/op2624685-sys',
-    liveUrl: 'https://demo-project.com'
-  },
-  {
-    title: 'Analytics Dashboard API',
-    category: 'Big Data & Analytics',
-    icon: 'BarChart3',
-    description: 'High-performance backend for analytics dashboard with data aggregation, caching, and export functionality.',
-    technologies: ['Java', 'Spring Boot', 'ElasticSearch', 'Kafka'],
-    githubUrl: 'https://github.com/op2624685-sys',
-    liveUrl: 'https://demo-project.com'
   },
 ];
 
