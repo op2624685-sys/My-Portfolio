@@ -25,7 +25,18 @@ export default function AmbientBackdrop() {
   };
 
   const toggleVisibility = () => {
-    setIsVideoVisible(!isVideoVisible);
+    const nextVisibility = !isVideoVisible;
+    setIsVideoVisible(nextVisibility);
+
+    if (videoRef.current) {
+      if (!nextVisibility) {
+        videoRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        videoRef.current.play().catch(() => {});
+        setIsPlaying(true);
+      }
+    }
   };
 
   return (
@@ -107,38 +118,40 @@ export default function AmbientBackdrop() {
           pointerEvents: 'auto',
           display: 'flex',
           alignItems: 'center',
-          gap: '8px',
-          padding: '6px 12px',
+          gap: '12px',
+          padding: '8px 16px',
           borderRadius: '9999px',
-          background: 'rgba(16, 16, 20, 0.70)',
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
-          transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+          background: 'linear-gradient(135deg, rgba(20, 20, 26, 0.8) 0%, rgba(10, 10, 12, 0.9) 100%)',
+          backdropFilter: 'blur(20px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+          border: '1px solid rgba(255, 255, 255, 0.12)',
+          boxShadow: '0 12px 40px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.05)',
+          transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
         }}
-        className="hover:border-amber-500/40 opacity-70 hover:opacity-100"
+        className="hover:scale-105 hover:border-emerald-500/50 opacity-60 hover:opacity-100 group"
       >
-        <span className="flex items-center gap-2 text-[11px] font-mono tracking-wider text-amber-200/90 uppercase mr-1">
-          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+        <span className="flex items-center gap-2 text-[10px] font-mono tracking-widest text-emerald-200/80 uppercase mr-1">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
           Live BG
         </span>
 
-        <button
-          onClick={togglePlay}
-          title={isPlaying ? "Pause Background Video" : "Play Background Video"}
-          className="p-1.5 rounded-full hover:bg-white/10 text-white/80 hover:text-amber-300 transition-colors"
-        >
-          {isPlaying ? <Pause size={13} /> : <Play size={13} />}
-        </button>
+        <div className="flex items-center gap-1">
+          <button
+            onClick={togglePlay}
+            title={isPlaying ? "Pause Background Video" : "Play Background Video"}
+            className="p-2 rounded-full hover:bg-white/10 text-white/70 hover:text-emerald-400 transition-all duration-300 active:scale-90"
+          >
+            {isPlaying ? <Pause size={14} /> : <Play size={14} />}
+          </button>
 
-        <button
-          onClick={toggleVisibility}
-          title={isVideoVisible ? "Hide Video Background" : "Show Video Background"}
-          className="p-1.5 rounded-full hover:bg-white/10 text-white/80 hover:text-amber-300 transition-colors"
-        >
-          {isVideoVisible ? <Eye size={13} /> : <EyeOff size={13} />}
-        </button>
+          <button
+            onClick={toggleVisibility}
+            title={isVideoVisible ? "Hide Video Background" : "Show Video Background"}
+            className="p-2 rounded-full hover:bg-white/10 text-white/70 hover:text-emerald-400 transition-all duration-300 active:scale-90"
+          >
+            {isVideoVisible ? <Eye size={14} /> : <EyeOff size={14} />}
+          </button>
+        </div>
       </div>
 
       <style>{`
