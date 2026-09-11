@@ -43,7 +43,7 @@ function ProjectCard({ project, number }) {
         <p className="relative text-xs sm:text-sm text-white/50 mb-4 shrink-0 line-clamp-2 sm:line-clamp-none">{project.description}</p>
 
         {/* preview takes up remaining card space, since the card now fills the screen */}
-        <div className="relative flex-1 min-h-0">
+        <div className="relative flex-1 w-full min-h-0">
           <LivePreview url={project.liveUrl} title={project.title} />
         </div>
       </div>

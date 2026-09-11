@@ -59,13 +59,14 @@ function LivePreview({ url, title }) {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative w-full h-full bg-[#0d0d0f] overflow-hidden rounded-xl border border-white/10">
-      <div className="relative w-full h-full overflow-hidden bg-[#0d0d0f]">
+    <div ref={containerRef} className="relative w-full h-full bg-[#0d0d0f] overflow-hidden rounded-xl border border-white/10 flex flex-col">
+      <div className="relative w-full h-full overflow-hidden bg-[#0d0d0f] flex-1">
         {!loaded && !blocked && (
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className="absolute inset-0 flex items-center justify-center z-10">
             <div className="w-7 h-7 border-2 border-white/15 border-t-red-500 rounded-full animate-spin" />
           </div>
         )}
+
 
         {blocked ? (
           <a
@@ -91,6 +92,7 @@ function LivePreview({ url, title }) {
               transformOrigin: "top left",
               border: "none",
               pointerEvents: "none",
+              display: "block",
             }}
           />
         )}
