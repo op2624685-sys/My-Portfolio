@@ -1184,6 +1184,13 @@ const Index = () => {
         }
 
         @media (max-width: 820px) {
+          #contact {
+            padding: '4rem 1.5rem 3rem' !important;
+          }
+          .contact-headline {
+            font-size: clamp(40px, 8vw, 80px) !important;
+            margin-bottom: 30px !important;
+          }
           .portfolio-hero {
             min-height: 100svh !important;
             padding: 5rem 1rem 3.5rem !important;
@@ -1295,6 +1302,13 @@ const Index = () => {
         }
 
         @media (max-width: 420px) {
+          #contact {
+            padding: '3rem 1rem 2rem' !important;
+          }
+          .contact-headline {
+            font-size: clamp(32px, 12vw, 52px) !important;
+            margin-bottom: 20px !important;
+          }
           .portfolio-hero {
             padding: 5rem 0.5rem 3.5rem !important;
           }
