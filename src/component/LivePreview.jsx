@@ -28,7 +28,7 @@ function LivePreview({ url, title }) {
       if (!containerRef.current) return;
       const { clientWidth, clientHeight } = containerRef.current;
 
-      const mobile = window.innerWidth < 768;
+      const mobile = window.innerWidth < 1024;
       setIsMobile(mobile);
 
       if (mobile) {
