@@ -20,6 +20,7 @@ import Navbar from '../component/Navbar';
 import JavaMain from '../component/JavaMain';
 import AmbientBackdrop from '../component/AmbientBackdrop';
 import TextRotation from '../component/TextRotation';
+import GlitchTextRotation from '../component/GlitchTextRotation';
 import { IconCloud } from '../component/IconCloud';
 import ProjectsSection from '../component/ProjectsSection';
 import ViewAllProjectsButton from '../component/ViewAllProjectsButton';
@@ -535,7 +536,6 @@ const Index = () => {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="gs font-syne hero-name"
             style={{
-              fontSize: 'clamp(4rem, 18vw, 12rem)',
               fontWeight: 900,
               letterSpacing: '-0.06em',
               lineHeight: 0.8,
@@ -571,7 +571,7 @@ const Index = () => {
               >
                 <span className="text-gradient-emerald">BUILDING SCALABLE</span> <br />
                 <span className="inline-block mt-2">
-                  <TextRotation size="lg" align="center" />
+                  <GlitchTextRotation size="lg" align="center" />
                 </span>
               </h2>
             </motion.div>
@@ -1166,8 +1166,12 @@ const Index = () => {
       <JavaMain onIntroComplete={handleIntroComplete} />
 
       <style>{`
+        .hero-name {
+          font-size: clamp(4rem, 18vw, 12rem);
+        }
         .contact-headline {
           background: linear-gradient(
+
             180deg,
             #c8c8c8 0%,
             #ffffff 35%,
@@ -1226,8 +1230,8 @@ const Index = () => {
           }
 
           .hero-name {
-            font-size: clamp(2.3rem, 11vw, 3.35rem) !important;
-            letter-spacing: 0 !important;
+            font-size: clamp(2rem, 10vw, 4rem) !important;
+            letter-spacing: -0.02em !important;
             line-height: 1 !important;
           }
 
@@ -1291,6 +1295,9 @@ const Index = () => {
         }
 
         @media (max-width: 420px) {
+          .portfolio-hero {
+            padding: 5rem 0.5rem 3.5rem !important;
+          }
           .hero-content {
             gap: 2rem !important;
           }
@@ -1305,7 +1312,10 @@ const Index = () => {
           }
 
           .hero-name {
-            font-size: clamp(2.1rem, 10.5vw, 2.8rem) !important;
+            font-size: 9.5vw !important;
+            letter-spacing: -0.05em !important;
+            line-height: 1 !important;
+            text-align: center;
           }
 
           .hero-title {
