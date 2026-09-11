@@ -9,7 +9,7 @@ function ProjectCard({ project, number }) {
       <div className="relative w-full max-w-screen-2xl min-h-[75vh] rounded-3xl bg-white/[0.03] backdrop-blur-xl border border-white/10 p-5 sm:p-8 overflow-hidden flex flex-col">
         <div className="relative flex items-start justify-between mb-4 shrink-0">
           <div className="flex items-start gap-3">
-            <span className="text-5xl sm:text-6xl font-bold text-white/15 leading-none">
+            <span className="text-5xl sm:text-6xl font-bold leading-none bg-gradient-to-b from-white/30 to-white/5 bg-clip-text text-transparent">
               {number}
             </span>
             <div className="pt-1">
