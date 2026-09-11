@@ -21,7 +21,7 @@ import JavaMain from '../component/JavaMain';
 import AmbientBackdrop from '../component/AmbientBackdrop';
 import TextRotation from '../component/TextRotation';
 import { IconCloud } from '../component/IconCloud';
-import ScrollableCardStack from '../component/ScrollableCardStack';
+import ProjectsSection from '../component/ProjectsSection';
 import ViewAllProjectsButton from '../component/ViewAllProjectsButton';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -729,12 +729,11 @@ const Index = () => {
       <section id="projects" style={{ position: 'relative', zIndex: 2, padding: '3rem 1.5rem 4rem' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <SectionHeader kicker="Selected Work" lead="Recent" accent="projects." />
+        </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <ScrollableCardStack items={projects} perspective={1200}>
-              <ViewAllProjectsButton />
-            </ScrollableCardStack>
-          </div>
+        <ProjectsSection projects={projects} />
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '4rem' }}>
+          <ViewAllProjectsButton />
         </div>
       </section>
 
