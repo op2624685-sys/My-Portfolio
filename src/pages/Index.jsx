@@ -179,6 +179,15 @@ const levelStyle = (level) => {
 
 const projects = [
   {
+    title: 'Dadi Bulsara Ashihara Karate Foundation',
+    category: 'Community Portal',
+    icon: 'Layers',
+    description: 'A professional digital presence for the Ashihara Karate Foundation, showcasing martial arts excellence and community outreach.',
+    technologies: ['React', 'Tailwind CSS', 'Vercel'],
+    githubUrl: 'https://github.com/op2624685-sys/Dadi-Bulsara-Ashihara-Karate',
+    liveUrl: 'https://dadi-bulsara-ashihara-karate.vercel.app'
+  },
+  {
     title: 'E-Commerce Backend API',
     category: 'E-Commerce Backend',
     icon: 'ShoppingCart',
