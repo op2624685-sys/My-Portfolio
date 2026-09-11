@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const DEFAULT_WORDS = ['Java', 'Backend', 'Microservices', 'REST APIs'];
 
@@ -59,7 +59,6 @@ export default function GlitchTextRotation({
         fontWeight: 700,
         letterSpacing: '1px',
         minWidth: size === 'lg' ? '260px' : 'auto',
-        display: 'inline-block',
       }}
     >
       {displayText || ' '}
