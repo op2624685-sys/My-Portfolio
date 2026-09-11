@@ -9,6 +9,7 @@ import {
   Sparkles,
   Github,
   Linkedin,
+  Instagram,
   Mail,
   Calendar,
   Code2,
@@ -124,7 +125,7 @@ const SectionHeader = ({ kicker, lead, accent, tag: Tag = 'h2' }) => (
       style={{
         display: 'inline-block',
         fontSize: '0.78rem',
-        color: 'var(--text-tertiary)',
+        color: 'var(--text-secondary)',
         letterSpacing: '0.2em',
         textTransform: 'uppercase',
         fontWeight: 500,
@@ -740,11 +741,11 @@ const Index = () => {
       {/* ── #about ───────────────────────────────────────────── */}
       <section id="about" style={{ position: 'relative', zIndex: 2, padding: '3rem 1.5rem 4rem' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <SectionHeader kicker="About Me" lead="Crafting reliable" accent="backend systems." />
+          <SectionHeader kicker="The Engineer" lead="Architecting" accent="Digital Foundations." />
           <p
             style={{
               textAlign: 'center',
-              color: 'var(--text-tertiary)',
+              color: 'var(--text-secondary)',
               maxWidth: 540,
               margin: '-2.5rem auto 4rem',
               fontSize: '1.05rem',
@@ -938,153 +939,145 @@ const Index = () => {
       <section id="contact" style={{
         position: 'relative',
         zIndex: 2,
-        padding: '8rem 1.5rem 6rem',
+        padding: '8rem 1.5rem 4rem',
         minHeight: '100vh',
         display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
       }}>
-        <div style={{
-          maxWidth: 1100,
-          width: '100%',
-          margin: '0 auto',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '4rem',
-          alignItems: 'center'
-        }}>
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-            style={{ textAlign: 'left' }}
-          >
-            <h2
-              className="font-display"
-              style={{
-                fontSize: 'clamp(2.8rem, 6vw, 4.5rem)',
-                fontWeight: 500,
-                letterSpacing: '-0.03em',
-                lineHeight: 1.05,
-                margin: 0,
-                marginBottom: '1.5rem',
-              }}
-            >
-              <span className="text-gradient">Let's build </span>
-              <span className="text-gradient-emerald">something together.</span>
-            </h2>
-            <p style={{
-              color: 'var(--text-secondary)',
-              fontSize: 'clamp(1.1rem, 2vw, 1.25rem)',
-              lineHeight: 1.6,
-              maxWidth: 500,
-              marginBottom: '2.5rem',
-              fontWeight: 400
-            }}>
-              I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
-            </p>
-
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '1rem',
-              padding: '0.75rem 1.25rem',
-              borderRadius: '999px',
-              background: 'rgba(16, 185, 129, 0.05)',
-              border: '1px solid rgba(16, 185, 129, 0.2)',
-              width: 'fit-content'
-            }}>
-              <span style={{
-                width: 8,
-                height: 8,
-                borderRadius: '50%',
-                background: '#4ade80',
-                boxShadow: '0 0 8px #4ade80'
-              }} />
-              <span style={{ fontSize: '0.85rem', color: 'var(--text-primary)', fontWeight: 500 }}>
-                Available for new opportunities
-              </span>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          style={{ maxWidth: 900, width: '100%' }}
+        >
+          <h2
+            className="font-display contact-headline"
             style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-              gap: '1rem'
+              fontSize: 'clamp(52px, 10vw, 130px)',
+              fontWeight: 900,
+              lineHeight: 0.92,
+              letterSpacing: '-0.01em',
+              textTransform: 'uppercase',
+              margin: '0 0 44px 0',
             }}
           >
-            {[
-              {
-                label: 'Email Me',
-                desc: 'The best way to reach me',
-                link: 'mailto:op2624685@gmail.com',
-                icon: Mail,
-                color: 'var(--accent)'
-              },
-              {
-                label: 'GitHub',
-                desc: 'Check out my open source work',
-                link: 'https://github.com/op2624685-sys',
-                icon: Github,
-                color: 'var(--text-primary)'
-              },
-              {
-                label: 'LinkedIn',
-                desc: 'Connect for professional networking',
-                link: 'https://linkedin.com/in/omprakash',
-                icon: Linkedin,
-                color: 'var(--accent-soft)'
-              }
-            ].map((item, idx) => (
-              <motion.a
-                key={item.label}
-                href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ y: -5, scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="surface-card"
-                style={{
-                  padding: '2rem',
-                  textDecoration: 'none',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '1rem',
-                  border: '1px solid var(--border-default)',
-                  transition: 'border-color 0.3s ease'
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--accent)'}
-                onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--border-default)'}
-              >
-                <div style={{
-                  width: 48,
-                  height: 48,
-                  borderRadius: 12,
-                  background: 'rgba(16, 185, 129, 0.1)',
-                  display: 'grid',
-                  placeItems: 'center',
-                  color: item.color
-                }}>
-                  <item.icon size={24} />
-                </div>
-                <div style={{ textAlign: 'left' }}>
-                  <h3 style={{ fontSize: '1.2rem', fontWeight: 550, color: 'var(--text-primary)', margin: 0, marginBottom: '0.4rem' }}>
-                    {item.label}
-                  </h3>
-                  <p style={{ fontSize: '0.9rem', color: 'var(--text-tertiary)', margin: 0, lineHeight: 1.4 }}>
-                    {item.desc}
-                  </p>
-                </div>
-              </motion.a>
-            ))}
-          </motion.div>
-        </div>
+            <span>Let's Build</span><br />
+            <span>Something Amazing</span>
+          </h2>
+
+          <a
+            href="mailto:op2624685@gmail.com"
+            className="btn-touch"
+            style={{
+              display: 'inline-block',
+              padding: '14px 36px',
+              borderRadius: '100px',
+              border: '1px solid rgba(255,255,255,0.3)',
+              background: 'rgba(255,255,255,0.1)',
+              color: '#ffffff',
+              fontSize: '11px',
+              fontWeight: 600,
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              textDecoration: 'none',
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+              marginBottom: '28px',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(255,255,255,0.2)';
+              e.currentTarget.style.color = '#ffffff';
+              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
+              e.currentTarget.style.color = '#ffffff';
+              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)';
+            }}
+          >
+            Get in Touch
+          </a>
+
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '28px' }}>
+            <a
+              href="mailto:op2624685@gmail.com"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                color: '#ffffff',
+                fontSize: '13px',
+                letterSpacing: '0.02em',
+                textDecoration: 'none',
+                transition: 'color 0.2s',
+                marginBottom: '28px',
+                fontWeight: 500,
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.color = '#a7f3d0'}
+              onMouseLeave={(e) => e.currentTarget.style.color = '#ffffff'}
+            >
+              <Mail size={14} style={{ opacity: 0.8, color: '#a7f3d0' }} />
+              op2624685@gmail.com
+            </a>
+
+            <div className="socials" style={{ display: 'flex', gap: '14px' }}>
+              {socialLinks.map((link) => (
+                <motion.a
+                  key={link.name}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.1 }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 36,
+                    height: 36,
+                    borderRadius: '50%',
+                    border: '1px solid rgba(255,255,255,0.3)',
+                    color: '#ffffff',
+                    textDecoration: 'none',
+                    transition: 'all 0.2s',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.6)';
+                    e.currentTarget.style.color = '#a7f3d0';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)';
+                    e.currentTarget.style.color = '#ffffff';
+                  }}
+                >
+                  <link.icon size={16} />
+                </motion.a>
+              ))}
+            </div>
+          </div>
+        </motion.div>
       </section>
+
+      <footer style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '22px 40px',
+        borderTop: '1px solid rgba(255,255,255,0.05)',
+        zIndex: 2,
+        position: 'relative',
+        marginBottom: '2rem'
+      }}>
+        <span style={{ fontSize: '11px', color: 'var(--text-muted)', letterSpacing: '0.04em' }}>
+          © 2026 Om. All rights reserved.
+        </span>
+        <span style={{ fontSize: '11px', color: 'var(--text-muted)', letterSpacing: '0.04em' }}>
+          Designed & Developed by Om
+        </span>
+      </footer>
       </main>
 
       {/* Unique Futuristic Animated Scroll Down Indicator */}
@@ -1181,6 +1174,19 @@ const Index = () => {
       <JavaMain onIntroComplete={handleIntroComplete} />
 
       <style>{`
+        .contact-headline {
+          background: linear-gradient(
+            180deg,
+            #c8c8c8 0%,
+            #ffffff 35%,
+            #d0d0d0 60%,
+            #888 100%
+          );
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
         @media (max-width: 820px) {
           .portfolio-hero {
             min-height: 100svh !important;
