@@ -188,13 +188,13 @@ const projects = [
     liveUrl: 'https://dadi-bulsara-ashihara-karate.vercel.app'
   },
   {
-    title: 'E-Commerce Backend API',
-    category: 'E-Commerce Backend',
-    icon: 'ShoppingCart',
-    description: 'A comprehensive RESTful API for an e-commerce platform with user authentication, product management, shopping cart, and order processing.',
-    technologies: ['Spring Boot', 'MySQL', 'JWT', 'Spring Security'],
-    githubUrl: 'https://github.com/op2624685-sys',
-    liveUrl: 'https://demo-project.com'
+    title: 'NexHealth: Enterprise Healthcare Ecosystem',
+    category: 'Distributed Systems',
+    icon: 'CheckSquare',
+    description: 'An enterprise-scale distributed healthcare ecosystem engineered with a decoupled event-driven architecture via Apache Kafka. Featuring real-time notifications via WebSockets, automated prescription generation, secure JWT-based authentication, and a high-concurrency appointment booking system.',
+    technologies: ['Java 21', 'Spring Boot 3.5', 'PostgreSQL', 'Apache Kafka', 'Redis', 'React 19', 'JWT', 'Spring Security', 'WebSockets', 'Cloudinary', 'SMTP'],
+    githubUrl: 'https://github.com/op2624685-sys/Hospital-Management-System',
+    liveUrl: 'https://hms.omprakashjavadev.in'
   },
   {
     title: 'Task Management System',
