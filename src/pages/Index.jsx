@@ -197,7 +197,7 @@ const services = [
 
 const socialLinks = [
   { name: 'GitHub',   icon: Github,   url: 'https://github.com/op2624685-sys' },
-  { name: 'LinkedIn', icon: Linkedin, url: 'https://linkedin.com/in/omprakash' },
+  { name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/in/op2624685-sys/' },
   { name: 'Email',    icon: Mail,     url: 'mailto:op2624685@gmail.com' },
 ];
 
