@@ -1,25 +1,21 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
 import {
-  ArrowDown,
   ChevronDown,
   ArrowUpRight,
   Sparkles,
   Github,
   Linkedin,
-  Instagram,
   Mail,
   Calendar,
   Code2,
   Layers,
-  ExternalLink,
 } from 'lucide-react';
 import Navbar from '../component/Navbar';
 import JavaMain from '../component/JavaMain';
 import AmbientBackdrop from '../component/AmbientBackdrop';
-import TextRotation from '../component/TextRotation';
 import GlitchTextRotation from '../component/GlitchTextRotation';
 import { IconCloud } from '../component/IconCloud';
 import ProjectsSection from '../component/ProjectsSection';
@@ -153,30 +149,6 @@ const SectionHeader = ({ kicker, lead, accent, tag: Tag = 'h2' }) => (
 );
 
 /* ─── Section data (reused from dedicated pages) ─────────────── */
-const skills = [
-  { name: 'Java',             icon: `${BASE_URL.replace(/\/$/, '')}/icons/java.svg`,   level: 'Expert',       description: 'Core Java, Java 8+, Collections, Multithreading, Streams' },
-  { name: 'Spring Framework', icon: `${BASE_URL.replace(/\/$/, '')}/icons/spring.svg`, level: 'Advanced',     description: 'Spring Boot, Spring MVC, Spring Security, Spring Data JPA' },
-  { name: 'MySQL',            icon: `${BASE_URL.replace(/\/$/, '')}/icons/mysql.svg`,  level: 'Advanced',     description: 'Database design, query optimization, stored procedures' },
-  { name: 'PostgreSQL',       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg', level: 'Advanced',     description: 'Relational data modeling, complex queries, performance tuning' },
-  { name: 'Git',              icon: `${BASE_URL.replace(/\/$/, '')}/icons/git.svg`,    level: 'Advanced',     description: 'Version control, branching, merging, CI/CD pipelines' },
-  { name: 'Docker',           icon: `${BASE_URL.replace(/\/$/, '')}/icons/docker.svg`, level: 'Intermediate', description: 'Containerization, Docker Compose, deployment workflows' },
-  { name: 'AWS',              icon: 'https://zonalogo.com/assets/aws-logo-png-svg.webp?asset=1862',    level: 'Intermediate', description: 'Cloud infrastructure, EC2, S3, Lambda, IAM' },
-  { name: 'Linux',            icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg',   level: 'Advanced',     description: 'Shell scripting, system administration, SSH, kernel basics' },
-  { name: 'Redis',            icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg',   level: 'Intermediate', description: 'In-memory caching, pub/sub, distributed locking' },
-  { name: 'Kafka',            icon: 'https://cdn.freebiesupply.com/logos/thumbs/2x/kafka-logo.png',    level: 'Intermediate', description: 'Event streaming, producers/consumers, topic management', customStyle: { background: '#fff' } },
-  { name: 'JUnit / Mockito',  level: 'Expert',       description: 'TDD, unit testing, mock objects, integration testing' },
-  { name: 'Observability',    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/grafana/grafana-original.svg', level: 'Intermediate', description: 'Monitoring with Grafana & Prometheus, alerting, metrics' },
-  { name: 'Postman',          icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg',   level: 'Expert',       description: 'API testing, automated collections, environment variables' },
-  { name: 'REST API',                                       level: 'Expert',       description: 'RESTful services, API design, microservices architecture' },
-  { name: 'Hibernate',                                      level: 'Advanced',     description: 'ORM, JPA, entity relationships, query language' },
-  { name: 'Maven / Gradle',                                level: 'Advanced',     description: 'Build tools, dependency management, project configuration' },
-];
-
-const levelStyle = (level) => {
-  if (level === 'Expert')   return { background: 'rgba(16, 185, 129, 0.12)',  color: '#a7f3d0', border: '1px solid rgba(16, 185, 129, 0.4)' };
-  if (level === 'Advanced') return { background: 'rgba(74, 222, 128, 0.10)',   color: '#86efac', border: '1px solid rgba(74, 222, 128, 0.35)' };
-  return                            { background: 'rgba(255, 255, 255, 0.04)', color: 'var(--text-tertiary)', border: '1px solid var(--border-default)' };
-};
 
 const projects = [
   {
@@ -186,7 +158,7 @@ const projects = [
     description: 'A full-scale enterprise system for martial arts administration. Featuring a hierarchical RBAC model (Admin, Sub-Admin, Teacher, Student), Redis-backed performance optimization, and specialized modules for managing global championships, tournaments, and training camps, including a dedicated teacher panel for student attendance and progress tracking.',
     technologies: ['Java 21', 'Spring Boot 4.1', 'PostgreSQL', 'Redis', 'React 19', 'JWT', 'Nimbus JOSE', 'Tailwind CSS 4', 'Vercel'],
     githubUrl: 'https://github.com/op2624685-sys/Dadi-Bulsara-Ashihara-Karate-Backend',
-    liveUrl: 'https://dadi-bulsara-ashihara-karate.vercel.app'
+    liveUrl: 'https://karate.omprakashjavadev.in'
   },
   {
     title: 'MediCore: Enterprise Healthcare Ecosystem',
@@ -228,16 +200,6 @@ const socialLinks = [
   { name: 'LinkedIn', icon: Linkedin, url: 'https://linkedin.com/in/omprakash' },
   { name: 'Email',    icon: Mail,     url: 'mailto:op2624685@gmail.com' },
 ];
-
-/* ─── Framer variants ────────────────────────────────────────── */
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.2 } },
-};
-const cardVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 110, damping: 18 } },
-};
 
 /* ═══ HERO INDEX PAGE (single-page with sections) ════════════════ */
 const Index = () => {
