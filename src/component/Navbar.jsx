@@ -142,23 +142,14 @@ const Navbar = () => {
           cursor: pointer;
         }
         .nb-logo-glyph {
-          width: 32px;
-          height: 32px;
-          border-radius: 9px;
-          background: linear-gradient(135deg, #f0d4a8 0%, #d4af7a 60%, #a87c4b 100%);
-          display: grid;
-          place-items: center;
-          font-family: 'Fraunces', serif;
-          font-weight: 600;
-          font-size: 0.92rem;
-          color: #0a0a0b;
-          box-shadow:
-            inset 0 1px 0 rgba(255, 255, 255, 0.4),
-            0 1px 2px rgba(0, 0, 0, 0.4),
-            0 6px 16px -6px var(--accent-glow);
+          width: 38px;
+          height: 38px;
+          border-radius: 50%;
+          background: transparent;
+          display: block;
           transition: transform 0.5s var(--ease-out);
           flex-shrink: 0;
-          object-fit: cover;
+          object-fit: contain;
         }
         .nb-logo:hover .nb-logo-glyph { transform: scale(1.1); }
 
@@ -265,8 +256,8 @@ const Navbar = () => {
               className="nb-logo"
             >
               <img
-                src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/profile/om-photo.jpg`}
-                alt="Profile"
+                src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/fevicon.png`}
+                alt="Logo"
                 className="nb-logo-glyph"
               />
               <span className="nb-logo-name">Om Prakash</span>

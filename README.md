@@ -1,7 +1,7 @@
 # 🚀 Om Prakash | Java Backend Engineer
 
 <p align="center">
-  <img src="profile/om-photo.jpg" width="150" style="border-radius: 50%" alt="Om Prakash" />
+  <img src="profile/profilePic.jpeg" width="150" style="border-radius: 50%" alt="Om Prakash" />
 </p>
 
 <p align="center">

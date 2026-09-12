@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 
 const ViewAllProjectsButton = () => {
-  const profileImg = "/profile/om-photo.jpg";
+  const profileImg = "/profile/profilePic.jpeg";
 
   return (
     <motion.a

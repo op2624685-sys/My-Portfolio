@@ -735,7 +735,7 @@ const Index = () => {
                     }}
                   >
                     <img
-                      src={`${BASE_URL.replace(/\/$/, '')}/profile/om-photo.jpg`}
+                      src={`${BASE_URL.replace(/\/$/, '')}/profile/profilePic.jpeg`}
                       alt="Om Prakash"
                       style={{
                         width: '100%',
