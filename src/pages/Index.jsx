@@ -17,7 +17,7 @@ import Navbar from '../component/Navbar';
 import JavaMain from '../component/JavaMain';
 import AmbientBackdrop from '../component/AmbientBackdrop';
 import GlitchTextRotation from '../component/GlitchTextRotation';
-import { IconCloud } from '../component/IconCloud';
+import SkillsMarquee from '../component/SkillsMarquee';
 import ProjectsSection from '../component/ProjectsSection';
 import ViewAllProjectsButton from '../component/ViewAllProjectsButton';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -110,41 +110,73 @@ function ParticleField() {
 }
 
 /* ─── Reusable section primitives ────────────────────────────── */
-const SectionHeader = ({ kicker, lead, accent, tag: Tag = 'h2' }) => (
+const SectionHeader = ({ kicker, lead, accent, subtitle, tag: Tag = 'h2' }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ amount: 0.3 }}
     transition={{ duration: 0.6 }}
-    style={{ textAlign: 'center', marginBottom: '4rem' }}
+    style={{ textAlign: 'center', marginBottom: '5rem' }}
   >
-    <span
-      style={{
-        display: 'inline-block',
-        fontSize: '0.78rem',
-        color: 'var(--text-secondary)',
-        letterSpacing: '0.2em',
-        textTransform: 'uppercase',
-        fontWeight: 500,
-        marginBottom: '1rem',
-      }}
-    >
-      {kicker}
-    </span>
+    <div style={{
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '8px',
+      padding: '6px 14px',
+      borderRadius: '100px',
+      background: 'rgba(16, 185, 129, 0.1)',
+      border: '1px solid rgba(16, 185, 129, 0.2)',
+      marginBottom: '1.5rem'
+    }}>
+      <span style={{
+        width: '6px',
+        height: '6px',
+        borderRadius: '50%',
+        background: 'var(--accent)',
+        boxShadow: '0 0 8px var(--accent)'
+      }} />
+      <span
+        style={{
+          fontSize: '0.7rem',
+          color: 'var(--accent)',
+          letterSpacing: '0.2em',
+          textTransform: 'uppercase',
+          fontWeight: 600,
+        }}
+      >
+        {kicker}
+      </span>
+    </div>
     <Tag
       className="font-display"
       style={{
-        fontSize: 'clamp(2.5rem, 5.5vw, 4rem)',
-        fontWeight: 500,
-        letterSpacing: '-0.03em',
-        lineHeight: 1.05,
-        margin: 0,
-        marginBottom: '1rem',
+        fontSize: 'clamp(2.8rem, 6vw, 4.5rem)',
+        fontWeight: 700,
+        letterSpacing: '-0.04em',
+        lineHeight: 1.1,
+        margin: '0 0 1rem 0',
       }}
     >
       <span className="text-gradient">{lead} </span>
       <span className="text-gradient-emerald">{accent}</span>
     </Tag>
+    {subtitle && (
+      <motion.p
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ delay: 0.3, duration: 0.8 }}
+        style={{
+          fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+          color: 'var(--text-secondary)',
+          maxWidth: '600px',
+          margin: '0 auto',
+          lineHeight: 1.6,
+          fontWeight: 400,
+        }}
+      >
+        {subtitle}
+      </motion.p>
+    )}
   </motion.div>
 );
 
@@ -206,19 +238,11 @@ const Index = () => {
   const [introComplete, setIntroComplete] = useState(false);
   const heroRef = useRef(null);
   const scrollHintRef = useRef(null);
-  const ballRef = useRef(null);
   const [hideScrollHint, setHideScrollHint] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const isManualNavigating = useRef(false);
   const mountTime = useRef(null);
-
-  const skillSlugs = [
-    "java", "springboot", "mysql", "postgresql", "git", "docker", "aws", "linux", "redis", "apachekafka",
-    "grafana", "prometheus", "postman", "hibernate", "apachemaven", "gradle", "github", "gitlab",
-    "visualstudiocode", "intellijidea", "apachetomcat", "kubernetes", "jenkins", "sonarqube", "mongodb",
-    "rabbitmq", "microsoftazure", "googlecloud", "openai"
-  ];
 
   const handleIntroComplete = () => setIntroComplete(true);
 
@@ -247,74 +271,6 @@ const Index = () => {
     onScroll();
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
-
-  /* Skills Ball Scroll Animation */
-  useEffect(() => {
-    if (!ballRef.current) return;
-
-    const ball = ballRef.current;
-
-    // Initial position - completely off-screen to the right
-    gsap.set(ball, { x: '120vw', y: '50vh', xPercent: -50, yPercent: -50, opacity: 0 });
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: '#skills',
-        start: 'top center',
-        endTrigger: '#skills',
-        end: 'bottom center',
-        scrub: 1.5,
-      }
-    });
-
-    tl.to(ball, {
-      opacity: 1,
-      duration: 0.3
-    }, 0)
-    // 1. Slow, cinematic entry from far right
-    .to(ball, {
-      x: '85vw',
-      y: '60vh',
-      ease: 'power1.inOut',
-      duration: 2
-    }, 0.3)
-    // 2. First Jump: Arc to Center-Bottom (right -> center-bottom)
-    .to(ball, {
-      x: '50vw',
-      y: '85vh',
-      ease: 'back.out(2)',
-      duration: 2.5
-    }, 2.3)
-    // 3. Smooth glide to Middle-Center (The a-ha moment)
-    .to(ball, {
-      x: '50vw',
-      y: '60vh',
-      ease: 'power2.inOut',
-      duration: 3
-    }, 4.8)
-    // 4. Pause/Settle feel (Hold position)
-    .to(ball, {
-      x: '50vw',
-      y: '60vh',
-      duration: 3
-    }, 7.8)
-    // 5. Second Jump: Center-Bottom again before exit
-    .to(ball, {
-      x: '50vw',
-      y: '85vh',
-      ease: 'back.in(2)',
-      duration: 2.5
-    }, 10.8)
-    // 6. Final Dramatic Jump exit to Left (Horizontal)
-    .to(ball, {
-      x: '-120vw',
-      y: '40vh',
-      rotation: 720,
-      ease: 'power2.in',
-      duration: 3
-    }, 13.3);
-
-  }, [introComplete]);
 
   useEffect(() => {
     const handleManualNav = () => {
@@ -427,22 +383,6 @@ const Index = () => {
       <Navbar />
 
       <main>
-        <div
-          ref={ballRef}
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: 'auto',
-            height: 'auto',
-            zIndex: 10,
-            pointerEvents: 'auto',
-            perspective: '1000px',
-          }}
-        >
-          <IconCloud slugs={skillSlugs} />
-        </div>
-
         {/* ── #hero ────────────────────────────────────────────── */}
       <section
         id="hero"
@@ -671,13 +611,16 @@ const Index = () => {
       </section>
 
       {/* ── #skills ──────────────────────────────────────────── */}
-      <section id="skills" style={{ position: 'relative', zIndex: 2, padding: '3rem 1.5rem 4rem' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <SectionHeader kicker="Skills & Technologies" lead="Tools I use" accent="every day." />
-
-          {/* Increased height to give the ball more space to be centered and rotate */}
-          <div style={{ height: '100vh' }} />
+      <section id="skills" style={{ position: 'relative', zIndex: 2, padding: '5rem 0 6rem' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 1.5rem' }}>
+          <SectionHeader
+            kicker="Technical Stack"
+            lead="Tools I use"
+            accent="every day."
+            subtitle="A curated collection of technologies and frameworks I leverage to build scalable, high-performance enterprise systems."
+          />
         </div>
+        <SkillsMarquee />
       </section>
 
       {/* ── #projects ────────────────────────────────────────── */}
