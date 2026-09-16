@@ -4,6 +4,7 @@ import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 import Index from "./pages/Index";
 
@@ -58,6 +59,7 @@ const App = () => {
         </div>
       </div>
       <Analytics />
+      <SpeedInsights />
     </Router>
   );
 };
