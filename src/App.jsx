@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Analytics } from '@vercel/analytics/react';
 
 import Index from "./pages/Index";
 
@@ -56,6 +57,7 @@ const App = () => {
           </Routes>
         </div>
       </div>
+      <Analytics />
     </Router>
   );
 };
