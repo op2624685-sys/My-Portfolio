@@ -12,6 +12,15 @@ import {
   Calendar,
   Code2,
   Layers,
+  Cloud,
+  GitBranch,
+  Activity,
+  FlaskConical,
+  Database,
+  Server,
+  Cpu,
+  Wrench,
+  MoveDiagonal,
 } from 'lucide-react';
 import Navbar from '../component/Navbar';
 import JavaMain from '../component/JavaMain';
@@ -20,7 +29,12 @@ import GlitchTextRotation from '../component/GlitchTextRotation';
 import SkillsMarquee from '../component/SkillsMarquee';
 import ProjectsSection from '../component/ProjectsSection';
 import ViewAllProjectsButton from '../component/ViewAllProjectsButton';
+import ProfileCard from '../component/ProfileCard';
+import ExpertiseGrid from '../component/ExpertiseGrid';
+import ExperienceTimeline from '../component/ExperienceTimeline';
+import ValuesGrid from '../component/ValuesGrid';
 import { useLocation, useNavigate } from 'react-router-dom';
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -110,7 +124,7 @@ function ParticleField() {
 }
 
 /* ─── Reusable section primitives ────────────────────────────── */
-const SectionHeader = ({ kicker, lead, accent, subtitle, tag: Tag = 'h2' }) => (
+const SectionHeader = ({ kicker, lead, accent, subtitle, tag: Tag = 'h2', fontSize = 'clamp(2.8rem, 6vw, 4.5rem)' }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
@@ -150,7 +164,7 @@ const SectionHeader = ({ kicker, lead, accent, subtitle, tag: Tag = 'h2' }) => (
     <Tag
       className="font-display"
       style={{
-        fontSize: 'clamp(2.8rem, 6vw, 4.5rem)',
+        fontSize: fontSize,
         fontWeight: 700,
         letterSpacing: '-0.04em',
         lineHeight: 1.1,
@@ -232,6 +246,149 @@ const socialLinks = [
   { name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/in/op2624685-sys/' },
   { name: 'Email',    icon: Mail,     url: 'mailto:op2624685@gmail.com' },
 ];
+
+const PROFILE_DATA = {
+  image: '/profile/profilePic.jpeg',
+  name: 'Om Prakash',
+  role: 'Java Developer',
+  focus: 'Backend Systems',
+  location: 'India',
+  status: 'Open to opportunities',
+  year: '2026',
+  bio: 'I build reliable, well-structured backend systems with Java — from clean object-oriented architecture to REST APIs that hold up under real-world load. I care about code that\'s easy to read a year later, not just code that works today, and I enjoy the discipline of getting the fundamentals right: solid data structures, sensible design patterns, and systems that scale without surprises.',
+  stats: [
+    { label: 'Projects Built', value: '10', suffix: '+' },
+    { label: 'Core Language', value: 'Java', suffix: '.' },
+    { label: 'Years Coding', value: '3', suffix: '+' },
+    { label: 'Commitment', value: '100', suffix: '%' },
+  ],
+  socialLinks: socialLinks,
+};
+
+const TECHNICAL_EXPERTISE = [
+  {
+    id: 'core-java',
+    title: 'Core Java',
+    icon: 'J',
+    description: 'Strong grip on OOP principles, collections, multithreading, and exception handling.',
+    tags: ['OOP', 'Collections', 'Multithreading'],
+    accent: 'emerald',
+    Icon: Cpu,
+  },
+  {
+    id: 'backend-frameworks',
+    title: 'Backend Frameworks',
+    icon: 'SB',
+    description: 'Building REST APIs and services with Spring Boot, following clean layered architecture.',
+    tags: ['Spring Boot', 'REST APIs', 'Hibernate'],
+    accent: 'cyan',
+    Icon: Server,
+  },
+  {
+    id: 'databases',
+    title: 'Databases',
+    icon: 'DB',
+    description: 'Designing schemas and writing efficient queries across relational & document databases.',
+    tags: ['MySQL', 'PostgreSQL', 'MongoDB', 'JDBC'],
+    accent: 'violet',
+    Icon: Database,
+  },
+  {
+    id: 'dsa',
+    title: 'Data Structures & Algorithms',
+    icon: 'DS',
+    description: 'Solid problem-solving fundamentals — the backbone of writing performant Java code.',
+    tags: ['DSA', 'Problem Solving'],
+    accent: 'amber',
+    Icon: Wrench,
+  },
+  {
+    id: 'tools-workflow',
+    title: 'Tools & Workflow',
+    icon: 'GT',
+    description: 'Comfortable across the everyday developer toolchain and version control.',
+    tags: ['Git', 'Maven', 'Postman'],
+    accent: 'teal',
+    Icon: GitBranch,
+  },
+  {
+    id: 'system-design',
+    title: 'System Design',
+    icon: 'CS',
+    description: 'Understanding how to structure applications that stay maintainable as they grow.',
+    tags: ['Design Patterns', 'Scalability'],
+    accent: 'rose',
+    Icon: MoveDiagonal,
+  },
+  {
+    id: 'cloud-deployment',
+    title: 'Cloud Deployment',
+    icon: 'AWS',
+    description: 'Deploying and managing scalable applications on AWS with infrastructure as code.',
+    tags: ['AWS EC2', 'AWS S3', 'AWS IAM', 'VPC'],
+    accent: 'orange',
+    Icon: Cloud,
+  },
+  {
+    id: 'ci-cd',
+    title: 'CI/CD',
+    icon: 'CI',
+    description: 'Automating build, test, and deployment pipelines for reliable software delivery.',
+    tags: ['GitHub Actions', 'Workflows', 'Secrets Mgmt'],
+    accent: 'indigo',
+    Icon: GitBranch,
+  },
+  {
+    id: 'monitoring',
+    title: 'Monitoring & Observability',
+    icon: 'MON',
+    description: 'Full-stack observability with metrics, logs, traces, and alerting.',
+    tags: ['Grafana', 'Prometheus', 'Micrometer', 'OpenTelemetry', 'Spring Boot Actuator', 'Loki'],
+    accent: 'emerald',
+    Icon: Activity,
+  },
+  {
+    id: 'testing',
+    title: 'Testing',
+    icon: 'TST',
+    description: 'Comprehensive testing strategies ensuring code quality and reliability.',
+    tags: ['Unit Testing', 'Integration Testing', 'JUnit 5', 'Mockito', 'Postman'],
+    accent: 'pink',
+    Icon: FlaskConical,
+  },
+];
+
+const EXPERIENCE_DATA = [
+  {
+    period: '2025 — Present',
+    title: 'Java Developer',
+    org: 'Building backend systems & REST APIs',
+    desc: 'Working on server-side applications with Java and Spring Boot, focused on writing clean, testable, and scalable code for real production use cases.',
+    isCurrent: true,
+  },
+  {
+    period: '2022 — 2025',
+    title: "Bachelor's Degree",
+    org: 'Computer Science / IT',
+    desc: 'Built a strong foundation in programming, data structures, algorithms, and core computer science concepts.',
+    isCurrent: false,
+  },
+  {
+    period: '2022',
+    title: 'Started with Java',
+    org: 'Self-driven learning',
+    desc: 'Began learning Java from the ground up — syntax, OOP, and steadily moved toward building real backend projects.',
+    isCurrent: false,
+  },
+];
+
+const WORK_VALUES = [
+  { num: '01', title: 'Clean Code First', desc: 'Readable, well-structured code that the next developer — including future me — won\'t dread opening.' },
+  { num: '02', title: 'Strong Fundamentals', desc: 'No shortcuts on core concepts. A solid base makes everything built on top of it more reliable.' },
+  { num: '03', title: 'Always Learning', desc: 'Backend development moves fast — staying curious and upskilling is part of the job, not extra credit.' },
+  { num: '04', title: 'Ownership', desc: 'Treating every task like it matters, from a small bug fix to a full feature build.' },
+];
+
 
 /* ═══ HERO INDEX PAGE (single-page with sections) ════════════════ */
 const Index = () => {
@@ -637,197 +794,41 @@ const Index = () => {
 
       {/* ── #about ───────────────────────────────────────────── */}
       <section id="about" style={{ position: 'relative', zIndex: 2, padding: '3rem 1.5rem 4rem' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <SectionHeader kicker="The Engineer" lead="Architecting" accent="Digital Foundations." />
-          <p
-            style={{
-              textAlign: 'center',
-              color: 'var(--text-secondary)',
-              maxWidth: 540,
-              margin: '-2.5rem auto 4rem',
-              fontSize: '1.05rem',
-              lineHeight: 1.6,
-            }}
-          >
-            A passionate Java backend developer focused on scalable architecture and clean engineering.
-          </p>
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <SectionHeader
+            kicker="The Engineer"
+            lead="About"
+            accent="Me."
+            fontSize="clamp(2rem, 4vw, 3rem)"
+            subtitle="Building robust, scalable foundations through clean code and a disciplined approach to Java engineering."
+          />
 
-          <div
-            className="about-grid"
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'minmax(0, 320px) minmax(0, 1fr)',
-              gap: '1.5rem',
-            }}
-          >
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ amount: 0.3 }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="surface-card" style={{ padding: '2rem', textAlign: 'center' }}>
-                <div style={{ position: 'relative', display: 'inline-block', marginBottom: '1.5rem' }}>
-                  <div
-                    style={{
-                      width: 120,
-                      height: 120,
-                      borderRadius: '50%',
-                      padding: 3,
-                      background: 'linear-gradient(135deg, #ecfdf5 0%, #a7f3d0 50%, #10b981 100%)',
-                    }}
-                  >
-                    <img
-                      src={`${BASE_URL.replace(/\/$/, '')}/profile/profilePic.jpeg`}
-                      alt="Om Prakash"
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        borderRadius: '50%',
-                        objectFit: 'cover',
-                        border: '3px solid var(--bg-base)',
-                      }}
-                    />
-                  </div>
-                  <div
-                    style={{
-                      position: 'absolute',
-                      bottom: 4,
-                      right: 4,
-                      width: 18,
-                      height: 18,
-                      borderRadius: '50%',
-                      background: '#4ade80',
-                      border: '3px solid var(--bg-elev-1)',
-                      boxShadow: '0 0 12px rgba(74, 222, 128, 0.4)',
-                    }}
-                  />
-                </div>
+          <div className="flex flex-col gap-24">
+            <ProfileCard profileData={PROFILE_DATA} />
 
-                <h2 style={{ fontFamily: 'Fraunces, serif', fontSize: '1.4rem', fontWeight: 500, color: 'var(--text-primary)', margin: 0, marginBottom: '0.3rem', letterSpacing: '-0.015em' }}>
-                  Om Prakash
-                </h2>
-                <p style={{ color: 'var(--accent-soft)', fontSize: '0.85rem', fontWeight: 450, margin: 0, marginBottom: '1.5rem' }}>
-                  Java Backend Developer
-                </p>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginBottom: '1.5rem' }}>
-                  {stats.map((stat) => (
-                    <div
-                      key={stat.label}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.85rem',
-                        padding: '0.75rem 0.95rem',
-                        borderRadius: 12,
-                        background: 'rgba(255, 255, 255, 0.025)',
-                        border: '1px solid var(--border-subtle)',
-                        textAlign: 'left',
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: 32,
-                          height: 32,
-                          borderRadius: 8,
-                          background: 'rgba(16, 185, 129, 0.1)',
-                          display: 'grid',
-                          placeItems: 'center',
-                        }}
-                      >
-                        <stat.icon size={15} style={{ color: 'var(--accent)' }} />
-                      </div>
-                      <div>
-                        <div style={{ fontFamily: 'Fraunces, serif', fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.1 }}>
-                          {stat.value}
-                        </div>
-                        <div style={{ fontSize: '0.74rem', color: 'var(--text-tertiary)' }}>{stat.label}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem' }}>
-                  {socialLinks.map((link) => (
-                    <motion.a
-                      key={link.name}
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ y: -2 }}
-                      aria-label={link.name}
-                      style={{
-                        width: 40,
-                        height: 40,
-                        borderRadius: 10,
-                        background: 'rgba(255, 255, 255, 0.03)',
-                        border: '1px solid var(--border-default)',
-                        display: 'grid',
-                        placeItems: 'center',
-                        color: 'var(--text-secondary)',
-                        textDecoration: 'none',
-                      }}
-                    >
-                      <link.icon size={16} />
-                    </motion.a>
-                  ))}
-                </div>
+            <div className="flex flex-col gap-12">
+              <div className="flex items-baseline justify-between gap-4">
+                <h2 className="text-3xl font-bold text-gray-100 tracking-tight">Technical Expertise</h2>
+                <span className="font-mono text-xs text-gray-500 uppercase whitespace-nowrap">01 / core stack</span>
               </div>
-            </motion.div>
+              <ExpertiseGrid skills={TECHNICAL_EXPERTISE} />
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ amount: 0.1 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}
-            >
-              <div className="surface-card" style={{ padding: '2rem' }}>
-                <h3 style={{ fontSize: '1.05rem', fontWeight: 550, color: 'var(--text-primary)', margin: 0, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.6rem', letterSpacing: '-0.01em' }}>
-                  <span style={{ width: 3, height: 16, borderRadius: 2, background: 'linear-gradient(180deg, #a7f3d0, #10b981)' }} />
-                  Overview
-                </h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.65, fontSize: '0.95rem' }}>
-                  <p style={{ margin: 0 }}>Hello! I'm Om Prakash, a passionate Java backend developer with over 3 years of experience building robust and scalable server-side applications. I specialize in crafting efficient RESTful APIs, microservices architectures, and enterprise-level solutions.</p>
-                  <p style={{ margin: 0 }}>My journey started with a fascination for solving complex problems, and has grown into a career focused on backend technologies. I work extensively across the Spring ecosystem — Spring Boot, Spring Security, and Spring Data JPA.</p>
-                  <p style={{ margin: 0 }}>I'm particularly interested in system design, performance optimization, and applying best practices in software architecture.</p>
-                </div>
+            <div className="flex flex-col gap-12">
+              <div className="flex items-baseline justify-between gap-4">
+                <h2 className="text-3xl font-bold text-gray-100 tracking-tight">Experience & Education</h2>
+                <span className="font-mono text-xs text-gray-500 uppercase whitespace-nowrap">02 / timeline</span>
               </div>
+              <ExperienceTimeline experiences={EXPERIENCE_DATA} />
+            </div>
 
-              <div className="surface-card" style={{ padding: '2rem' }}>
-                <h3 style={{ fontSize: '1.05rem', fontWeight: 550, color: 'var(--text-primary)', margin: 0, marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.6rem', letterSpacing: '-0.01em' }}>
-                  <span style={{ width: 3, height: 16, borderRadius: 2, background: 'linear-gradient(180deg, #a7f3d0, #10b981)' }} />
-                  What I Do
-                </h3>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '0.75rem' }}>
-                  {services.map((item, idx) => (
-                    <motion.div
-                      key={item.title}
-                      initial={{ opacity: 0, y: 12 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ amount: 0.3 }}
-                      transition={{ delay: idx * 0.05, duration: 0.4 }}
-                      style={{
-                        padding: '1rem',
-                        borderRadius: 12,
-                        background: 'rgba(255, 255, 255, 0.02)',
-                        border: '1px solid var(--border-subtle)',
-                        cursor: 'default',
-                      }}
-                    >
-                      <div style={{ width: 28, height: 28, borderRadius: 8, background: 'rgba(16, 185, 129, 0.1)', display: 'grid', placeItems: 'center', marginBottom: '0.6rem' }}>
-                        <Sparkles size={13} style={{ color: 'var(--accent)' }} />
-                      </div>
-                      <h4 style={{ fontSize: '0.92rem', fontWeight: 550, color: 'var(--text-primary)', margin: 0, marginBottom: '0.25rem', letterSpacing: '-0.005em' }}>
-                        {item.title}
-                      </h4>
-                      <p style={{ fontSize: '0.82rem', color: 'var(--text-tertiary)', lineHeight: 1.5, margin: 0 }}>{item.desc}</p>
-                    </motion.div>
-                  ))}
-                </div>
+            <div className="flex flex-col gap-12">
+              <div className="flex items-baseline justify-between gap-4">
+                <h2 className="text-3xl font-bold text-gray-100 tracking-tight">How I Work</h2>
+                <span className="font-mono text-xs text-gray-500 uppercase whitespace-nowrap">03 / principles</span>
               </div>
-            </motion.div>
+              <ValuesGrid values={WORK_VALUES} />
+            </div>
           </div>
         </div>
       </section>
