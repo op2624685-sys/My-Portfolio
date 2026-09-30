@@ -21,6 +21,14 @@ import {
   Cpu,
   Wrench,
   MoveDiagonal,
+  Shield,
+  ListChecks,
+  BarChart3,
+  MessageSquare,
+  Search,
+  Layout,
+  CheckCircle2,
+  RefreshCw,
 } from 'lucide-react';
 import Navbar from '../component/Navbar';
 import JavaMain from '../component/JavaMain';
@@ -383,10 +391,78 @@ const EXPERIENCE_DATA = [
 ];
 
 const WORK_VALUES = [
-  { num: '01', title: 'Clean Code First', desc: 'Readable, well-structured code that the next developer — including future me — won\'t dread opening.' },
-  { num: '02', title: 'Strong Fundamentals', desc: 'No shortcuts on core concepts. A solid base makes everything built on top of it more reliable.' },
-  { num: '03', title: 'Always Learning', desc: 'Backend development moves fast — staying curious and upskilling is part of the job, not extra credit.' },
-  { num: '04', title: 'Ownership', desc: 'Treating every task like it matters, from a small bug fix to a full feature build.' },
+  {
+    id: 'requirement-analysis',
+    title: 'Understand the Problem',
+    Icon: MessageSquare,
+    accent: 'emerald',
+    badge: 'Step 1',
+    tags: ['Stakeholder Talk', 'User Stories', 'Scope'],
+    desc: 'Pehle problem ko properly samajhna — stakeholders se requirements collect karna, user needs ko understand karna, aur clear acceptance criteria define karna. Bina sahi problem ke solution impossible hai.'
+  },
+  {
+    id: 'edge-case-analysis',
+    title: 'Edge Case Discovery',
+    Icon: Search,
+    accent: 'cyan',
+    badge: 'Step 2',
+    tags: ['Corner Cases', 'Failure Scenarios', 'Risk Assessment'],
+    desc: 'Normal flow ke alawa sabhi edge cases, invalid inputs, network failures, aur rare scenarios ko identify karna. Har possible failure point ko pehle hi map karna.'
+  },
+  {
+    id: 'solution-design',
+    title: 'Solution Architecture',
+    Icon: Layout,
+    accent: 'violet',
+    badge: 'Step 3',
+    tags: ['Data Modeling', 'API Design', 'Trade-offs'],
+    desc: 'Sabse efficient solution ka design banana — database schema, API endpoints, system architecture, aur multiple approaches ka trade-off analysis karna. Simple aur scalable design choose karna.'
+  },
+  {
+    id: 'implementation',
+    title: 'Clean Implementation',
+    Icon: Code2,
+    accent: 'amber',
+    badge: 'Step 4',
+    tags: ['Modular Code', 'DRY', 'Clean Code'],
+    desc: 'Design ko clean, modular aur maintainable code mein implement karna — reusable components, clear naming, proper error handling, aur no duplicated logic.'
+  },
+  {
+    id: 'testing-validation',
+    title: 'Test & Validate',
+    Icon: CheckCircle2,
+    accent: 'rose',
+    badge: 'Step 5',
+    tags: ['Unit Tests', 'Edge Cases', 'E2E Scenarios'],
+    desc: 'Implementation ko test karna — unit tests, edge case scenarios, aur real-world usage simulate karna. Har scenario verify karna ki solution actually kaam kar raha hai.'
+  },
+  {
+    id: 'code-review',
+    title: 'Review & Optimize',
+    Icon: Layers,
+    accent: 'orange',
+    badge: 'Step 6',
+    tags: ['Code Review', 'Refactoring', 'Performance'],
+    desc: 'Code ko self-review aur peer review se pass karna — performance bottlenecks identify karna, unnecessary complexity remove karna, aur code quality continuously improve karna.'
+  },
+  {
+    id: 'deployment-monitoring',
+    title: 'Deploy & Monitor',
+    Icon: Cloud,
+    accent: 'indigo',
+    badge: 'Step 7',
+    tags: ['CI/CD', 'Logs', 'Metrics'],
+    desc: 'Solution ko production mein deploy karna aur usko monitor karna — build pipelines, automated testing, error tracking, aur performance metrics ke through real-time validation.'
+  },
+  {
+    id: 'maintenance-iteration',
+    title: 'Maintain & Iterate',
+    Icon: RefreshCw,
+    accent: 'teal',
+    badge: 'Step 8',
+    tags: ['Feedback', 'Tech Debt', 'Continuous Improvement'],
+    desc: 'Deployment ke baad bhi kaam nahi rukta — user feedback collect karna, bugs fix karna, tech debt manage karna, aur solution ko continuously improve karna.'
+  },
 ];
 
 
