@@ -160,17 +160,6 @@ const ValuesGrid = ({ values }) => {
             <div className="absolute top-0 left-0 w-full h-0.5 opacity-60"
               style={{ background: `linear-gradient(90deg, ${accent.accent}, transparent 60%)` }} />
 
-            {/* Step number indicator */}
-            <div className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center font-mono text-[11px] font-bold"
-              style={{
-                background: accent.iconBg,
-                border: `1px solid ${accent.iconBorder}`,
-                color: accent.text
-              }}
-            >
-              {idx + 1}
-            </div>
-
             <div className="relative z-10">
               {/* Icon + Badge row */}
               <div className="flex items-center justify-between mb-5">

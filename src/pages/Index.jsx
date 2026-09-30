@@ -4,8 +4,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
 import {
   ChevronDown,
-  ArrowUpRight,
-  Sparkles,
+  ArrowRight,
+  ExternalLink,
   Github,
   Linkedin,
   Mail,
@@ -29,11 +29,13 @@ import {
   Layout,
   CheckCircle2,
   RefreshCw,
+  Leaf,
+  Boxes,
+  Coffee,
 } from 'lucide-react';
 import Navbar from '../component/Navbar';
 import JavaMain from '../component/JavaMain';
 import AmbientBackdrop from '../component/AmbientBackdrop';
-import GlitchTextRotation from '../component/GlitchTextRotation';
 import SkillsMarquee from '../component/SkillsMarquee';
 import ProjectsSection from '../component/ProjectsSection';
 import ViewAllProjectsButton from '../component/ViewAllProjectsButton';
@@ -606,7 +608,12 @@ const Index = () => {
     // This effect is now disabled to prevent automatic snapping during scroll-spy updates.
   }, [location.pathname]);
 
-  const techs = [{ label: 'Spring Boot' }, { label: 'Microservices' }, { label: 'REST APIs' }, { label: 'Java' }];
+  const techs = [
+    { label: 'Spring Boot', icon: Leaf },
+    { label: 'Microservices', icon: Boxes },
+    { label: 'REST APIs', icon: Cloud },
+    { label: 'Java', icon: Coffee },
+  ];
 
   return (
     <>
@@ -620,226 +627,93 @@ const Index = () => {
       <section
         id="hero"
         className="portfolio-hero"
-        style={{
-          minHeight: '100vh',
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          padding: '7rem 1.5rem 2rem',
-          position: 'relative',
-          zIndex: 2,
-          maxWidth: '100%',
-          margin: 0,
-        }}
       >
         <div
           ref={heroRef}
           className="hero-content"
-          style={{
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '1rem',
-            textAlign: 'center',
-          }}
         >
-          {/* 1. Centered Role Header - Now a subtle kicker */}
           <motion.div
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="gs hero-role"
-            style={{
-              fontSize: '0.75rem',
-              fontFamily: "'JetBrains Mono', monospace",
-              color: 'rgba(240, 243, 250, 0.6)',
-              marginBottom: '0.25rem',
-              fontWeight: 500,
-              letterSpacing: '0.3em',
-              textTransform: 'uppercase',
-            }}
           >
             &lt; JAVA BACKEND ENGINEER &amp; FULL STACK DEVELOPER /&gt;
           </motion.div>
 
-          {/* 2. Massive Bold Name - Contact Section Style */}
           <motion.h1
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, y: 16 }}
+            animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="gs font-syne hero-name"
-            style={{
-              fontWeight: 900,
-              letterSpacing: '-0.06em',
-              lineHeight: 0.8,
-              margin: '0 0 0.5rem 0',
-              textTransform: 'uppercase',
-              background: 'linear-gradient(180deg, #c8c8c8 0%, #ffffff 35%, #d0d0d0 60%, #888 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.3))',
-            }}
+            className="gs hero-name"
           >
-            OM PRAKASH.
+            <span>OM</span>
+            <span>PRAKASH<span className="hero-name-dot">.</span></span>
           </motion.h1>
 
-          {/* 3. The Statement - Centered and High Impact */}
-          <div className="hero-main" style={{ width: '100%', maxWidth: 900 }}>
+          <div className="hero-main">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: 0.4 }}
               className="gs"
             >
-              <h2
-                className="font-display hero-title"
-                style={{
-                  fontSize: 'clamp(2rem, 6vw, 4.5rem)',
-                  fontWeight: 700,
-                  letterSpacing: '-0.03em',
-                  lineHeight: 1.1,
-                  margin: '0 0 0.5rem 0',
-                }}
-              >
-                <span className="text-gradient-emerald">BUILDING SCALABLE</span> <br />
-                <span className="inline-block mt-2">
-                  <GlitchTextRotation size="lg" align="center" />
-                </span>
+              <h2 className="hero-title">
+                <span>I BUILD SCALABLE</span>
+                <strong>BACKEND SYSTEMS</strong>
               </h2>
+              <p className="hero-description">
+                I build scalable Spring Boot microservices, REST APIs, and cloud-ready backend systems with performance, security, and clean architecture in mind.
+              </p>
             </motion.div>
 
-            {/* Action Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: 0.5 }}
               className="gs hero-actions"
-              style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '0.5rem' }}
             >
               <a
                 href="/projects"
                 className="btn-primary"
-                style={{ padding: '0.8rem 2rem', fontSize: '0.95rem', fontWeight: 600 }}
                 onClick={(e) => {
                   e.preventDefault();
                   navigate('/projects');
                   document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' });
                 }}
               >
+                <ExternalLink size={16} strokeWidth={2} />
                 Explore Projects
-                <ArrowUpRight size={18} strokeWidth={2.25} />
+                <ArrowRight size={16} strokeWidth={2.25} />
               </a>
               <a
                 href="/contact"
                 className="btn-ghost"
-                style={{ padding: '0.8rem 2rem', fontSize: '0.95rem', fontWeight: 600 }}
                 onClick={(e) => {
                   e.preventDefault();
                   navigate('/contact');
                   document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
                 }}
               >
+                <Mail size={16} strokeWidth={2} />
                 Get In Touch
               </a>
             </motion.div>
 
-            {/* Tech Badges - More spaced and cleaner */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: 0.6 }}
               className="gs hero-tech-list"
-              style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem', justifyContent: 'center' }}
             >
               {techs.map((tech) => (
-                <span
-                  key={tech.label}
-                  className="hero-tech-pill"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    padding: '0.5rem 1.2rem',
-                    background: 'rgba(0, 0, 0, 0.6)',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    borderRadius: 999,
-                    fontSize: '0.8rem',
-                    color: 'var(--text-secondary)',
-                    fontWeight: 500,
-                    transition: 'all 0.3s var(--ease-out)',
-                    cursor: 'default',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(16, 185, 129, 0.15)';
-                    e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.5)';
-                    e.currentTarget.style.color = '#ffffff';
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(0, 0, 0, 0.6)';
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-                    e.currentTarget.style.color = 'var(--text-secondary)';
-                    e.currentTarget.style.transform = 'translateY(0)';
-                  }}
-                >
-                  <Sparkles size={12} style={{ color: 'var(--accent)' }} />
+                <span key={tech.label} className="hero-tech-pill">
+                  <tech.icon size={14} strokeWidth={1.8} />
                   {tech.label}
                 </span>
               ))}
             </motion.div>
           </div>
-
-          {/* 4. Premium Overview Card - High-End Statement Look */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
-            className="gs hero-bio"
-            style={{
-              maxWidth: '900px',
-              width: '100%',
-              margin: '0.5rem auto 0',
-              position: 'relative',
-              padding: '2rem',
-              borderRadius: '24px',
-              background: 'linear-gradient(145deg, rgba(20, 20, 26, 0.7) 0%, rgba(10, 10, 12, 0.8) 100%)',
-              backdropFilter: 'blur(24px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(24px) saturate(180%)',
-              border: '1px solid rgba(255, 255, 255, 0.08)',
-              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.1)',
-              textAlign: 'center',
-              overflow: 'hidden',
-            }}
-          >
-            {/* Subtle Top Accent Line */}
-            <div style={{
-              position: 'absolute',
-              top: 0,
-              left: '50%',
-              transform: 'translateX(-50%)',
-              width: '60px',
-              height: '3px',
-              background: 'linear-gradient(90deg, transparent, #10b981, transparent)',
-              opacity: 0.6,
-            }} />
-
-            <p
-              style={{
-                fontSize: 'clamp(1rem, 2.2vw, 1.15rem)',
-                color: 'rgba(240, 243, 250, 0.85)',
-                fontWeight: 400,
-                lineHeight: 1.7,
-                margin: 0,
-                letterSpacing: '-0.01em',
-              }}
-            >
-              I build scalable <span style={{ color: '#ffffff', fontWeight: 600, textShadow: '0 0 20px rgba(16, 185, 129, 0.3)' }}>Spring Boot microservices</span>, REST APIs, and cloud-ready backend systems with performance, security, and clean architecture in mind.
-            </p>
-          </motion.div>
         </div>
       </section>
 
@@ -1325,6 +1199,281 @@ const Index = () => {
 
           .hero-actions a {
             white-space: nowrap !important;
+          }
+        }
+
+        .portfolio-hero {
+          position: relative;
+          z-index: 2;
+          isolation: isolate;
+          min-height: 100svh;
+          display: flex;
+          align-items: flex-start;
+          padding: clamp(7.5rem, 15vh, 10.5rem) clamp(2.5rem, 5vw, 5.5rem) 3rem;
+        }
+
+        .hero-content {
+          width: min(100%, 610px);
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          text-align: left;
+        }
+
+        .hero-role {
+          margin: 0 0 1.6rem;
+          color: rgba(220, 231, 244, 0.78);
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 0.72rem;
+          font-weight: 500;
+          letter-spacing: 0.12em;
+          line-height: 1.45;
+        }
+
+        .hero-name {
+          display: flex;
+          flex-direction: column;
+          margin: 0 0 2.6rem;
+          font-family: 'Syne', sans-serif;
+          font-size: clamp(3.8rem, 6.6vw, 6.6rem);
+          font-weight: 800;
+          letter-spacing: -0.04em;
+          line-height: 0.78;
+          text-transform: uppercase;
+          background: linear-gradient(180deg, #c8c8c8 0%, #ffffff 35%, #d0d0d0 60%, #888888 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.38));
+        }
+
+        .hero-name-dot {
+          color: #14e1ce;
+          -webkit-text-fill-color: #14e1ce;
+        }
+
+        .hero-main {
+          width: 100%;
+        }
+
+        .hero-title {
+          display: flex;
+          flex-direction: column;
+          gap: 0.2rem;
+          margin: 0;
+          color: #e4eaf4;
+          font-family: 'Space Grotesk', sans-serif;
+          font-size: clamp(1.75rem, 3vw, 2.85rem);
+          font-weight: 600;
+          letter-spacing: 0;
+          line-height: 1.02;
+        }
+
+        .hero-title strong {
+          color: #14dfcf;
+          font-size: 1.26em;
+          font-weight: 700;
+          text-shadow: 0 0 24px rgba(20, 223, 207, 0.2);
+        }
+
+        .hero-description {
+          max-width: 480px;
+          margin: 1.25rem 0 1.8rem;
+          color: rgba(226, 234, 244, 0.82);
+          font-size: 0.82rem;
+          font-weight: 400;
+          letter-spacing: 0;
+          line-height: 1.55;
+        }
+
+        .hero-actions {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 1rem;
+          margin-bottom: 1.6rem;
+        }
+
+        .hero-actions a {
+          min-height: 44px;
+          padding: 0.7rem 1.35rem;
+          font-family: 'Plus Jakarta Sans', sans-serif;
+          font-size: 0.76rem;
+          font-weight: 600;
+        }
+
+        .hero-actions .btn-primary {
+          color: #ecfffc;
+          background: linear-gradient(135deg, #12dfca 0%, #00ac9d 100%);
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32), 0 8px 24px rgba(0, 217, 194, 0.26);
+        }
+
+        .hero-actions .btn-ghost {
+          color: #e7edf5;
+          background: rgba(4, 12, 19, 0.3);
+          border-color: rgba(197, 217, 233, 0.52);
+        }
+
+        .hero-tech-list {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.65rem;
+        }
+
+        .hero-tech-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.45rem;
+          min-height: 34px;
+          padding: 0.42rem 0.95rem;
+          color: rgba(235, 242, 249, 0.88);
+          background: rgba(3, 12, 18, 0.42);
+          border: 1px solid rgba(163, 192, 214, 0.28);
+          border-radius: 999px;
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          font-size: 0.68rem;
+          font-weight: 500;
+          line-height: 1;
+        }
+
+        .hero-tech-pill svg {
+          color: #12ddcb;
+        }
+
+        @media (min-width: 821px) {
+          .hero-role {
+            margin-bottom: 2rem;
+            font-size: 0.82rem;
+            line-height: 1.55;
+          }
+
+          .hero-name {
+            margin-bottom: 3rem;
+            font-size: clamp(4.3rem, 6.9vw, 6.9rem);
+            line-height: 0.9;
+          }
+
+          .hero-title {
+            gap: 0.28rem;
+            font-size: clamp(2.15rem, 3.65vw, 3.5rem);
+            line-height: 1.08;
+          }
+
+          .hero-title strong {
+            white-space: nowrap;
+          }
+
+          .hero-description {
+            max-width: 525px;
+            margin: 1.4rem 0 2rem;
+            font-size: 0.92rem;
+            line-height: 1.65;
+          }
+
+          .hero-actions {
+            gap: 1.1rem;
+            margin-bottom: 1.8rem;
+          }
+
+          .hero-actions a {
+            min-height: 48px;
+            padding: 0.78rem 1.5rem;
+            font-size: 0.84rem;
+          }
+
+          .hero-tech-list {
+            gap: 0.72rem;
+          }
+
+          .hero-tech-pill {
+            min-height: 38px;
+            padding: 0.48rem 1.05rem;
+            font-size: 0.75rem;
+          }
+        }
+
+        @media (max-width: 820px) {
+          .portfolio-hero {
+            min-height: 100svh !important;
+            padding: 6.65rem 1.2rem 2.6rem !important;
+          }
+
+          .hero-content {
+            width: min(100%, 390px) !important;
+            gap: 0 !important;
+          }
+
+          .hero-role {
+            margin-bottom: 1rem !important;
+            font-size: 0.58rem !important;
+            letter-spacing: 0.095em !important;
+            line-height: 1.45 !important;
+          }
+
+          .hero-name {
+            margin-bottom: 1.35rem !important;
+            font-size: clamp(2.75rem, 13vw, 4.1rem) !important;
+            letter-spacing: -0.04em !important;
+            line-height: 0.78 !important;
+            text-align: left !important;
+          }
+
+          .hero-main {
+            margin-top: 0 !important;
+          }
+
+          .hero-title {
+            gap: 0.14rem;
+            font-size: clamp(1.35rem, 6.6vw, 2rem) !important;
+            line-height: 1.04 !important;
+            letter-spacing: 0 !important;
+            margin-bottom: 0 !important;
+          }
+
+          .hero-description {
+            max-width: 315px;
+            margin: 0.9rem 0 1.25rem !important;
+            font-size: 0.69rem !important;
+            line-height: 1.52 !important;
+          }
+
+          .hero-actions {
+            flex-wrap: nowrap !important;
+            justify-content: flex-start !important;
+            gap: 0.65rem !important;
+            margin-bottom: 1.1rem !important;
+          }
+
+          .hero-actions a {
+            min-height: 37px !important;
+            padding: 0.5rem 0.78rem !important;
+            font-size: 0.62rem !important;
+            gap: 0.38rem !important;
+            white-space: nowrap !important;
+          }
+
+          .hero-actions svg {
+            width: 12px !important;
+            height: 12px !important;
+          }
+
+          .hero-tech-list {
+            max-width: 360px !important;
+            gap: 0.42rem !important;
+            margin: 0 !important;
+          }
+
+          .hero-tech-pill {
+            min-height: 28px;
+            padding: 0.34rem 0.52rem !important;
+            gap: 0.3rem !important;
+            font-size: 0.56rem !important;
+          }
+
+          .hero-tech-pill svg {
+            width: 10px !important;
+            height: 10px !important;
           }
         }
       `}</style>
