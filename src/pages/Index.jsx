@@ -1405,17 +1405,17 @@ const Index = () => {
           }
 
           .hero-role {
-            margin-bottom: 1rem !important;
-            font-size: 0.58rem !important;
+            margin-bottom: 1.15rem !important;
+            font-size: 0.68rem !important;
             letter-spacing: 0.095em !important;
-            line-height: 1.45 !important;
+            line-height: 1.5 !important;
           }
 
           .hero-name {
-            margin-bottom: 1.35rem !important;
-            font-size: clamp(2.75rem, 13vw, 4.1rem) !important;
+            margin-bottom: 1.55rem !important;
+            font-size: clamp(3rem, 14.5vw, 4.4rem) !important;
             letter-spacing: -0.04em !important;
-            line-height: 0.78 !important;
+            line-height: 0.88 !important;
             text-align: left !important;
           }
 
@@ -1424,56 +1424,61 @@ const Index = () => {
           }
 
           .hero-title {
-            gap: 0.14rem;
-            font-size: clamp(1.35rem, 6.6vw, 2rem) !important;
-            line-height: 1.04 !important;
+            gap: 0.2rem;
+            font-size: clamp(1.5rem, 7.3vw, 2.2rem) !important;
+            line-height: 1.08 !important;
             letter-spacing: 0 !important;
             margin-bottom: 0 !important;
           }
 
           .hero-description {
-            max-width: 315px;
-            margin: 0.9rem 0 1.25rem !important;
-            font-size: 0.69rem !important;
-            line-height: 1.52 !important;
+            max-width: 340px;
+            margin: 1.05rem 0 1.45rem !important;
+            font-size: 0.78rem !important;
+            line-height: 1.58 !important;
           }
 
           .hero-actions {
             flex-wrap: nowrap !important;
             justify-content: flex-start !important;
-            gap: 0.65rem !important;
-            margin-bottom: 1.1rem !important;
+            gap: 0.72rem !important;
+            margin-bottom: 1.3rem !important;
           }
 
           .hero-actions a {
-            min-height: 37px !important;
-            padding: 0.5rem 0.78rem !important;
-            font-size: 0.62rem !important;
-            gap: 0.38rem !important;
+            min-height: 42px !important;
+            padding: 0.6rem 0.92rem !important;
+            font-size: 0.72rem !important;
+            gap: 0.45rem !important;
             white-space: nowrap !important;
           }
 
           .hero-actions svg {
-            width: 12px !important;
-            height: 12px !important;
+            width: 14px !important;
+            height: 14px !important;
           }
 
           .hero-tech-list {
-            max-width: 360px !important;
-            gap: 0.42rem !important;
-            margin: 0 !important;
+            width: calc(100vw - 1rem) !important;
+            max-width: none !important;
+            flex-wrap: nowrap !important;
+            gap: 0.35rem !important;
+            margin: 0 0 0 -0.25rem !important;
           }
 
           .hero-tech-pill {
-            min-height: 28px;
-            padding: 0.34rem 0.52rem !important;
-            gap: 0.3rem !important;
-            font-size: 0.56rem !important;
+            min-height: 32px;
+            flex-shrink: 0;
+            padding: 0.4rem 0.64rem !important;
+            gap: 0.35rem !important;
+            font-size: 0.64rem !important;
+            white-space: nowrap;
           }
 
           .hero-tech-pill svg {
-            width: 10px !important;
-            height: 10px !important;
+            width: 12px !important;
+            height: 12px !important;
+            flex-shrink: 0;
           }
         }
       `}</style>
