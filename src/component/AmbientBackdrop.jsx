@@ -34,8 +34,9 @@ export default function AmbientBackdrop() {
         @media (max-width: 820px) {
           .ambient-backdrop {
             background-image: linear-gradient(rgba(2, 8, 13, 0.46), rgba(2, 8, 13, 0.66)), var(--mobile-background);
-            background-position: center top;
-            background-size: 100% auto;
+            min-height: 100dvh;
+            background-position: center center;
+            background-size: cover;
             background-color: #02080d;
           }
         }
