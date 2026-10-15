@@ -23,12 +23,13 @@ export default function AmbientBackdrop() {
         .ambient-backdrop {
           position: fixed;
           inset: 0;
-          z-index: 0;
+          z-index: -1;
           pointer-events: none;
           background-image: linear-gradient(rgba(2, 8, 13, 0.58), rgba(2, 8, 13, 0.7)), var(--desktop-background);
           background-position: center;
           background-size: cover;
           background-repeat: no-repeat;
+          background-color: #02080d;
         }
 
         @media (max-width: 820px) {

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
@@ -43,7 +44,7 @@ import ProfileCard from '../component/ProfileCard';
 import ExpertiseGrid from '../component/ExpertiseGrid';
 import ExperienceTimeline from '../component/ExperienceTimeline';
 import ValuesGrid from '../component/ValuesGrid';
-import { useLocation, useNavigate } from 'react-router-dom';
+import ContactForm from '../component/ContactForm';
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -787,91 +788,40 @@ const Index = () => {
       <section id="contact" style={{
         position: 'relative',
         zIndex: 2,
-        padding: '8rem 1.5rem 4rem',
+        padding: '8rem 0.5rem 4rem',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        textAlign: 'center',
       }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          style={{ maxWidth: 900, width: '100%' }}
+          style={{ maxWidth: 1400, width: '100%' }}
         >
-          <h2
-            className="font-display contact-headline"
-            style={{
-              fontSize: 'clamp(52px, 10vw, 130px)',
-              fontWeight: 900,
-              lineHeight: 0.92,
-              letterSpacing: '-0.01em',
-              textTransform: 'uppercase',
-              margin: '0 0 44px 0',
-            }}
-          >
-            <span>Let's Build</span><br />
-            <span>Something Amazing</span>
-          </h2>
-
-          <a
-            href="mailto:op2624685@gmail.com"
-            className="btn-touch"
-            style={{
-              display: 'inline-block',
-              padding: '14px 36px',
-              borderRadius: '100px',
-              border: '1px solid rgba(255,255,255,0.3)',
-              background: 'rgba(255,255,255,0.1)',
-              color: '#ffffff',
-              fontSize: '11px',
-              fontWeight: 600,
-              letterSpacing: '0.14em',
-              textTransform: 'uppercase',
-              textDecoration: 'none',
-              cursor: 'pointer',
-              transition: 'all 0.2s',
-              marginBottom: '28px',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(255,255,255,0.2)';
-              e.currentTarget.style.color = '#ffffff';
-              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
-              e.currentTarget.style.color = '#ffffff';
-              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)';
-            }}
-          >
-            Get in Touch
-          </a>
-
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '28px' }}>
-            <a
-              href="mailto:op2624685@gmail.com"
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center w-full px-4">
+            <h2
+              className="font-display contact-headline text-center lg:text-left"
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                color: '#ffffff',
-                fontSize: '13px',
-                letterSpacing: '0.02em',
-                textDecoration: 'none',
-                transition: 'color 0.2s',
-                marginBottom: '28px',
-                fontWeight: 500,
+                fontSize: 'clamp(40px, 8vw, 110px)',
+                fontWeight: 900,
+                lineHeight: 0.92,
+                letterSpacing: '-0.02em',
+                textTransform: 'uppercase',
+                margin: '0 0 44px 0',
               }}
-              onMouseEnter={(e) => e.currentTarget.style.color = '#a7f3d0'}
-              onMouseLeave={(e) => e.currentTarget.style.color = '#ffffff'}
             >
-              <Mail size={14} style={{ opacity: 0.8, color: '#a7f3d0' }} />
-              op2624685@gmail.com
-            </a>
+              <span>Let's Build</span><br />
+              <span>Something Amazing</span>
+            </h2>
 
+            <ContactForm />
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '28px', marginTop: '4rem' }}>
             <div className="socials" style={{ display: 'flex', gap: '14px' }}>
               {socialLinks.map((link) => (
                 <motion.a
@@ -1041,7 +991,7 @@ const Index = () => {
 
         @media (max-width: 820px) {
           #contact {
-            padding: '4rem 1.5rem 3rem' !important;
+            padding: 4rem 1.5rem 3rem !important;
           }
           .contact-headline {
             font-size: clamp(40px, 8vw, 80px) !important;
@@ -1159,7 +1109,7 @@ const Index = () => {
 
         @media (max-width: 420px) {
           #contact {
-            padding: '3rem 1rem 2rem' !important;
+            padding: 3rem 1rem 2rem !important;
           }
           .contact-headline {
             font-size: clamp(32px, 12vw, 52px) !important;
