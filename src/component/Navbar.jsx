@@ -192,44 +192,79 @@ const Navbar = () => {
 
         .nb-mobile-panel {
           pointer-events: auto;
-          margin: 12px auto 0;
-          width: 90%;
-          max-width: 400px;
-          padding: 1.5rem;
-          background: rgba(17, 17, 20, 0.95);
-          backdrop-filter: blur(24px) saturate(180%);
-          -webkit-backdrop-filter: blur(24px) saturate(180%);
-          border: 1px solid var(--border-default);
-          border-radius: 24px;
-          box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.8);
+          position: fixed;
+          top: 0;
+          right: 0;
+          width: 320px;
+          height: 100vh;
+          padding: 6rem 2rem 2rem 2rem;
+          background: linear-gradient(135deg, rgba(17, 17, 20, 0.95), rgba(10, 10, 12, 0.98));
+          backdrop-filter: blur(40px) saturate(180%);
+          -webkit-backdrop-filter: blur(40px) saturate(180%);
+          border-left: 1px solid rgba(255, 255, 255, 0.1);
+          box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
           display: flex;
           flex-direction: column;
-          gap: 0.5rem;
-          animation: fadeInUp 0.4s var(--ease-out) both;
+          gap: 1rem;
+          animation: slideInRight 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+          z-index: 40;
+        }
+
+        @keyframes slideInRight {
+          from { opacity: 0; transform: translateX(30px) scale(0.98); }
+          to { opacity: 1; transform: translateX(0) scale(1); }
+        }
+
+        @keyframes linkFadeIn {
+          from { opacity: 0; transform: translateY(15px); }
+          to { opacity: 1; transform: translateY(0); }
         }
 
         .nb-mobile-link {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 1rem 1.25rem;
+          padding: 1rem 1.5rem;
           color: var(--text-secondary);
           text-decoration: none;
-          font-size: 1rem;
-          font-weight: 450;
+          font-size: 1.25rem;
+          font-weight: 400;
+          letter-spacing: 0.02em;
           border-radius: 16px;
           transition: all 0.3s var(--ease-out);
           cursor: pointer;
+          opacity: 0;
+          animation: linkFadeIn 0.5s var(--ease-out) forwards;
+          position: relative;
+          overflow: hidden;
         }
         .nb-mobile-link:hover, .nb-mobile-link.active {
-          background: rgba(255, 255, 255, 0.06);
+          background: rgba(255, 255, 255, 0.05);
           color: var(--text-primary);
-          transform: translateX(5px);
+          box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.03);
         }
         .nb-mobile-link.active {
-          background: rgba(212, 175, 122, 0.12);
+          background: rgba(212, 175, 122, 0.1);
           color: var(--accent-soft);
           font-weight: 500;
+        }
+        .nb-mobile-link.active::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 20%;
+          bottom: 20%;
+          width: 3px;
+          background: var(--accent);
+          border-radius: 0 4px 4px 0;
+          box-shadow: 0 0 10px var(--accent);
+        }
+        .nb-mobile-link:hover .nb-mobile-link-icon {
+          transform: translate(3px, -3px);
+          opacity: 0.8;
+        }
+        .nb-mobile-link-icon {
+          transition: transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out);
         }
 
         @media (max-width: 880px) {
@@ -312,15 +347,21 @@ const Navbar = () => {
         {/* ── Mobile dropdown ── */}
         {isMenuOpen && (
           <div className="nb-mobile-panel nb-mobile">
-            {navLinks.map((link) => (
+            {navLinks.map((link, index) => (
               <a
                 key={link.path}
                 href={link.path}
                 onClick={(e) => handleNavClick(e, link.path)}
                 className={`nb-mobile-link${activePath === link.path ? ' active' : ''}`}
+                style={{ animationDelay: `${index * 0.06}s` }}
               >
                 <span>{link.name}</span>
-                <ArrowUpRight size={16} strokeWidth={1.75} style={{ opacity: 0.5 }} />
+                <ArrowUpRight
+                  size={16}
+                  strokeWidth={1.75}
+                  className="nb-mobile-link-icon"
+                  style={{ opacity: 0.5 }}
+                />
               </a>
             ))}
             <a
@@ -328,19 +369,39 @@ const Navbar = () => {
               download="Om_Prakash_Resume.pdf"
               onClick={() => setIsMenuOpen(false)}
               className="nb-mobile-link"
-              style={{ borderTop: '1px solid var(--border-subtle)', marginTop: '0.4rem', paddingTop: '0.85rem' }}
+              style={{
+                borderTop: '1px solid var(--border-subtle)',
+                marginTop: '0.4rem',
+                paddingTop: '0.85rem',
+                animationDelay: `${navLinks.length * 0.06}s`
+              }}
             >
               <span>Resume</span>
-              <Download size={16} strokeWidth={1.75} style={{ opacity: 0.5 }} />
+              <Download
+                size={16}
+                strokeWidth={1.75}
+                className="nb-mobile-link-icon"
+                style={{ opacity: 0.5 }}
+              />
             </a>
             <a
               href="mailto:op2624685@gmail.com"
               onClick={() => setIsMenuOpen(false)}
               className="nb-mobile-link"
-              style={{ borderTop: 'none', marginTop: '0', paddingTop: '0' }}
+              style={{
+                borderTop: 'none',
+                marginTop: '0',
+                paddingTop: '0',
+                animationDelay: `${(navLinks.length + 1) * 0.06}s`
+              }}
             >
               <span>Email</span>
-              <Mail size={16} strokeWidth={1.75} style={{ opacity: 0.5 }} />
+              <Mail
+                size={16}
+                strokeWidth={1.75}
+                className="nb-mobile-link-icon"
+                style={{ opacity: 0.5 }}
+              />
             </a>
           </div>
         )}
