@@ -24,25 +24,29 @@ function LivePreview({ url, title }) {
   };
 
   useEffect(() => {
-    const updateScale = () => {
-      if (!containerRef.current) return;
-      const { clientWidth, clientHeight } = containerRef.current;
+      const updateScale = () => {
+        if (!containerRef.current) return;
+        const { clientWidth, clientHeight } = containerRef.current;
 
-      const mobile = window.innerWidth < 1024;
-      setIsMobile(mobile);
+        const mobile = window.innerWidth < 1024;
+        setIsMobile(mobile);
 
-      if (mobile) {
-        setScale(1);
-        return;
-      }
+        if (mobile) {
+          const mobileBaseWidth = 430;
+          const mobileBaseHeight = 750;
+          const scaleX = clientWidth / mobileBaseWidth;
+          const scaleY = clientHeight / mobileBaseHeight;
+          setScale(Math.max(scaleX, scaleY));
+          return;
+        }
 
-      const baseWidth = 1440;
-      const baseHeight = 900;
-      const scaleX = clientWidth / baseWidth;
-      const scaleY = clientHeight / baseHeight;
+        const baseWidth = 1440;
+        const baseHeight = 900;
+        const scaleX = clientWidth / baseWidth;
+        const scaleY = clientHeight / baseHeight;
 
-      setScale(Math.min(scaleX, scaleY));
-    };
+        setScale(Math.min(scaleX, scaleY));
+      };
 
     updateScale();
     window.addEventListener('resize', updateScale);
@@ -60,7 +64,7 @@ function LivePreview({ url, title }) {
 
   return (
     <div ref={containerRef} className="relative w-full h-full bg-[#0d0d0f] overflow-hidden rounded-xl border border-white/10 flex flex-col">
-      <div className="relative w-full h-full overflow-hidden bg-[#0d0d0f] flex-1">
+      <div className="relative w-full h-full overflow-hidden bg-[#0d0d0f] flex-1 flex items-center justify-center">
         {!loaded && !blocked && (
           <div className="absolute inset-0 flex items-center justify-center z-10">
             <div className="w-7 h-7 border-2 border-white/15 border-t-red-500 rounded-full animate-spin" />
@@ -86,13 +90,14 @@ function LivePreview({ url, title }) {
             ref={() => start()}
             sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
             style={{
-              width: isMobile ? "100%" : "1440px",
-              height: isMobile ? "100%" : "900px",
-              transform: isMobile ? "none" : `scale(${scale})`,
-              transformOrigin: "top left",
+              width: isMobile ? "430px" : "1440px",
+              height: isMobile ? "750px" : "900px",
+              transform: `scale(${scale})`,
+              transformOrigin: isMobile ? "center center" : "top left",
               border: "none",
               pointerEvents: "none",
               display: "block",
+              margin: isMobile ? "auto" : "0",
             }}
           />
         )}

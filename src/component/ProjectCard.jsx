@@ -4,7 +4,7 @@ import LivePreview from "./LivePreview";
 function ProjectCard({ project, number }) {
   return (
     <section
-      className="shrink-0 w-full flex items-center justify-center px-4 sm:px-8 sticky top-[5vh] md:top-[10vh] mb-[-12vh] md:mb-[-15vh]"
+      className="shrink-0 w-full flex items-center justify-center px-4 sm:px-8 sticky top-[5vh] md:top-[10vh] mb-[10vh] md:mb-[-15vh]"
     >
       <div className="relative w-full max-w-screen-2xl min-h-[90vh] md:min-h-[75vh] rounded-3xl bg-white/[0.03] backdrop-blur-xl border border-white/10 p-4 sm:p-8 overflow-hidden flex flex-col shadow-2xl">
         <div className="relative flex flex-col sm:flex-row items-start justify-between mb-4 shrink-0 gap-4 sm:gap-0">
